@@ -1,5 +1,5 @@
 # Site settings
-title: MonadWizard | A simple Jekyll blog
+title: MonadWizard
 description: "A minimal blog template, build with Jekyll."
 url: "https://monadwizard.live"
 author:
@@ -31,6 +31,7 @@ gems:
 
 # Custom variables
 version: "1.1.0"
+
 
 # Options
 custom_header: false
