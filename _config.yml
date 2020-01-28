@@ -1,14 +1,14 @@
 # Site settings
-title: Emerald | A simple Jekyll blog
+title: MonadWizard | A simple Jekyll blog
 description: "A minimal blog template, build with Jekyll."
-url: "http://www.jacoporabolini.com/emerald"
+url: "https://monadwizard.live"
 author:
-  name: "Jacopo Rabolini"
-  email: "hello@jacoporabolini.com"
-  url: "http://www.jacoporabolini.com"
+  name: "Rakib Hasan"
+  email: "monad.wizard.r@gmail.com"
+  url: "https://monadwizard.live/blog"
 
 # Build settings
-baseurl: /emerald # Change this to your relative path (ex: /blog/), or leave just a /
+baseurl: / # Change this to your relative path (ex: /blog/), or leave just a /
 markdown: kramdown
 source: .
 destination: ./_site
