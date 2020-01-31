@@ -18,56 +18,76 @@ sortly বলা যায় git ২ ধরনের repository ব্যবহা
 
 আমরা git bash open করি than ,
 shell code <font color="green"> mkdir </font> এর পর পছন্দ মত directory এর নাম দিয়া folder তৈরী করি ।
-                   mkdir FolderName
+                   
+		   mkdir FolderName
 
 shell code <font color="green"> cd </font> এর পর তৈরীকৃত folder এর নাম দিয়া directory টি তে প্রবেশ করি।
-                   cd FolderName
+                   
+		   cd FolderName
 
 তৈরীকৃত folder টি কে git repository বানাইতে <font color="green"> git init </font> দ্বারা গিট initial করি। এর ফলে উক্ত directory টি তে .git নামক একটি folder তৈরী হবে, এই .git ফোল্ডারটি সমস্ত গিট data control করবে।
-                    git init
+                    
+		    git init
 
 গিট এর সব commit এর identity এর জন্য একটি user-name প্রয়োজন হয়। সকল git এর জন্য একটি নির্দিষ্ট global-user-name দাওয়া যাইতে পারে। global-user-name শুধু একবার তৈরি করতে হয়।
-	        git config –global user.name “Name”
+	        
+		git config –global user.name “Name”
 
 
 আমরা global-user-name এর সঙ্গে একটা global-e@mail save করতে পারি। 
-	        git config –global user.email “Mail@Name”
+	        
+		git config –global user.email “Mail@Name”
 
 
 আমরা বিশেষ git-repository এর জন্য আলাদা user-name দিতে পারি,যাকে local-user-name বলা যায়। local-user-name কেবল তৈরীকৃত repository তে ব্যবহৃত হয়।
-            git config user.name “name”
+            
+	    git config user.name “name”
+
 আমরা local-user-name এ ও একটা local-e@mail save করতে পারি।
-	        git config user.email “email@name”
+	        
+		git config user.email “email@name”
 
 
 কোন git-repository এর user-name সমূহ দেখতে উক্ত repository তে গিয়া <font color="green"> git config --list </font> লিখতে হয়। 
-	        git config --list
+	        
+		git config --list
+
 <font color="green"> git config --list </font> এ user.name=Name এবং user.email=Mail দেখতে পাওয়া যায়। 
 
 shell code <font color="green"> touch </font> এর পর fileNameWithExtention দিয়া git bash এর দ্বারা নতুন file তৈরী করা যায়।
-            touch fileNameWithExtention
+            
+	    touch fileNameWithExtention
 
 git command <font color="green"> git status </font> এর দ্বারা আমরা rescan করে repository টির update দেখতে পাই। আমরা onstage and upstage file দেখতে command টি ব্যবহার করি।
-	        git status 
+	        
+		git status 
 
 আমরা UNTRACKED file এবং নতুন file, git command <font color="green"> filename </font> এর দ্বারা দেখতে পাই।
-	        filename 
+	        
+		filename 
 
 আমরা untracked file কে git command <font color="green">git add fullName </font> এর দ্বারা stage area তে নিতে পারি।
-            git add fulfillName
+            
+	    git add fulfillName
 
 আমাদের বার বার git directory টির অবস্থা <font color="green">git status</font> দ্বারা check করতে হইতে পারে। 
-            git status
+            
+	    git status
 
 আমরা directory এর সব file এক সঙ্গে stage-area তে নিতে পারি git command <font color="green"> git add . </font> দ্বারা   
-            git add --all 
+            
+	    git add --all 
 অথবা	
-            git add . 
+            
+	    git add . 
 
 stage-area তে file আনার পর তা local-repository তে push করতে হয়। যার ফলে আমাদের file এর সকল update আলাদা আলাদা version এ রাখা যায়, এবং version control করা যায়।  
-	        git commit
+	        
+		git commit
+
 এখন একটা নতুন bash দেখা যাবে, যেখানে update version টার একটা কমেন্ট লিখতে press <font color="green">I</font> তারপর comment লিখে press <font color="green">Esc</font> এখন press <font color="green">:x</font> সর্ব শেষ এ press press <font color="green">Enter</font> button.
-            Press button :  I
+            
+	    Press button :  I
             Then:           type something 
             Press button :  Esc   
             press buttons:  :x
@@ -76,12 +96,16 @@ stage-area তে file আনার পর তা local-repository তে push �
 
 অথবা 
 আমরা একটা single line এ ও commit করতে পারি। 
-	        git commit -m “type message”
+	        
+		git commit -m “type message”
 
 আমরা সকল commit file দেখতে পারি <font color="green">git log</font> দ্বারা 
-	        git log 
+	        
+		git log 
+
 অথবা আমরা shortly commit file টি দেখতে পারি।
-	        git log --online 
+	        
+		git log --online 
 
 > যদি পূর্বে commit হয়েছে এমন file এ নতুন কোনো পরিবর্তণ করি তা হইলে আমাদের আবার ->onstage -> তারপর commit করতে হবে। 
 
