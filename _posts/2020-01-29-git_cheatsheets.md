@@ -1,231 +1,244 @@
-# here we learn how to work with git and GitHub repository
+# এই পোস্ট এ আমাদের যাত্রা **গিট** এবং **গিটহাব** নিয়া।  
 
-## I think you know basic about git and GitHub.
+## আমি মনে করি গিট এর basic আপনারা সবাই জানেন।
 
-### so, we just see all commands , which are used to work with git and Github.
+### sortly বলা যায় git ২ ধরনের repository ব্যবহার করে। local এবং global
+![image](https://drive.google.com/uc?export=view&id=1Tw57LPzPZX9RvUnFeWA_JkNYDIGFWvR1)
 
-
-
-## 1. Create Directory for repo by:   
-                   ` mkdir FolderName ` 
-## 2. Go to inside of created directory by: 
-                   ` cd FolderName `
-## 3. Now initial folder as repository by: 
-                   ` git init `
-
-### Now select username as globally by: 
-	`git config –global user.name “Name” `
-### Then select email as globally by: 
-	`git config –global user.email “Mail@Name” `
+![image](https://drive.google.com/uc?export=view&id=1FJeX1lzMGNzjmjDCB2eg69K3dim_65jR)
 
 
-## IF WE WANT TO CREATE LOCAL USER-NAME & MAIL FOR SINGLE REPO THEN: 
-### For user-name: 
-	` git config user.name “name” `
-### For mail-name:
-	` git config user.email “email@name” `
+### সুতরাং, এই পোস্ট এ আমরা কেবল সমস্ত কমান্ড দেখব, যা গিটহাবের সঙ্গে গিট এর কাজ করতে ব্যবহৃত হয়।
 
 
-##  For check present username & Mail in git by: 
-	` git config --list `
-### Now in list you can see "" user.name=Name "" & "" user.email=Mail "" 
-#
-## Now We can make some new file for work by: -
-         ` touch fileNameWithExtention `
+<p style='color:green'>এই পোস্ট এ আমরা Git Bash ব্যবহার করব। </p>
 
-## We can rescan our repo to see onstage and upstage file by: -
-	` git status `
-## We can see UNTRACKED FILE which are new create & new file by: -
-	 ` filename `
-#
-### We can stage our untracked file by: -
-	` git add fulfillName `
 
-## Again rescan our status by: -
-	` git status `
+প্রথমতও আমাদের একটা directory প্রয়োজন যেখানে আমরা আমাদের file create করব এবং প্রয়োজনে github a repository বানায়ে upload দেব।
 
-## We can stage all file in a directory by: -
-	` git add --all `
-### or	
-        ` git add . `
+amra git bash open করি than ,
+###   shell code <font color="green"> mkdir </font> এর পর পছন্দ মত directory এর নাম দিয়া folder তৈরী করি ।
+                   mkdir FolderName
 
-## We need to commit for take stage file on Local Repo by: -
-	  ` git commit `
+###  shell code <font color="green"> cd </font> এর পর তৈরীকৃত folder এর নাম দিয়া directory টি তে প্রবেশ করি।
+                   cd FolderName
 
-#
-### Now open a new bash with inserting message for commit by: -
-	Press: ` I button `
-	Then: ` type something `
-        Press: ` Esc ` button
-### Complete commit by press:  
-                     ` :x `
-### Last press: 
-               ` enter button `
-### Now we can see 2 files changed,
+###  তৈরীকৃত folder টি কে git repository বানাইতে <font color="green"> git init </font> দ্বারা গিট initial করি। এর ফলে উক্ত directory টি তে .git নামক একটি folder তৈরী হবে, এই .git ফোল্ডারটি সমস্ত গিট data control করবে।
+                    git init
 
-#
-## We can commit in a single line by: -
-	` git commit -m “type message” `
+###  গিট এর সব commit এর identity এর জন্য একটি user-name প্রয়োজন হয়। সকল git এর জন্য একটি নির্দিষ্ট global-user-name দাওয়া যাইতে পারে। global-user-name শুধু একবার তৈরি করতে হয়।
+	        git config –global user.name “Name”
 
-## To see all commit file by: -
-	` git log `
-## Or we can see committed file shortly: -
-	` git log --online `
 
-> If we change any file which are committed than we again need to take -> onstage -> then commit.
+### আমরা global-user-name এর সঙ্গে একটা global-e@mail save করতে পারি। 
+	        git config –global user.email “Mail@Name”
 
-### If we want to go back to backdated file from update then we need to go back to previous version, then we need first to see all of our update with commit Id by: -
-	` git log --online `
-## then we select our previous commit’s ID and use by: -
-	` git checkout 658251  (id of commit) `
 
-### For work new commit we need to switch (ID) to (master)
-## Here we can see all of our created commit by: -
-	` git checkout master `
+### আমরা বিশেষ git-repository এর জন্য আলাদা user-name দিতে পারি,যাকে local-user-name বলা যায়। local-user-name কেবল তৈরীকৃত repository তে ব্যবহৃত হয়।
+            git config user.name “name”
+### আমরা local-user-name এ ও একটা local-e@mail save করতে পারি।
+	        git config user.email “email@name”
 
-## We can see any change of our previous commit’s file with change text by: -
-	` git diff `
-> We check git diff before make change as new commit.
 
-## We can see the difference of two commit by there ID by: -
-	` git show 03df531  1Fds546    (online ID) `
+###  কোন git-repository এর user-name সমূহ দেখতে উক্ত repository তে গিয়া <font color="green"> git config --list </font> লিখতে হয়। 
+	        git config --list
+### <font color="green"> git config --list </font> এ user.name=Name এবং user.email=Mail দেখতে পাওয়া যায়। 
 
-> here we see a difference from ---a/filename to +++b/filename AND we see the result on “-ans which added” then “+ans which added last” to “+ last update result”
+## shell code <font color="green"> touch </font> এর পর fileNameWithExtention দিয়া git bash এর দ্বারা নতুন file তৈরী করা যায়।
+            touch fileNameWithExtention
 
-## We can see difference before stage area by: -
-	` git diff `
-## But If we wanna see difference on stage area than we need extra command: -
-	` git diff --staged `
+## git command <font color="green"> git status </font> এর দ্বারা আমরা rescan করে repository টির update দেখতে পাই। আমরা onstage and upstage file দেখতে command টি ব্যবহার করি।
+	        git status 
 
-### If we just delete any file from folder this file can’t delete permanently. This file stand on other commit.
-## So, if we need to Delete, then we need to delete from git by: - 
-	` Git rm filename.extention `
+## আমরা UNTRACKED file এবং নতুন file, git command <font color="green"> filename </font> এর দ্বারা দেখতে পাই।
+	        filename 
 
-> Now we can’t see filename.extention on git local repo Directory.
+### আমরা untracked file কে git command <font color="green">git add fullName </font> এর দ্বারা stage area তে নিতে পারি।
+            git add fulfillName
 
-## But our file is inside of other staged, we check by: -
-	` git status `
-> Here we see our delete isn’t staged. Git tracked our file.
+### আমাদের বার বার git directory টির অবস্থা <font color="green">git status</font> দ্বারা check করতে হইতে পারে। 
+            git status
+
+## আমরা directory এর সব file এক সঙ্গে stage-area তে নিতে পারি git command <font color="green"> git add . </font> দ্বারা   
+            git add --all 
+### অথবা	
+            git add . 
+
+### stage-area তে file আনার পর তা local-repository তে push করতে হয়। যার ফলে আমাদের file এর সকল update আলাদা আলাদা version এ রাখা যায়, এবং version control করা যায়।  
+	        git commit
+### এখন একটা নতুন bash দেখা যাবে, যেখানে update version টার একটা কমেন্ট লিখতে press <font color="green">I</font> তারপর comment লিখে press <font color="green">Esc</font> এখন press <font color="green">:x</font> সর্ব শেষ এ press press <font color="green">Enter</font> button.
+            Press button :  I
+            Then:           type something 
+            Press button :  Esc   
+            press buttons:  :x
+            last button  :  enter
+
+
+### অথবা 
+### আমরা একটা single line এ ও commit করতে পারি। 
+	        git commit -m “type message”
+
+### আমরা সকল commit file দেখতে পারি <font color="green">git log</font> দ্বারা 
+	        git log 
+### অথবা আমরা shortly commit file টি দেখতে পারি।
+	        git log --online 
+
+> যদি পূর্বে commit হয়েছে এমন file এ নতুন কোনো পরিবর্তণ করি তা হইলে আমাদের আবার ->onstage -> তারপর commit করতে হবে। 
+
+            git add .
+            git commit -m "any message"
+
+
+
+### যদি আমরা update থেকে backdate file টিতে ফিরে যেতে চাই তবে আমাদের পূর্ববর্তী version এ ফিরে যেতে হবে, তারপরে আমাদের প্রথমে commit id এর মাধ্যমে আমাদের update টি দেখতে হবে।
+
+            git log --online
+
+### তারপর আমাদের git log থেকে পূর্ববর্তী commit এর id use করতে হবে। যেমনঃ (id of commit= 658251)
+
+            git checkout 658251
+
+### নতুন commit ব্যবহার করতে commit (ID) টি master branch এ নিতে হবে।
+### এখন আমরা আমাদের তৈরিকৃত সকল commit দেখতে পাবো master উল্লেখ এর মাধমে।
+
+	        git checkout master 
+
+### আমরা যদি পূর্ববর্তী যেকোনো commit এর change প্রদত্ত text সহ দেখতে চাই তা হইলে git command <font color="green">git diff</font> প্রয়োজন
+	      
+            git diff
+
+> নতুন commit পরিবর্তন করার আগেেই আমরা <font color="green">git diff</font> এর দ্বারা চেক করি।
+
+### আমরা commit ID ব্যবহার করে দুটি commit এর পার্থক্য দেখতে পারি। যেমনঃ (online ID = 1Fds546)
+	       
+            git show 03df531  1Fds546   
+
+### আমরা stage area এর পূর্বে difference দেখতে পারি।
+
+            git diff
+
+### তবে আমরা যদি stage area তে difference দেখতে চাই তবে।
+
+            git diff --staged
+
+### আমরা যদি কেবল folder থেকে কোন file delete করে ফেলি, তবে এই file টি স্থায়ীভাবে delete হয় না। এই ফাইলটি অন্যান্য commit এ থেকে যায় এবং ফিরে আনা যায় ।
+### যদি আমরা git থেকে delete করতে চাই , তা হইলে git bash এ command দিতে হবে 
+
+            Git rm filename.extention
+
+> এখন আমরা git এর local repository তে filename.extention দেখতে পাব না।
+
+
+### কিন্তু অন্য stage এ আমাদের delete করা file দেখতে পাবো। 
+            
+            git status
+
+> আমাদের delete করা file git এ track করবে।
 
 ### For remove permanently from stage, we need: -
-	` git reset HEAD filename.extention `
-## Now commit our change by: -
-	` Git commit -m “delete filename permanently” `
+### git এর stage থেকে permanently file টি delete করে local repository থেকে এক বারে বাদ দিতে git command 
+
+            git reset HEAD filename.extention
+
+### আমদের নতুন change টি commit করতে হবে।
+
+            Git commit -m “delete filename permanently” 
 
 
-## Local Repo to Remote Repo: -
-> Now we see how to connect local Repo to remote Repo and take change local to Remote Repo. We complete that by pushing file using CMD for that
+#
+# <font color="green"> Local Repository থেকে Remote Repository তে file  </font>
+#
 
-1. Login to github from browser
-2. Create Repo
-3. Copy “push an existing repository” comments
-4. Past comment on CMD from HTTPS panel
-5. Login git on CMD pupup
-6. Enter press with given command which the 2nd line of copy
+### আমরা গিট এর একটা local version আমাদের  directory তে   .git file এ  locate করে  রেখেছি । এখন  শুধু  টা  global repository তে  upload দাওয়া  বাঁকি । 
+### global repository শুধু  ২ টা  operation ঘটায় ।  git push এবং  git fatch.
 
+### global repository তে  আমাদের  file upload করার জন্য  প্রথমে github.com এ  login করতে হবে। তারপর  github এ একটি  repository তৈরি  করতে হবে।  repository টির  ssh/https link টা  দ্বারা আমরা আমাদের local repository টা কে github এর তৈরি repository এর সঙ্ঘে connect করব। 
 
+### আমি ধরে নিতেছি  আপনাদের github এ loging করে repository তৈরি করা  হয়েছে। আপনারা github এ repository তৈরি করতে  readme.md file টাই  check-mark দিয়ে  দিতে পারেন আবার readme.md file বাদ এ ও  repository তৈরি  করতে পারেন।
 
-### Below are the commands we are going to use to upload files to GitHub with Git Bash 1st go to repo directory 
+### এখন আমাদের local repository এর directory তে গিয়ে git bash টি open করব ।
 
-## as cheet shit
+### আমরা সব সময় git status দিয়ে check করব , file এ কোন update হয়েছে কি না। যদি update হয় তা হলে file list এ তা দেখা যাবে। update ঘটলে <font color="green">-> git add . -> git commit -m "new comment"</font>  ,মানে new change টাকে stage area -> local repository তে আনতে হবে। 
 
-` ls `
+### এতক্ষণ সব পুরান প্যাঁচাল ছিল , এখন global repository তে file pass করি।
 
-` cd `
+### মনে করি আমাদের git bash এর path সঠিক , এখন git command <font color="green">git remote add origin [gitLink from HTTPS]</font>। আমরা git clone করতে যে link use করি,এই টা একই link.
+### github এ loging এর জন্য popup window আসলে login complete করতা হবে।
 
-` git init `
-
-` git remote add origin [gitLink from 4 HTTPS] `
-
-` git remote -v `
-
-` git add . `
-
-` git commit -m "First commit" `
-
-` git push origin master `
+                  git remote add origin [gitLink from HTTPS]
 
 
-## for update by force :
-         `git push origin master -f `
+### এখন <font color="green">git remote -v</font> দিয়ে fatch এবং push নিশ্চিত  করতে হবে। 
+
+                  git remote -v
+
+
+### সর্বশেষ  এ  brunch এ  upload  দিতে হবে। এখানে আমরা master বা root brunch এ upload দেব। তাই<font color="green">git push origin master</font> এ master উল্লেখ করব। ভিন্ন brunch এর জন্য সেই brunch এর নাম উল্লেখ করতাম। 
+
+                  git push origin master
 
 
 
+### আমরা একটা সহজ sortcut দেখে নেয়। আমরা basic work এ  এই সব command use করছি। পর্যায়ক্রমে  একটা project যে সব command এর দ্বারা github এ upload দাওয়া যায় তা :
+## cheet shit
 
-## We remove Connection by: -
-1. Search on windows “credential” & go “Credential Manager”
-2. Go to Windows Credentials
-3. Click      right side of [github](git:https://github.com)
-4. Click Remove & press Yes
++           ls
 
-## Now we disconnect local & Remote Repo
++           cd project_directory
+
++           git init 
+
++           git remote add origin [gitLink from HTTPS]
+
++           git remote -v
+
++           git add .
+
++           git commit -m "First commit"
+
++           git push origin master
+
+
+### যদি error এর জন্য git repository টা github এ upload দিতে না পারেন, তবে by force আপনে emergincy তে upload দিতে পারেন। :
+
+                  git push origin master -f
+
+
+
+### আমাদের github এ  file upload দাওয়াতো  শেষ হল, এখন যদি github এ কোন update ঘটায় এবং তা যদি local repository তে  আনতে চাই , বা local repository তেও একই আপডেট ঘটাতে চাই তা হইলে আমাদের ৩টা command use করতে হবে। 
+
+### আমাদের git bash এর path টা local repository এর directory এর path দিব তারপর 
+
++           git pull origin master `
+
+### তারপর
++           git stash save "your comment"
+
+
+### সর্বশেষ এ shash থেকে মক্তি পাইতে git command এ দেব 
+
++           git stash drop
 
 #
 #
 #
 #
 #
-# if you face error in 
-       
-      ` git push origin master `
-         
-      ` fatal: I don't handle protocol 'https' `
-### try
-     `git push origin master -f`
+
+### যদি প্রয়োজন হয় তা হলে আমরা আমাদের github এর পুর connection pc থেকে remove করে দিতে পারি। এর জন্য windows_search_bar এ গিয়ে credential লিখলে suggest এ <font color="green">Credential Manager</font> আসবে। 
+### Credential Manager এ গিয়ে <font color="green">windows Credentials</font> এ click করলে, নিচে অনেক path এর সঙ্ঘে  <font color="green">git:https://github.com</font> আসবে। 
+### right side এর dropdown option এ click করলে  <font color="green">Edit</font> এবং <font color="green">Remove</font> option পাওয়া যাবে । Remove এ click করে pc থেকে github এর connection পুরোপুরি remove করা যাবে।
 
 
-# Fix it removing that reference
+
+
+### আমরা git থেকে origin remove করতে পারি। 
           
-       ` git remote rm origin `
+          git remote rm origin 
 
-      ` #then check is all worked well `
-        
-      ` git remote -v `
+### এখন fatch এবং pull এর দ্বারা connection টা clear করলে আমরা আবার অন্য origin add করতে পারব ।
 
-
-# Now you could add again the url for the remote repository
-
-` git remote add origin https://example.com/user/repo.git `
-
-` #and check `
-
-` git remote -v `
-
-` #And push the changes in your local repository to github `
-
-` git push origin master `
-
-
-# for take update from remote repository (git) to local repository(hardDisk)
-#
-1st go to repo directory then open git bash than type
-#
-` git pull origin master `
-#
-### than
-#
-`git stash save "your comment"`
-#
-
-# than for get rid of the shash
-#
-` git stash drop `
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            git remote -v 
 
 
 
