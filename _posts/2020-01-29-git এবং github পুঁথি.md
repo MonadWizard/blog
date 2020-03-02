@@ -265,7 +265,8 @@ right side এর dropdown option এ click করলে  <font color="green">Ed
             git remote -v 
 
 
+git এ অনেক সময় previous cached থাকা তে new update commit ঘটে না। তাই যদি git এ কোন cache delete করতে হয় তবে rm --cached ব্যবহার করা যায়। -r ব্যবহার করতে হয় যদি read permission না থাকে। 
 
-
+	git rm -r --cached name
 
 
