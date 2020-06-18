@@ -1,25 +1,25 @@
-# :scroll: Django Cheat Sheet
-A cheat-sheet for creating web apps with the Django framework using the Python language. Most of the summaries and examples are based off [the official documentation](https://docs.djangoproject.com/en/3.1/) for Django v3.1.
+# ` Django Cheat Sheet `
+A cheat-sheet for creating web apps with the Django framework using the Python language. Most of the summaries and examples are based off [the official documentation](https://docs.djangoproject.com/en/2.0/) for Django v2.0.
 
 ## ` Sections `
-- :snake: [Initializing pipenv](#snake-initializing-pipenv-optional) (optional)
-- :blue_book: [Creating a project](#blue_book-creating-a-project)
-- :page_with_curl: [Creating an app](#page_with_curl-creating-an-app)
-- :tv: [Creating a view](#tv-creating-a-view)
-- :art: [Creating a template](#art-creating-a-template)
-- :ticket: [Creating a model](#ticket-creating-a-model)
-- :postbox: [Creating model objects and queries](#postbox-creating-model-objects-and-queries)
-- :man: [Using the Admin page](#man-using-the-admin-page)
+- [Initializing pipenv](initializing-pipenv-optional) (optional)
+- [Creating a project](#creating-a-project)
+-  [Creating an app](#creating-an-app)
+-  [Creating a view](#creating-a-view)
+-  [Creating a template](#creating-a-template)
+-  [Creating a model](#creating-a-model)
+-  [Creating model objects and queries](#creating-model-objects-and-queries)
+-  [Using the Admin page](#using-the-admin-page)
 
 
-## :snake: Initializing pipenv (optional)
+## Initializing pipenv (optional)
 - Make main folder with `$ mkdir <folder>` and navigate to it with `$ cd <folder>`
 - Initialize pipenv with `$ pipenv install`
 - Enter pipenv shell with `$ pipenv shell`
 - Install django with `$ pipenv install django`
 - Install other package dependencies with `$ pipenv install <package_name>`
 
-## :blue_book: Creating a project
+## Creating a project
 - Navigate to main folder with `$ cd <folder>`
 - Create project with `$ django-admin startproject <project_name>`
 
@@ -46,7 +46,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 ```
 - You can set this environment variable in your shell with `export SECRET_KEY=<secret_key>`
 
-## :page_with_curl: Creating an app
+##  Creating an app
 - Navigate to the outer project folder  `$ cd <outer_project_folder>`
 - Create app with  `$ python manage.py startapp <app_name>`
 - Inside the `app` folder, create a file called `urls.py`
@@ -84,7 +84,7 @@ INSTALLED_APPS = [
 $ python manage.py migrate
 ```
 
-## :tv: Creating a view
+##  Creating a view
 - Within the app directory, open `views.py` and add the following:
 ```python
 from django.http import HttpResponse
@@ -120,7 +120,7 @@ urlpatterns = [
 - Remember: there are multiple files named `urls.py`
 - The `urls.py` file within app directories are organized by the `urls.py` found in the project folder.
 
-## :art: Creating a template
+##  Creating a template
 - Within the app directory, HTML, CSS, and JavaScript files are located within the following locations:
 ```
 app/
@@ -181,7 +181,7 @@ Hello, World!
 </body>
 ```
 
-## :ticket: Creating a model
+##  Creating a model
 - Within the app's `models.py` file, an example of a simple model can be added with the following:
 ```python
 from django.db import models
@@ -236,7 +236,7 @@ ForeignKey(SomeModel, unique=True)
 	
 - For more detail, the [official documentation for database models]( https://docs.djangoproject.com/en/2.0/topics/db/models/) provides a lot of useful information and examples.
 
-## :postbox: Creating model objects and queries
+##  Creating model objects and queries
 - Example `models.py` file:
 ```python
 from django.db import models
@@ -290,7 +290,7 @@ $ python manage.py shell
 >>> find_entry = Entry.objects.filter(name='Beatles Blog')
 ```
 
-## :man: Using the Admin page
+##  Using the Admin page
 - To create a `superuser`:
 ```bash
 $ python manage.py createsuperuser
