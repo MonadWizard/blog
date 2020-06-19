@@ -1,7 +1,8 @@
-# ` Django Cheat Sheet `
+#  Django Cheat Sheet 
+
 A cheat-sheet for creating web apps with the Django framework using the Python language. Most of the summaries and examples are based off [the official documentation](https://docs.djangoproject.com/en/2.0/) for Django v2.0.
 
-## ` Sections `
+##  Sections 
 - [Initializing pipenv](#initializing-pipenv-optional) (optional)
 - [Creating a project](#creating-a-project)
 -  [Creating an app](#creating-an-app)
