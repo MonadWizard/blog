@@ -261,6 +261,38 @@ def index(request):
 
 
 
+- HTML এ static file নিয়ে কাজ করার জন্য নিচের code Demo হিসেবে follow করতে পারি। 
+
+```html
+
+{% load static %}
+
+
+
+<html>
+	<head>		
+		<link rel="stylesheet" href="{% static 'styles.css' %}">
+	</head>
+
+</html>
+
+```
+
+- make sure `settings.py` file এ নিচের script add করা হয়েছে। :
+
+```python
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+	os.path.join(BASE_DIR, "static")
+]
+
+```
+
+
+
+
+
 
 
 
