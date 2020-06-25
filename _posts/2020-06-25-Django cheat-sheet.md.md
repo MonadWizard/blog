@@ -260,7 +260,7 @@ def index(request):
 ```
 
 - HTML এ static file নিয়ে কাজ করার জন্য নিচের code Demo হিসেবে follow করতে পারি।
-html file এর ১ম line এ `{% load static %}` ব্যবহার করতে হবে । 
+html file এর ১ম line এ <font color="green"> {% load static %} </font> ব্যবহার করতে হবে । 
 
 
 
