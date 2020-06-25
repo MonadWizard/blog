@@ -240,6 +240,33 @@ urlpatterns = [
 
 
 
+```python
+
+from django.shortcuts import render
+
+def index(request):
+    return render(request,'index.html')
+
+```
+
+- আমরা যে কোন context বা variable কে html এ add korte পারি বা এক কথায় templating করতে পারি।:
+
+```python
+
+def index(request):
+	context = {"context_variable": context_variable}
+    return render(request,'index.html', context)
+
+```
+
+
+
+
+
+
+
+
+
 
 
 
