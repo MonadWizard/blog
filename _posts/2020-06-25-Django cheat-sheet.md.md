@@ -307,3 +307,130 @@ ForeignKey(SomeModel, unique=True)
 - আরও জানার জন্য [official documentation for database models]( https://docs.djangoproject.com/en/3.1/topics/db/models/) এ গিয়ে দেখুন। 
 
 
+
+
+
+
+
+##  Creating model objects and queries
+
+
+- উদাহরণ স্বরূপ   `models.py` file:
+
+
+```python
+
+from django.db import models
+
+class Blog(models.Model):
+    name = models.CharField(max_length=100)
+    tagline = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+class Author(models.Model):
+    name = models.CharField(max_length=200)
+    email = models.EmailField()
+
+    def __str__(self):
+        return self.name
+
+class Entry(models.Model):
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
+    headline = models.CharField(max_length=255)
+    body_text = models.TextField()
+    pub_date = models.DateField()
+    authors = models.ManyToManyField(Author)
+    rating = models.IntegerField()
+
+    def __str__(self):
+        return self.headline
+
+```
+
+
+-  shell ব্যবহার করে একটি object তৈরি করতে :
+
+
+```
+
+$ python manage.py shell
+
+```
+
+
+
+```python
+
+>>> from blog.models import Blog
+>>> b = Blog(name='Beatles Blog', tagline='All the latest news.')
+>>> b.save()
+
+
+```
+
+
+
+- object টার change save করতে :
+
+
+
+```python
+
+>>> b.name = 'The Beatles Blog'
+>>> b.save()
+
+
+```
+
+
+
+- objects retrieve করতে :
+
+
+
+
+```python
+
+
+>>> all_entries = Entry.objects.all()
+>>> indexed_entry = Entry.objects.get(pk=1)
+>>> find_entry = Entry.objects.filter(name='Beatles Blog')
+
+
+```
+
+
+
+
+
+
+
+##  Using the Admin page
+
+
+- `superuser` তৈরি করতে :
+
+
+```bash
+
+$ python manage.py createsuperuser
+
+```
+
+
+- একটি model কে Admin page এ add করতে `admin.py` এ Demo দেখানো হয়েছে। 
+
+
+```python
+
+from django.contrib import admin
+from .models import Authors, Books
+
+admin.site.register(Authors)
+admin.site.register(Books)
+
+```
+
+
