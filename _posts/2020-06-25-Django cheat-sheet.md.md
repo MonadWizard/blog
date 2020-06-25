@@ -217,95 +217,93 @@ urlpatterns = [
 - app এর  `urls.py` file এ views.py এর method define করছি আর project এর  `urls.py` এ app এর urls.py file টা define করছি। 
 
 
+##  Creating a model
 
 
-##  Creating a template
-
-- app directory তে নিচের structure এ HTML , CSS, JS বা Front-end file গুলো থাকে। media file এর বাপার টা একটু আলাদা। আমরা পরে media file নিয়ে আলোচনা করব। 
-
-```
-
->app/
-   >templates/
-      index.html
-   >static/
-      style.css
-      script.js
-
-```
-
-- template view file এ ব্যবহার করা হয়,  `views.py` file এ নিচের line গুলো add করে আমরা django project এ একটা customized html ফাইল view এবং execute করতে পারি  :
+- একটি সাধারণ `models.py` file এর Demo নিচে দেখানো হয়েছে। :
 
 ```python
 
-from django.shortcuts import render
+from django.db import models
 
-def index(request):
-    return render(request,'index.html')
+class Person(models.Model):
+	first_name = models.CharField(max_length=30)
+	last_name = models.CharField(max_length=30)
 
 ```
 
-- আমরা যে কোন context বা variable কে html এ add korte পারি বা এক কথায় templating করতে পারি।:
+*Note:  Django তে  primary key তৈরি করতে হয় না , Django automatically একটি IntegerField add করে।*
+
+- model এর structure এ কোন  change করলে migration করে model টাকে update করতে হয়।  নিচের code SHELL এ execute করে model টার migration করতে হয়। :
+
+
+```
+
+$ python manage.py makemigrations <app_name>
+$ python manage.py migrate
+
+
+```
+
+
+*Note: including <app_name> is optional.*
+
+
+- একটি one-to-many relationship `ForeignKey` এর দ্বারা তৈরি হয়। :
+
 
 ```python
 
-def index(request):
-	context = {"context_variable": context_variable}
-    return render(request,'index.html', context)
+class Musician(models.Model):
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    instrument = models.CharField(max_length=100)
+
+class Album(models.Model):
+    artist = models.ForeignKey(Musician, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    release_date = models.DateField()
+    num_stars = models.IntegerField()
 
 ```
 
-- HTML এ static file নিয়ে কাজ করার জন্য নিচের code Demo হিসেবে follow করতে পারি। 
-
-```html
-
-{% load static %}
-
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		
-		<link rel="stylesheet" href="{% static 'styles.css' %}">
-	</head>
-</html>
-
-```
-
-- make sure `settings.py` file এ নিচের script add করা হয়েছে। :
+- In this example, Musician একটি foreignKey যা Album এ ব্যবহার করা হয়েছে। :
 
 ```python
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-	os.path.join(BASE_DIR, "static")
-]
+>>> m = Musician.objects.get(pk=1)
+>>> a = m.album_set.get()
+
+```
+ 
+- একটি many-to-many relationship `ManyToManyField` ব্যবহার করে তৈরি করা হয়। :
+
+
+```python
+
+
+class Topping(models.Model):
+    # ...
+    pass
+
+class Pizza(models.Model):
+    # ...
+    toppings = models.ManyToManyField(Topping)
+
 
 ```
 
-- base HTML structure আমরা অন্য HTML file এ তৈরি করে তা যে কোন HTML file এ main structure হিসেবে ব্যবহার করতে `extends` ব্যবহার করা হয়। Demo হিসেবে নিচের code follow করতে পারি। :
+*Note :  `ManyToManyField`   **শুধু মাত্র একটা model এই Define করা হয়** ।*
 
-```html
+- এ ছাড়া Django `OneToOneField` relation provide করে , একটি one-to-one relationship `unique = True` দ্বারাও define করা যায় যা model টির `ForeignKey` :
 
-{% extends 'base.html'%}
 
-{% block content %}
+```python
 
-Hello, World!
-
-{% endblock %}
+ForeignKey(SomeModel, unique=True)
 
 ```
-
-- এখন `base.html` এ block content টা specific part এ add করতে হবে :
-
-```html
-
-<body>
-	{% block content %}{% endblock %}
-</body>
-
-```
+	
+- আরও জানার জন্য [official documentation for database models]( https://docs.djangoproject.com/en/3.1/topics/db/models/) এ গিয়ে দেখুন। 
 
 
