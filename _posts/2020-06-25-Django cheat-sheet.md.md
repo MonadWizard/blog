@@ -263,6 +263,70 @@ def index(request):
 
 
 
+```python
+
+
+	{% load static %}
+
+
+
+
+	<html>
+		<head>		
+		</head>
+		<body>
+		
+		
+		</body>
+
+	</html>
+
+```
+
+
+
+- make sure `settings.py` file এ নিচের script add করা হয়েছে। :
+
+```python
+
+	STATIC_URL = '/static/'
+
+	STATICFILES_DIRS = [
+		os.path.join(BASE_DIR, "static")
+	]
+
+```
+
+
+- base HTML structure আমরা অন্য HTML file এ তৈরি করে তা যে কোন HTML file এ main structure হিসেবে ব্যবহার করতে `extends` ব্যবহার করা হয়। 
+Demo হিসেবে নিচের code follow করতে পারি। :
+
+
+```python
+
+
+	{% extends 'base.html'%}
+
+	{% block content %}
+
+	Hello, Django!
+
+	{% endblock %}
+
+```
+
+- এখন `base.html` এ block content টা specific part এ add করতে হবে :
+
+```python
+
+
+	<body>
+		{% block content %}{% endblock %}
+	</body>
+
+```
+
+
 
 
 
