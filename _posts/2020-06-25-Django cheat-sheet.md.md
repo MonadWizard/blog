@@ -261,6 +261,11 @@ def index(request):
 
 
 
+
+
+
+
+
 - HTML এ static file নিয়ে কাজ করার জন্য নিচের code Demo হিসেবে follow করতে পারি। 
 
 ```
@@ -269,53 +274,15 @@ def index(request):
 
 
 
+
 	<html>
 		<head>		
-			<link rel="stylesheet" href="{% static 'styles.css' %}">
+
 		</head>
 
 	</html>
 
 ```
-
-- make sure `settings.py` file এ নিচের script add করা হয়েছে। :
-
-```python
-
-	STATIC_URL = '/static/'
-	STATICFILES_DIRS = [
-		os.path.join(BASE_DIR, "static")
-	]
-
-```
-
-
-- base HTML structure আমরা অন্য HTML file এ তৈরি করে তা যে কোন HTML file এ main structure হিসেবে ব্যবহার করতে `extends` ব্যবহার করা হয়। 
-Demo হিসেবে নিচের code follow করতে পারি। :
-
-
-```
-
-	{% extends 'base.html'%}
-
-	{% block content %}
-
-	Hello, Django!
-
-	{% endblock %}
-
-```
-
-- এখন `base.html` এ block content টা specific part এ add করতে হবে :
-
-```
-
-	<body>
-		{% block content %}{% endblock %}
-	</body>
-
-```
-
 
 
 
