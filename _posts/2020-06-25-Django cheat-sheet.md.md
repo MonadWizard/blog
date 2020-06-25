@@ -168,3 +168,52 @@ INSTALLED_APPS = [
 $ python manage.py migrate
 
 ```
+
+##  Creating a view
+
+
+- new created app এর app directory এর `views.py` file a নিচের line গুলো এর দ্বারা একটা basic view পাইতে পারি :
+
+
+```python
+
+from django.http import HttpResponse
+
+def index(request):
+    return HttpResponse("Hello, World!")
+
+```
+
+- app directory এর `urls.py` এ নিচের line গুলো এর দ্বারা একটা basic view এর url পাইতে পারি 
+
+```python
+
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.index, name='index'),
+]
+
+```
+
+
+- এখন project এর `urls.py` এ app এর urls.py define করলেই আমাদের view complete. 
+
+```python
+
+from django.contrib import admin
+from django.urls import include, path
+
+urlpatterns = [
+    path('app/', include('app.urls')),
+    path('admin/', admin.site.urls),
+]
+
+```
+
+- Remember: আমরা এইখানে ২টা `urls.py` ফাইল নিয়ে কাজ করছি  
+
+- app এর  `urls.py` file এ views.py এর method define করছি আর project এর  `urls.py` এ app এর urls.py file টা define করছি। 
+
+
