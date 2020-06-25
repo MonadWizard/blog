@@ -260,8 +260,6 @@ def index(request):
 ```
 
 
-
-
 - এখন `settings.py` file এ নিচের script add করা হয়েছে। :
 
 ```python
