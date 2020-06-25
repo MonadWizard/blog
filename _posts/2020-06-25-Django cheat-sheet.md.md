@@ -217,6 +217,106 @@ urlpatterns = [
 - app এর  `urls.py` file এ views.py এর method define করছি আর project এর  `urls.py` এ app এর urls.py file টা define করছি। 
 
 
+
+
+
+
+##  Creating a template
+
+- app directory তে নিচের structure এ HTML , CSS, JS বা Front-end file গুলো থাকে। media file এর বাপার টা একটু আলাদা। আমরা পরে media file নিয়ে আলোচনা করব। 
+
+```
+
+>app/
+   >templates/
+      index.html
+   >static/
+      style.css
+      script.js
+
+```
+
+- template view file এ ব্যবহার করা হয়,  `views.py` file এ নিচের line গুলো add করে আমরা django project এ একটা customized html ফাইল view এবং execute করতে পারি  :
+
+```python
+
+from django.shortcuts import render
+
+def index(request):
+    return render(request,'index.html')
+
+```
+
+- আমরা যে কোন context বা variable কে html এ add korte পারি বা এক কথায় templating করতে পারি।:
+
+```python
+
+def index(request):
+	context = {"context_variable": context_variable}
+    return render(request,'index.html', context)
+
+```
+
+- HTML এ static file নিয়ে কাজ করার জন্য নিচের code Demo হিসেবে follow করতে পারি। 
+
+```html
+
+{% load static %}
+
+
+
+<html>
+	<head>		
+		<link rel="stylesheet" href="{% static 'styles.css' %}">
+	</head>
+
+</html>
+
+```
+
+- make sure `settings.py` file এ নিচের script add করা হয়েছে। :
+
+```python
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+	os.path.join(BASE_DIR, "static")
+]
+
+```
+
+- base HTML structure আমরা অন্য HTML file এ তৈরি করে তা যে কোন HTML file এ main structure হিসেবে ব্যবহার করতে `extends` ব্যবহার করা হয়। Demo হিসেবে নিচের code follow করতে পারি। :
+
+
+```html
+
+{% extends 'base.html'%}
+
+{% block content %}
+
+Hello, Django!
+
+{% endblock %}
+
+```
+
+- এখন `base.html` এ block content টা specific part এ add করতে হবে :
+
+```html
+
+<body>
+	{% block content %}{% endblock %}
+</body>
+
+```
+
+
+
+
+
+
+
+
 ##  Creating a model
 
 
