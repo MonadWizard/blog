@@ -259,31 +259,7 @@ def index(request):
 
 ```
 
-
-
-
-
-
-
-
 - HTML এ static file নিয়ে কাজ করার জন্য নিচের code Demo হিসেবে follow করতে পারি। 
-
-```
-
-	{% load static %}
-
-
-
-
-	<html>
-		<head>		
-
-		</head>
-
-	</html>
-
-```
-
 
 
 
