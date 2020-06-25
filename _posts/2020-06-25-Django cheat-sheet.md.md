@@ -394,7 +394,7 @@ ForeignKey(SomeModel, unique=True)
 
 ```
 	
-- আরও জানার জন্য [official documentation for database models]( https://docs.djangoproject.com/en/2.0/topics/db/models/) এ গিয়ে দেখুন। 
+- আরও জানার জন্য [official documentation for database models]( https://docs.djangoproject.com/en/3.1/topics/db/models/) এ গিয়ে দেখুন। 
 
 
 
