@@ -259,33 +259,12 @@ def index(request):
 
 ```
 
-- HTML এ static file নিয়ে কাজ করার জন্য নিচের code Demo হিসেবে follow করতে পারি। 
+- HTML এ static file নিয়ে কাজ করার জন্য নিচের code Demo হিসেবে follow করতে পারি।
+html file এর ১ম line এ `{% load static %}` ব্যবহার করতে হবে । 
 
 
 
-```python
-
-
-	{% load static %}
-
-
-
-
-	<html>
-		<head>		
-		</head>
-		<body>
-		
-		
-		</body>
-
-	</html>
-
-```
-
-
-
-- make sure `settings.py` file এ নিচের script add করা হয়েছে। :
+- এখন `settings.py` file এ নিচের script add করা হয়েছে। :
 
 ```python
 
@@ -298,18 +277,17 @@ def index(request):
 ```
 
 
-- base HTML structure আমরা অন্য HTML file এ তৈরি করে তা যে কোন HTML file এ main structure হিসেবে ব্যবহার করতে `extends` ব্যবহার করা হয়। 
+- base html structure আমরা অন্য hyml file এ তৈরি করে তা যে কোন HTML file এ main structure হিসেবে ব্যবহার করতে `extends` ব্যবহার করা হয়। 
 Demo হিসেবে নিচের code follow করতে পারি। :
 
 
 ```python
 
-
 	{% extends 'base.html'%}
 
 	{% block content %}
 
-	Hello, Django!
+	what you wamt to write !
 
 	{% endblock %}
 
@@ -319,36 +297,13 @@ Demo হিসেবে নিচের code follow করতে পারি।
 
 ```python
 
-
+	{% load static %}
+	
 	<body>
 		{% block content %}{% endblock %}
 	</body>
 
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
