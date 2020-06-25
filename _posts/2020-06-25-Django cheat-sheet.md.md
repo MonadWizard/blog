@@ -4,7 +4,7 @@
 
 প্রতিটি framework এর কিছু default step থাকে, যা ব্যবহার করে frame-work তার structure তৈরি করা হয়। এর এই structure এর ভিতর সব operation implement করা হয়। 
 
-django এর 2 version এর official doc এর link এইখানে  [the official documentation](https://docs.djangoproject.com/en/2.0/) । আমরা django2.XX version এর কিছু shortcut এইখানে দেখব। 
+আমরা django2.XX version এর কিছু shortcut এইখানে দেখব। 
 
 ##  Sections 
 - [pipenv তৈরি](#initializing-pipenv-optional) (optional)
@@ -394,7 +394,6 @@ ForeignKey(SomeModel, unique=True)
 
 ```
 	
-- আরও জানার জন্য [official documentation for database models]( https://docs.djangoproject.com/en/3.1/topics/db/models/) এ গিয়ে দেখুন। 
 
 
 
