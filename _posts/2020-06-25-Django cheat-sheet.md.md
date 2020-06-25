@@ -259,7 +259,50 @@ def index(request):
 
 ```
 
-- HTML এ static file নিয়ে কাজ করার জন্য  html file এর ১ম line এ <font color="green"> {% load static %} </font> ব্যবহার করতে হবে । 
+
+
+
+- এখন `settings.py` file এ নিচের script add করা হয়েছে। :
+
+```python
+
+	STATIC_URL = '/static/'
+
+	STATICFILES_DIRS = [
+		os.path.join(BASE_DIR, "static")
+	]
+
+```
+
+
+- base html structure আমরা অন্য hyml file এ তৈরি করে তা যে কোন HTML file এ main structure হিসেবে ব্যবহার করতে `extends` ব্যবহার করা হয়। 
+Demo হিসেবে নিচের code follow করতে পারি। :
+
+
+```python
+
+	{% extends 'base.html'%}
+
+	{% block content %}
+
+	what you wamt to write !
+
+	{% endblock %}
+
+```
+
+- এখন `base.html` এ block content টা specific part এ add করতে হবে :
+
+```python
+
+	{% load static %}
+	
+	<body>
+		{% block content %}{% endblock %}
+	</body>
+
+```
+
 
 
 
