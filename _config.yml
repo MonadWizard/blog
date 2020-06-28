@@ -28,6 +28,8 @@ defaults:
 # Plugins
 gems:
   - jekyll-paginate
+## added ...............  
+remote_theme: "mmistakes/minimal-mistakes@4.13.0"
 
 # Custom variables
 version: "1.1.0"
