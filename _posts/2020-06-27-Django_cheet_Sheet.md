@@ -274,42 +274,15 @@ def index(request):
 Demo হিসেবে নিচের code follow করতে পারি। :
 
 
-```python
+![image](https://drive.google.com/uc?export=view&id=1B-5JTeER_4Ak_sYV8mhhbrotryIf-uIP)
 
-	{% extends 'base.html'%}
 
-	{% block content %}
 
-	what you wamt to write !
-
-	{% endblock %}
-
-```
 
 - এখন `base.html` এ block content টা specific part এ add করতে হবে :
 
-```python
 
-	{% load static %}
-	
-	<body>
-		{% block content %}{% endblock %}
-	</body>
-
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
+![image](https://drive.google.com/uc?export=view&id=1sJq8-Ez9HJE9jTqhJGWM5wQQljDIvF3c)
 
 
 
