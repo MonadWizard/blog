@@ -274,7 +274,7 @@ def index(request):
 Demo হিসেবে নিচের code follow করতে পারি। :
 
 
-```python
+```
 
 	{% extends 'base.html'%}
 
@@ -288,7 +288,7 @@ Demo হিসেবে নিচের code follow করতে পারি।
 
 - এখন `base.html` এ block content টা specific part এ add করতে হবে :
 
-```python
+```
 
 	{% load static %}
 	
