@@ -27,12 +27,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build Astro site and upload Pages artifact
-        uses: withastro/action@v4
-        # withastro/action automatically:
-        #   - Detects npm from package-lock.json
-        #   - Installs Node.js (v22+)
-        #   - Runs npm install && npm run build
-        #   - Uploads dist/ as a GitHub Pages artifact
+        uses: withastro/action@v6
 
   deploy:
     name: Deploy
@@ -44,4 +39,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
