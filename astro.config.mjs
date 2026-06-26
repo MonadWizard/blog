@@ -6,9 +6,8 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  // GitHub Pages project repo → served at monadwizard.github.io/blog/
-  site: 'https://monadwizard.github.io',
-  base: '/blog',
+  site: 'https://blog.rakib.click',
+  base: '/',
   devToolbar: { enabled: false },
   integrations: [mdx(), sitemap()],
   vite: {
