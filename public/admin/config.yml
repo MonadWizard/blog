@@ -49,7 +49,7 @@ collections:
       - label: "Description"
         name: "description"
         widget: "text"
-        hint: "One to two sentence summary. Used in post cards and meta tags. Aim for 120–160 characters."
+        hint: "One to two sentence summary. Used in post cards and meta tags. Aim for 120-160 characters."
 
       - label: "Publish Date"
         name: "pubDate"
