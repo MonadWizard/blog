@@ -1,0 +1,39 @@
+---
+// Giscus — GitHub Discussions-based comment system.
+//
+// SETUP REQUIRED before comments work:
+//   1. Enable GitHub Discussions on your repo
+//   2. Install the Giscus app: https://github.com/apps/giscus
+//   3. Visit https://giscus.app/ and enter your repo details
+//   4. Copy the generated data-repo-id and data-category-id values below
+//
+// The is:inline directive on the <script> tag is REQUIRED.
+// Without it, Astro strips data-* attributes from the script element.
+
+const GISCUS_REPO = 'MonadWizard/blog';
+const GISCUS_REPO_ID = 'PLACEHOLDER_REPO_ID';           // REPLACE → from giscus.app
+const GISCUS_CATEGORY = 'Announcements';                 // REPLACE → your Discussion category
+const GISCUS_CATEGORY_ID = 'PLACEHOLDER_CATEGORY_ID';   // REPLACE → from giscus.app
+---
+
+<section class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800">
+  <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">Comments</h2>
+  <script
+    src="https://giscus.app/client.js"
+    data-repo={GISCUS_REPO}
+    data-repo-id={GISCUS_REPO_ID}
+    data-category={GISCUS_CATEGORY}
+    data-category-id={GISCUS_CATEGORY_ID}
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="preferred_color_scheme"
+    data-lang="en"
+    data-loading="lazy"
+    crossorigin="anonymous"
+    async
+    is:inline
+  ></script>
+</section>

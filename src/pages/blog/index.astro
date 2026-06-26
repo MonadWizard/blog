@@ -1,0 +1,190 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import PostCard from '../../components/PostCard.astro';
+import readingTime from 'reading-time';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const posts = allPosts.sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
+);
+
+const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
+---
+
+<BaseLayout
+  title="Blog — Rakib Hasan"
+  description="Articles on Django, FastAPI, PostgreSQL, Redis, Elasticsearch, Nginx, and scalable backend systems."
+>
+  <Navbar />
+
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <header class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">Blog</h1>
+      <p id="post-count" class="text-gray-500 dark:text-gray-400">
+        {posts.length} {posts.length === 1 ? 'article' : 'articles'} on backend engineering, system design, and infrastructure.
+      </p>
+    </header>
+
+    <!-- Search bar -->
+    <div class="relative mb-6">
+      <svg
+        class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none"
+        fill="none" stroke="currentColor" viewBox="0 0 24 24"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+      <input
+        id="search-input"
+        type="search"
+        placeholder="Search by keyword or tag…"
+        autocomplete="off"
+        class="w-full pl-10 pr-4 py-2.5 text-sm rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+      />
+    </div>
+
+    <!-- Tag filter pills -->
+    {allTags.length > 0 && (
+      <div class="flex flex-wrap gap-2 mb-10">
+        <button
+          data-tag=""
+          class="tag-btn text-xs px-3 py-1 rounded-full font-medium border transition-colors
+            border-indigo-600 bg-indigo-600 text-white"
+        >
+          All
+        </button>
+        {allTags.map((tag) => (
+          <button
+            data-tag={tag}
+            class="tag-btn text-xs px-3 py-1 rounded-full font-medium border transition-colors
+              border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900
+              text-gray-600 dark:text-gray-400
+              hover:border-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-400"
+          >
+            {tag}
+          </button>
+        ))}
+      </div>
+    )}
+
+    <!-- No results -->
+    <p id="no-results" class="hidden text-gray-400 dark:text-gray-500 py-16 text-center text-sm">
+      No articles match your search. Try a different keyword or tag.
+    </p>
+
+    <!-- Posts list -->
+    <div id="posts-list">
+      {posts.map((post) => {
+        const rt = readingTime(post.body ?? '');
+        return (
+          <div
+            class="post-item"
+            data-title={post.data.title.toLowerCase()}
+            data-desc={post.data.description.toLowerCase()}
+            data-tags={JSON.stringify(post.data.tags)}
+          >
+            <PostCard
+              title={post.data.title}
+              description={post.data.description}
+              pubDate={post.data.pubDate}
+              tags={post.data.tags}
+              slug={post.id}
+              heroImage={post.data.heroImage}
+              readingTime={rt.text}
+            />
+          </div>
+        );
+      })}
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<script>
+  const searchInput = document.getElementById('search-input') as HTMLInputElement;
+  const postItems = document.querySelectorAll<HTMLElement>('.post-item');
+  const tagBtns = document.querySelectorAll<HTMLButtonElement>('.tag-btn');
+  const noResults = document.getElementById('no-results')!;
+  const postCount = document.getElementById('post-count')!;
+  const total = postItems.length;
+
+  let activeTag = new URLSearchParams(window.location.search).get('tag') ?? '';
+  let searchQuery = '';
+
+  function setTagStyles() {
+    tagBtns.forEach((btn) => {
+      const active = btn.dataset.tag === activeTag;
+      btn.className = [
+        'tag-btn text-xs px-3 py-1 rounded-full font-medium border transition-colors',
+        active
+          ? 'border-indigo-600 bg-indigo-600 text-white'
+          : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400 hover:border-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-400',
+      ].join(' ');
+    });
+  }
+
+  function filter() {
+    const q = searchQuery.trim().toLowerCase();
+    let visible = 0;
+
+    postItems.forEach((item) => {
+      const title = item.dataset.title ?? '';
+      const desc = item.dataset.desc ?? '';
+      const tags: string[] = JSON.parse(item.dataset.tags ?? '[]');
+
+      const matchesSearch =
+        !q ||
+        title.includes(q) ||
+        desc.includes(q) ||
+        tags.some((t) => t.toLowerCase().includes(q));
+
+      const matchesTag = !activeTag || tags.includes(activeTag);
+
+      const show = matchesSearch && matchesTag;
+      item.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+
+    noResults.classList.toggle('hidden', visible > 0);
+
+    if (visible === total) {
+      postCount.textContent = `${total} ${total === 1 ? 'article' : 'articles'} on backend engineering, system design, and infrastructure.`;
+    } else {
+      postCount.textContent = `${visible} of ${total} ${total === 1 ? 'article' : 'articles'} shown.`;
+    }
+
+    // Keep URL in sync so filtered views are bookmarkable
+    const url = new URL(window.location.href);
+    if (activeTag) url.searchParams.set('tag', activeTag);
+    else url.searchParams.delete('tag');
+    history.replaceState({}, '', url.toString());
+  }
+
+  tagBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      activeTag = btn.dataset.tag ?? '';
+      setTagStyles();
+      filter();
+    });
+  });
+
+  searchInput.addEventListener('input', () => {
+    searchQuery = searchInput.value;
+    filter();
+  });
+
+  // Handle browser back/forward navigation
+  window.addEventListener('popstate', () => {
+    activeTag = new URLSearchParams(window.location.search).get('tag') ?? '';
+    setTagStyles();
+    filter();
+  });
+
+  // Apply initial state from URL
+  setTagStyles();
+  filter();
+</script>

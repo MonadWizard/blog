@@ -1,17 +1,86 @@
 ---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import PostCard from '../components/PostCard.astro';
+import readingTime from 'reading-time';
 
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const posts = allPosts.sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
+);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout
+  title="Rakib Hasan — Backend Software Developer & System Architect"
+  description="Writing about Django, FastAPI, PostgreSQL, Redis, Elasticsearch, Nginx, and scalable backend systems."
+>
+  <Navbar />
+
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Hero -->
+    <section class="py-16 border-b border-gray-100 dark:border-gray-800">
+      <div class="max-w-2xl">
+        <h1 class="text-4xl sm:text-5xl font-bold tracking-tight text-gray-900 dark:text-white mb-5 leading-tight">
+          Hi, I'm Rakib Hasan
+        </h1>
+        <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
+          Backend Software Developer & System Architect based in
+          <span class="font-medium text-gray-800 dark:text-gray-200">Dhaka, Bangladesh</span>.
+          I build highly scalable RESTful services and backend infrastructure using
+          <span class="font-medium text-gray-800 dark:text-gray-200">Django, FastAPI, and Python</span>.
+          I design data pipelines with PostgreSQL, Redis, and Elasticsearch, and obsess over
+          Nginx security configuration.
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <a
+            href="/about"
+            class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition-colors"
+          >
+            About me
+          </a>
+          <a
+            href="https://github.com/MonadWizard"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg transition-colors"
+          >
+            GitHub
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Posts feed -->
+    <section class="py-8">
+      <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-2">
+        Latest Articles
+      </h2>
+      <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">
+        {posts.length} {posts.length === 1 ? 'article' : 'articles'} on backend engineering, system design, and infrastructure.
+      </p>
+
+      {posts.length === 0 && (
+        <p class="text-gray-400 dark:text-gray-500 py-12 text-center">No posts yet. Check back soon.</p>
+      )}
+
+      {posts.map((post) => {
+        const rt = readingTime(post.body ?? '');
+        return (
+          <PostCard
+            title={post.data.title}
+            description={post.data.description}
+            pubDate={post.data.pubDate}
+            tags={post.data.tags}
+            slug={post.id}
+            heroImage={post.data.heroImage}
+            readingTime={rt.text}
+          />
+        );
+      })}
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
