@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Content Manager — Rakib Hasan Blog</title>
     <style>
+      body { margin: 0; font-family: sans-serif; }
+      #cms-loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        color: #666;
+        font-size: 1rem;
+      }
       #cms-error {
         display: none;
         font-family: monospace;
@@ -19,26 +28,28 @@
         z-index: 99999;
       }
     </style>
+  </head>
+  <body>
+    <div id="cms-loading">Loading CMS…</div>
+    <div id="cms-error"></div>
     <script>
       window.onerror = function(msg, src, line, col, err) {
+        document.getElementById('cms-loading').style.display = 'none';
         var box = document.getElementById('cms-error');
-        if (box) {
-          box.style.display = 'block';
-          box.textContent = 'UNCAUGHT ERROR\n\n' + msg + '\n\nSource: ' + src + ':' + line + ':' + col + '\n\nStack:\n' + (err && err.stack ? err.stack : 'n/a');
-        }
+        box.style.display = 'block';
+        box.textContent = 'UNCAUGHT ERROR\n\n' + msg + '\n\nSource: ' + src + ':' + line + ':' + col + '\n\nStack:\n' + (err && err.stack ? err.stack : 'n/a');
         return false;
       };
       window.addEventListener('unhandledrejection', function(e) {
+        document.getElementById('cms-loading').style.display = 'none';
         var box = document.getElementById('cms-error');
-        if (box) {
-          box.style.display = 'block';
-          box.textContent += '\n\nUNHANDLED PROMISE REJECTION\n' + (e.reason && e.reason.stack ? e.reason.stack : String(e.reason));
-        }
+        box.style.display = 'block';
+        box.textContent += '\n\nUNHANDLED PROMISE REJECTION\n' + (e.reason && e.reason.stack ? e.reason.stack : String(e.reason));
       });
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.14.1/dist/decap-cms.js"></script>
-  </head>
-  <body>
-    <div id="cms-error"></div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/decap-cms@3.14.1/dist/decap-cms.js"
+      onerror="document.getElementById('cms-loading').style.display='none'; document.getElementById('cms-error').style.display='block'; document.getElementById('cms-error').textContent='FAILED TO LOAD decap-cms.js FROM CDN\n\nCheck your internet connection or try a hard refresh (Ctrl+Shift+R).';"
+    ></script>
   </body>
 </html>
