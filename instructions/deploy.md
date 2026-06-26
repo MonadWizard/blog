@@ -85,10 +85,10 @@ git push -u origin main
 ## Step 6 — Post-Deploy Setup
 
 ### Giscus comments
-Follow `.claude/specs/giscus-setup.md` to enable GitHub Discussions comments.
+Follow `instructions/cms-oauth-cloudflare.md` (Part B) to enable GitHub Discussions comments.
 
 ### Decap CMS admin panel
-Follow `.claude/specs/cms-setup.md` to configure Netlify Identity OAuth for the `/admin` panel.
+Follow `instructions/cms-oauth-cloudflare.md` (Part A) to set up the Cloudflare Worker OAuth proxy for the `/admin` panel.
 
 ### Resume PDF
 Add your resume as `public/resume.pdf` — the "Download Resume" button on the About page points to it.

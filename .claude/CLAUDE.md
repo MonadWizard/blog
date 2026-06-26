@@ -13,7 +13,7 @@ Personal developer portfolio and blog for **Rakib Hasan**, Backend Software Deve
 | Typography | @tailwindcss/typography | prose classes for blog posts |
 | Content | Astro Content Collections v5 | `src/content.config.ts` (not src/content/) |
 | Comments | Giscus | GitHub Discussions |
-| CMS | Decap CMS v3 | `/admin` route, GitHub + Netlify OAuth |
+| CMS | Decap CMS v3 | `/admin` route, GitHub OAuth via Cloudflare Worker |
 | Deploy | GitHub Actions → GitHub Pages | `withastro/action@v4` |
 
 ## Key Commands
@@ -59,7 +59,7 @@ public/
 3. **Giscus `is:inline`** — required on the `<script>` tag or Astro strips `data-*` attributes
 4. **Dark mode Giscus sync** — Navbar toggle must also postMessage to `.giscus-frame` iframe
 5. **GitHub Pages source** — must be set to "GitHub Actions" (not "Deploy from a branch") in repo Settings → Pages
-6. **Decap CMS OAuth** — requires Netlify Identity proxy (see `.claude/specs/cms-setup.md`)
+6. **Decap CMS OAuth** — uses a Cloudflare Worker as the GitHub OAuth proxy (see `.claude/specs/cms-setup.md`). Worker URL: `https://mute-king-c1c2.monad-wizard-r.workers.dev`. No Netlify involved.
 7. **reading-time** — computed in `[slug].astro` from `post.body` (raw markdown string)
 8. **Astro v7 integrations** — Tailwind added via Vite plugin (`@tailwindcss/vite`), not `@astrojs/tailwind`
 
@@ -71,15 +71,18 @@ public/
 - **Stack:** Django, FastAPI, Python, PostgreSQL, Redis, Elasticsearch, Nginx
 - **Hardware:** Intel Arc A770, Ryzen 7 7700
 
-## Placeholder Values to Replace
+## Deployed Values (already configured)
 
-After setting up the GitHub repo, replace these strings across the project:
+| Item | Value | File |
+|---|---|---|
+| GitHub repo | `MonadWizard/blog` | `astro.config.mjs`, `config.yml` |
+| Cloudflare Worker (OAuth proxy) | `https://mute-king-c1c2.monad-wizard-r.workers.dev` | `public/admin/config.yml` |
+| Giscus repo ID | `R_kgDOTGRvSQ` | `src/components/Giscus.astro` |
+| Giscus category ID | `DIC_kwDOTGRvSc4C_9zG` | `src/components/Giscus.astro` |
+
+## Still Needs Replacing
 
 | Placeholder | File | Replace with |
 |---|---|---|
-| `your-username` | astro.config.mjs, public/admin/config.yml, all component hrefs | GitHub username |
-| `your-repo` | public/admin/config.yml | GitHub repo name |
 | `your-profile` | Navbar.astro, Footer.astro, about.astro | LinkedIn profile slug |
 | `your-handle` | Navbar.astro, Footer.astro | Twitter/X handle |
-| `PLACEHOLDER_REPO_ID` | src/components/Giscus.astro | From giscus.app |
-| `PLACEHOLDER_CATEGORY_ID` | src/components/Giscus.astro | From giscus.app |

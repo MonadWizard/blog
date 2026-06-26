@@ -8,7 +8,7 @@
 #                Open: http://localhost:4321/blog/admin/
 #
 #   PRODUCTION → comment out the proxy backend, uncomment the github backend
-#                Requires Netlify OAuth proxy (see .claude/specs/cms-setup.md)
+#                Uses Cloudflare Worker as OAuth proxy (see .claude/specs/cms-setup.md)
 
 # ── Local dev backend (inactive) ─────────────────────────────────────────────
 # backend:
