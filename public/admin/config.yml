@@ -21,7 +21,7 @@ backend:
   name: github
   repo: MonadWizard/blog
   branch: main
-  base_url: https://api.netlify.com
+  base_url: https://mute-king-c1c2.monad-wizard-r.workers.dev
   auth_endpoint: auth
 
 # Where Decap CMS stores uploaded media files (relative to repo root)
