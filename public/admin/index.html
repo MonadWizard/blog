@@ -4,19 +4,41 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Content Manager — Rakib Hasan Blog</title>
-    <!--
-      Decap CMS — loaded from CDN.
-      This file is served as-is from /admin (copied from public/admin/).
-      The CMS SPA is completely separate from the Astro build pipeline.
-
-      Check https://www.npmjs.com/package/decap-cms-app for the latest version.
-    -->
+    <style>
+      #cms-error {
+        display: none;
+        font-family: monospace;
+        background: #1a1a2e;
+        color: #e94560;
+        padding: 2rem;
+        white-space: pre-wrap;
+        word-break: break-all;
+        position: fixed;
+        inset: 0;
+        overflow: auto;
+        z-index: 99999;
+      }
+    </style>
+    <script>
+      window.onerror = function(msg, src, line, col, err) {
+        var box = document.getElementById('cms-error');
+        if (box) {
+          box.style.display = 'block';
+          box.textContent = 'UNCAUGHT ERROR\n\n' + msg + '\n\nSource: ' + src + ':' + line + ':' + col + '\n\nStack:\n' + (err && err.stack ? err.stack : 'n/a');
+        }
+        return false;
+      };
+      window.addEventListener('unhandledrejection', function(e) {
+        var box = document.getElementById('cms-error');
+        if (box) {
+          box.style.display = 'block';
+          box.textContent += '\n\nUNHANDLED PROMISE REJECTION\n' + (e.reason && e.reason.stack ? e.reason.stack : String(e.reason));
+        }
+      });
+    </script>
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
   </head>
   <body>
-    <!--
-      Decap CMS mounts here automatically when the page loads.
-      No other HTML needed — the CMS renders its own React UI.
-    -->
+    <div id="cms-error"></div>
   </body>
 </html>

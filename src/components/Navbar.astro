@@ -1,7 +1,8 @@
 ---
+const base = import.meta.env.BASE_URL;
 const navLinks = [
-  { href: '/blog', label: 'Blog' },
-  { href: '/about', label: 'About' },
+  { href: `${base}blog`, label: 'Blog' },
+  { href: `${base}about`, label: 'About' },
 ];
 
 const socialLinks = [
@@ -28,7 +29,7 @@ const socialLinks = [
     <div class="flex items-center justify-between h-16">
       <!-- Logo / Name -->
       <a
-        href="/"
+        href={base}
         class="text-lg font-bold text-gray-900 dark:text-white tracking-tight hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
       >
         Rakib Hasan

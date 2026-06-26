@@ -9,6 +9,7 @@ export default defineConfig({
   // GitHub Pages project repo → served at monadwizard.github.io/blog/
   site: 'https://monadwizard.github.io',
   base: '/blog',
+  devToolbar: { enabled: false },
   integrations: [mdx(), sitemap()],
   vite: {
     plugins: [tailwindcss()],

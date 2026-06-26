@@ -45,6 +45,8 @@ Before pushing, replace these placeholders across the project:
 | `src/pages/index.astro` | `your-username` | GitHub username |
 | `src/pages/about.astro` | `your-username`, `your-profile` | Real links |
 
+Also verify that `public/admin/config.yml` has the **production GitHub backend active** (not the local proxy backend). The file should have the `github` backend block uncommented and the `proxy` block commented out. See `instructions/local-dev.md` if you used local CMS testing.
+
 ---
 
 ## Step 3 — Push to GitHub

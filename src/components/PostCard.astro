@@ -33,7 +33,7 @@ const formattedDate = pubDate.toLocaleDateString('en-US', {
     </div>
 
     <!-- Title -->
-    <a href={`/blog/${slug}`}>
+    <a href={`${import.meta.env.BASE_URL}blog/${slug}`}>
       <h2 class="text-xl font-bold leading-snug text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors mb-2 line-clamp-2">
         {title}
       </h2>
@@ -49,7 +49,7 @@ const formattedDate = pubDate.toLocaleDateString('en-US', {
       <div class="flex flex-wrap gap-2">
         {tags.map((tag) => (
           <a
-            href={`/blog?tag=${encodeURIComponent(tag)}`}
+            href={`${import.meta.env.BASE_URL}blog?tag=${encodeURIComponent(tag)}`}
             class="inline-block text-xs px-2.5 py-0.5 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full font-medium hover:bg-indigo-100 dark:hover:bg-indigo-900/40 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors"
           >
             {tag}
@@ -61,7 +61,7 @@ const formattedDate = pubDate.toLocaleDateString('en-US', {
 
   <!-- Hero thumbnail -->
   {heroImage && (
-    <a href={`/blog/${slug}`} class="flex-shrink-0 hidden sm:block">
+    <a href={`${import.meta.env.BASE_URL}blog/${slug}`} class="flex-shrink-0 hidden sm:block">
       <img
         src={heroImage}
         alt=""

@@ -133,16 +133,21 @@ Fix the frontmatter and rerun `npm run build`.
 
 The CMS at `/admin` requires internet access and GitHub OAuth even in development.
 
-For a fully local test (no GitHub auth required):
+For a fully local test (no GitHub auth required), swap the backend block in `public/admin/config.yml`:
+
+```yaml
+# Uncomment this block:
+backend:
+  name: proxy
+  proxy_url: http://localhost:8081/api/v1
+  branch: main
+
+# Comment out the github block above it
+```
+
+Then run both servers in separate terminals:
 
 ```bash
-# Install local backend
-npm install -D decap-server
-
-# In public/admin/config.yml, temporarily set:
-#   local_backend: true
-
-# Run both servers in separate terminals:
 # Terminal 1:
 npx decap-server
 
@@ -152,7 +157,7 @@ npm run dev
 # Visit http://localhost:4321/admin
 ```
 
-**Important:** Revert `local_backend` to `false` before committing.
+**Important:** Before committing, revert `public/admin/config.yml` to the GitHub production backend (comment out the proxy block, uncomment the github block).
 
 ---
 

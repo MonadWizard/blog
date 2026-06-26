@@ -1,36 +1,33 @@
 # Decap CMS Configuration
 # Full docs: https://decapcms.org/docs/configuration-options/
 #
-# SETUP REQUIRED — replace the values marked with REPLACE:
-#   1. backend.repo  — your GitHub username/repo-name
-#   2. Follow instructions/deploy.md for Netlify OAuth setup
+# TWO MODES — swap the backend block when switching environments:
 #
-# Authentication: GitHub via Netlify Identity OAuth proxy.
-# GitHub Pages cannot run the OAuth code exchange server-side,
-# so a free Netlify site acts as the OAuth intermediary.
-# See .claude/specs/cms-setup.md for step-by-step instructions.
+#   LOCAL DEV  → use the "proxy" backend below (already active)
+#                Run: npx decap-server
+#                Open: http://localhost:4321/blog/admin/
 #
-# LOCAL TESTING (no GitHub auth required):
-#   1. Set local_backend to true below
-#   2. Run: npx decap-server
-#   3. Run: npm run dev
-#   4. Open: http://localhost:4321/admin/
-#   Remember to set local_backend back to false before deploying.
+#   PRODUCTION → comment out the proxy backend, uncomment the github backend
+#                Requires Netlify OAuth proxy (see .claude/specs/cms-setup.md)
 
+# ── Local dev backend (inactive) ─────────────────────────────────────────────
+# backend:
+#   name: proxy
+#   proxy_url: http://localhost:8081/api/v1
+#   branch: main
+
+# ── Production backend (active) ───────────────────────────────────────────────
 backend:
   name: github
   repo: MonadWizard/blog
   branch: main
-  base_url: https://api.netlify.com  # Netlify OAuth proxy
+  base_url: https://api.netlify.com
   auth_endpoint: auth
 
 # Where Decap CMS stores uploaded media files (relative to repo root)
 media_folder: "public/images/uploads"
 # How the path appears in markdown content (served from site root)
 public_folder: "/images/uploads"
-
-# Set to true for local development (run `npx decap-server` alongside `npm run dev`)
-local_backend: false
 
 collections:
   - name: "blog"
@@ -43,9 +40,6 @@ collections:
     format: "frontmatter"
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     summary: "{{title}} ({{pubDate}})"
-    sortable_fields:
-      - pubDate
-      - title
     fields:
       - label: "Title"
         name: "title"
@@ -63,12 +57,10 @@ collections:
         format: "YYYY-MM-DD"
         date_format: "YYYY-MM-DD"
         time_format: false
-        default: ""
 
       - label: "Tags"
         name: "tags"
         widget: "list"
-        default: []
         hint: "Comma-separated tags, e.g. PostgreSQL, Python, Django"
 
       - label: "Draft"
@@ -86,24 +78,4 @@ collections:
       - label: "Body"
         name: "body"
         widget: "markdown"
-        # The markdown widget is a full rich-text editor.
-        # Use the toolbar to toggle: Bold, Italic, Headings, Lists,
-        # Links, Images, Code Blocks, and Blockquotes.
-        # Switch between Rich Text (WYSIWYG) and Markdown raw modes
-        # via the toggle button in the top-right of the editor.
-        buttons:
-          - bold
-          - italic
-          - code
-          - link
-          - heading-one
-          - heading-two
-          - heading-three
-          - bulleted-list
-          - numbered-list
-          - quote
-          - code-block
-        editor_components:
-          - image
-          - code-block
         hint: "Write the post content. Toggle between Rich Text and Markdown mode using the button above the editor."

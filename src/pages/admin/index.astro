@@ -1,0 +1,116 @@
+---
+export const prerender = true;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Content Manager — Rakib Hasan Blog</title>
+    <style>
+      body { margin: 0; }
+      #cms-loading {
+        font-family: sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        color: #555;
+        font-size: 14px;
+      }
+      #cms-error {
+        display: none;
+        font-family: monospace;
+        background: #1a1a2e;
+        color: #e94560;
+        padding: 2rem;
+        white-space: pre-wrap;
+        word-break: break-all;
+        position: fixed;
+        inset: 0;
+        overflow: auto;
+        z-index: 99999;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="cms-loading">Loading CMS…</div>
+    <div id="cms-error"></div>
+
+    <script is:inline>
+      function showError(msg) {
+        document.getElementById('cms-loading').style.display = 'none';
+        var box = document.getElementById('cms-error');
+        box.style.display = 'block';
+        box.textContent = msg;
+      }
+
+      window.onerror = function(msg, src, line, col, err) {
+        showError('UNCAUGHT ERROR\n\n' + msg + '\n\nSource: ' + src + ':' + line + ':' + col + '\n\nStack:\n' + (err && err.stack ? err.stack : 'n/a'));
+        return false;
+      };
+      window.addEventListener('unhandledrejection', function(e) {
+        showError('UNHANDLED PROMISE REJECTION\n\n' + (e.reason && e.reason.stack ? e.reason.stack : String(e.reason)));
+      });
+
+      window.CMS_MANUAL_INIT = true;
+
+      var script = document.createElement('script');
+      script.src = 'https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js';
+      script.onload = function() {
+        if (!window.CMS) {
+          showError('ERROR: window.CMS is not defined after loading decap-cms.js');
+          return;
+        }
+        document.getElementById('cms-loading').style.display = 'none';
+        window.CMS.init({
+          config: {
+            load_config_file: false,
+            backend: {
+              name: 'proxy',
+              proxy_url: 'http://localhost:8081/api/v1',
+              branch: 'main',
+            },
+            media_folder: 'public/images/uploads',
+            public_folder: '/images/uploads',
+            collections: [
+              {
+                name: 'blog',
+                label: 'Blog Posts',
+                label_singular: 'Blog Post',
+                folder: 'src/content/blog',
+                create: true,
+                delete: true,
+                extension: 'md',
+                format: 'frontmatter',
+                slug: '{{year}}-{{month}}-{{day}}-{{slug}}',
+                summary: '{{title}} ({{pubDate}})',
+                fields: [
+                  { label: 'Title', name: 'title', widget: 'string' },
+                  { label: 'Description', name: 'description', widget: 'text' },
+                  {
+                    label: 'Publish Date',
+                    name: 'pubDate',
+                    widget: 'datetime',
+                    format: 'YYYY-MM-DD',
+                    date_format: 'YYYY-MM-DD',
+                    time_format: false,
+                  },
+                  { label: 'Tags', name: 'tags', widget: 'list' },
+                  { label: 'Draft', name: 'draft', widget: 'boolean', default: true },
+                  { label: 'Hero Image', name: 'heroImage', widget: 'image', required: false },
+                  { label: 'Body', name: 'body', widget: 'markdown' },
+                ],
+              },
+            ],
+          },
+        });
+      };
+      script.onerror = function() {
+        showError('ERROR: Failed to load decap-cms.js from CDN.\n\nCheck your internet connection or try again.');
+      };
+      document.head.appendChild(script);
+    </script>
+  </body>
+</html>
