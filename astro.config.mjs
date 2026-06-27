@@ -6,7 +6,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://blog.rakib.click',
+  site: 'https://rakib.click',
   base: '/',
   devToolbar: { enabled: false },
   integrations: [mdx(), sitemap()],
