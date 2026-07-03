@@ -33,3 +33,40 @@
     border-radius: 3px;
   }
 }
+
+/* Animated photo frame — rotating conic-gradient ring */
+@property --frame-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes frame-rotate {
+  to {
+    --frame-angle: 360deg;
+  }
+}
+
+.photo-frame {
+  padding: 4px;
+  border-radius: 1.25rem;
+  background: conic-gradient(
+    from var(--frame-angle),
+    #6366f1,
+    #22d3ee,
+    #a855f7,
+    #6366f1
+  );
+  animation: frame-rotate 4s linear infinite;
+}
+
+.photo-frame img {
+  display: block;
+  border-radius: calc(1.25rem - 4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo-frame {
+    animation: none;
+  }
+}
