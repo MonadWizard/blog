@@ -47,17 +47,20 @@
     <script>
     // ── Journey Steps Custom Widget ────────────────────────────────────────────
     // Registered before CMS.init() so it is available when the journey
-    // collection editor loads. Uses React (bundled inside Decap CMS).
+    // collection editor loads.
+    //
+    // IMPORTANT: window.React must NOT be accessed at registration time because
+    // Decap CMS v3 may not have set it yet when this IIFE runs. Both components
+    // are written as plain functions (React functional components) so that React
+    // is only accessed inside the function body — i.e. at render time, when the
+    // CMS guarantees React is available.
     (function () {
-      // Decap CMS v3 exposes React as window.React
-      var React = window.React;
-      if (!React || !window.CMS) {
-        console.error('[journey-steps] window.React or window.CMS not found — widget skipped');
+      if (!window.CMS) {
+        console.error('[journey-steps] window.CMS not found — widget skipped');
         return;
       }
-      var h = React.createElement;
 
-      // ── Pure tree utilities (no DOM) ───────────────────────────────────────
+      // ── Pure tree utilities (no DOM, no React) ─────────────────────────────
 
       function parseLevelPath(lp) {
         var parts = lp.split('.');
@@ -156,70 +159,46 @@
         insertIn(root);
       }
 
-      // ── Widget Control ─────────────────────────────────────────────────────
+      // ── Widget Control (functional component — React accessed at render time) ─
 
-      var S = {
-        backgroundColor: '#fff',
-        borderRadius: '8px',
-        border: '1px solid #e5e7eb',
-        fontFamily: 'ui-sans-serif, system-ui, sans-serif',
-        fontSize: '13px',
-        padding: '12px',
-      };
+      function JourneyStepsControl(props) {
+        var React = window.React;
+        var h = React.createElement;
+        var useState = React.useState;
 
-      var JourneyStepsControl = (function () {
+        var _drag = useState(null); var draggedPath = _drag[0]; var setDraggedPath = _drag[1];
+        var _tgt  = useState(null); var dropTargetPath = _tgt[0]; var setDropTargetPath = _tgt[1];
+        var _pos  = useState(null); var dropPosition = _pos[0]; var setDropPosition = _pos[1];
+        var _edit = useState(null); var editingPath = _edit[0]; var setEditingPath = _edit[1];
 
-        function JourneyStepsControl(props) {
-          React.Component.call(this, props);
-          this.state = {
-            draggedPath: null,
-            dropTargetPath: null,
-            dropPosition: null,
-            editingPath: null,
-          };
-          this.handleAddRoot = this.handleAddRoot.bind(this);
-          this.handleAddChild = this.handleAddChild.bind(this);
-          this.handleDelete = this.handleDelete.bind(this);
-          this.handleFieldChange = this.handleFieldChange.bind(this);
-          this.handleDragStart = this.handleDragStart.bind(this);
-          this.handleDragOver = this.handleDragOver.bind(this);
-          this.handleDrop = this.handleDrop.bind(this);
-          this.handleDragEnd = this.handleDragEnd.bind(this);
-          this.renderNode = this.renderNode.bind(this);
-        }
-
-        JourneyStepsControl.prototype = Object.create(React.Component.prototype);
-        JourneyStepsControl.prototype.constructor = JourneyStepsControl;
-
-        JourneyStepsControl.prototype.getSteps = function () {
-          var val = this.props.value;
+        function getSteps() {
+          var val = props.value;
           if (!val) return [];
           if (typeof val.toJS === 'function') return val.toJS();
           if (Array.isArray(val)) return val;
           return [];
-        };
+        }
 
-        JourneyStepsControl.prototype.emitChange = function (steps) {
-          // Decap CMS v3 may use Immutable.js internally
+        function emitChange(steps) {
           var out = (window.Immutable && window.Immutable.fromJS)
             ? window.Immutable.fromJS(steps)
             : steps;
-          this.props.onChange(out);
-        };
+          props.onChange(out);
+        }
 
-        JourneyStepsControl.prototype.handleAddRoot = function () {
-          var steps = this.getSteps();
+        function handleAddRoot() {
+          var steps = getSteps();
           if (steps.some(function (s) { return s.levelPath === '0'; })) return;
-          this.emitChange([{
+          emitChange([{
             levelPath: '0',
             levelTitle: 'Root',
             title: 'Journey Title',
             description: '',
           }].concat(steps));
-        };
+        }
 
-        JourneyStepsControl.prototype.handleAddChild = function (parentLp) {
-          var steps = this.getSteps();
+        function handleAddChild(parentLp) {
+          var steps = getSteps();
           var root = buildTree(steps);
           if (!root) return;
           var parentNode = findNode(root, parentLp);
@@ -234,96 +213,97 @@
           var newStep = { levelPath: newPath, levelTitle: 'New Step', title: '', description: '' };
           parentNode.children.push({ step: newStep, children: [], levelPath: newPath });
           recomputePaths(root, 0, []);
-          this.emitChange(flattenTree(root));
-        };
+          emitChange(flattenTree(root));
+        }
 
-        JourneyStepsControl.prototype.handleDelete = function (lp) {
-          var steps = this.getSteps();
+        function handleDelete(lp) {
           if (lp === '0') {
             if (!window.confirm('Delete root? This removes the entire tree.')) return;
-            this.emitChange([]);
+            emitChange([]);
             return;
           }
+          var steps = getSteps();
           var root = buildTree(steps);
           if (!root) return;
           removeNode(root, lp);
           recomputePaths(root, 0, []);
-          this.emitChange(flattenTree(root));
-          if (this.state.editingPath === lp) {
-            this.setState({ editingPath: null });
-          }
-        };
+          emitChange(flattenTree(root));
+          if (editingPath === lp) setEditingPath(null);
+        }
 
-        JourneyStepsControl.prototype.handleFieldChange = function (lp, field, value) {
-          var steps = this.getSteps().map(function (s) {
+        function handleFieldChange(lp, field, value) {
+          var steps = getSteps().map(function (s) {
             if (s.levelPath !== lp) return s;
             var updated = Object.assign({}, s);
             updated[field] = value;
             return updated;
           });
-          this.emitChange(steps);
-        };
+          emitChange(steps);
+        }
 
-        JourneyStepsControl.prototype.handleDragStart = function (e, lp) {
+        function handleDragStart(e, lp) {
           e.dataTransfer.effectAllowed = 'move';
           e.dataTransfer.setData('text/plain', lp);
-          this.setState({ draggedPath: lp });
-        };
+          setDraggedPath(lp);
+        }
 
-        JourneyStepsControl.prototype.handleDragOver = function (e, lp) {
+        function handleDragOver(e, lp) {
           e.preventDefault();
           e.dataTransfer.dropEffect = 'move';
           var rect = e.currentTarget.getBoundingClientRect();
           var yRel = (e.clientY - rect.top) / rect.height;
           var position = yRel < 0.25 ? 'before' : (yRel > 0.75 ? 'after' : 'child');
-          if (this.state.dropTargetPath !== lp || this.state.dropPosition !== position) {
-            this.setState({ dropTargetPath: lp, dropPosition: position });
+          if (dropTargetPath !== lp || dropPosition !== position) {
+            setDropTargetPath(lp);
+            setDropPosition(position);
           }
-        };
+        }
 
-        JourneyStepsControl.prototype.handleDrop = function (e, targetLp) {
+        function handleDrop(e, targetLp) {
           e.preventDefault();
-          var draggedPath = this.state.draggedPath;
-          var dropPosition = this.state.dropPosition;
-          this.setState({ draggedPath: null, dropTargetPath: null, dropPosition: null });
+          var dp = draggedPath;
+          var pos = dropPosition;
+          setDraggedPath(null);
+          setDropTargetPath(null);
+          setDropPosition(null);
 
-          if (!draggedPath || draggedPath === targetLp) return;
-          if (draggedPath === '0') return; // root cannot be moved
+          if (!dp || dp === targetLp) return;
+          if (dp === '0') return;
 
-          var steps = this.getSteps();
+          var steps = getSteps();
           var root = buildTree(steps);
           if (!root) return;
 
-          var draggedNode = findNode(root, draggedPath);
+          var draggedNode = findNode(root, dp);
           if (!draggedNode) return;
-          // Guard: cannot drop onto own descendant
           if (findNode(draggedNode, targetLp)) return;
 
           var cloned = deepClone(draggedNode);
-          removeNode(root, draggedPath);
+          removeNode(root, dp);
 
-          if (dropPosition === 'child') {
+          if (pos === 'child') {
             var targetNode = findNode(root, targetLp);
             if (targetNode) targetNode.children.push(cloned);
           } else {
-            insertBesideNode(root, targetLp, cloned, dropPosition);
+            insertBesideNode(root, targetLp, cloned, pos);
           }
 
           recomputePaths(root, 0, []);
-          this.emitChange(flattenTree(root));
-        };
+          emitChange(flattenTree(root));
+        }
 
-        JourneyStepsControl.prototype.handleDragEnd = function () {
-          this.setState({ draggedPath: null, dropTargetPath: null, dropPosition: null });
-        };
+        function handleDragEnd() {
+          setDraggedPath(null);
+          setDropTargetPath(null);
+          setDropPosition(null);
+        }
 
-        JourneyStepsControl.prototype.renderNode = function (node, depth) {
-          var self = this;
+        function renderNode(node, depth) {
           var lp = node.levelPath;
-          var isEditing = this.state.editingPath === lp;
-          var isDragging = this.state.draggedPath === lp;
-          var isTarget = this.state.dropTargetPath === lp;
-          var dropPos = this.state.dropPosition;
+          var isEditing = editingPath === lp;
+          var isDragging = draggedPath === lp;
+          var isTarget = dropTargetPath === lp;
+          var dropPos = dropPosition;
 
           var borderStyle = isTarget
             ? ('2px dashed ' + (dropPos === 'child' ? '#6366f1' : '#22c55e'))
@@ -333,76 +313,54 @@
           return h('div', { key: lp },
             h('div', {
               draggable: true,
-              onDragStart: function (e) { self.handleDragStart(e, lp); },
-              onDragOver: function (e) { self.handleDragOver(e, lp); },
-              onDrop: function (e) { self.handleDrop(e, lp); },
-              onDragEnd: self.handleDragEnd,
+              onDragStart: function (e) { handleDragStart(e, lp); },
+              onDragOver: function (e) { handleDragOver(e, lp); },
+              onDrop: function (e) { handleDrop(e, lp); },
+              onDragEnd: handleDragEnd,
               style: {
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
-                padding: '8px 10px',
-                marginBottom: '4px',
-                marginLeft: (depth * 22) + 'px',
-                border: borderStyle,
-                borderRadius: '6px',
-                background: bgColor,
-                opacity: isDragging ? 0.4 : 1,
-                cursor: 'grab',
-                userSelect: 'none',
+                display: 'flex', alignItems: 'center', gap: '6px',
+                padding: '8px 10px', marginBottom: '4px', marginLeft: (depth * 22) + 'px',
+                border: borderStyle, borderRadius: '6px', background: bgColor,
+                opacity: isDragging ? 0.4 : 1, cursor: 'grab', userSelect: 'none',
               }
             },
-              // Drag handle
               h('span', { style: { color: '#9ca3af', fontSize: '16px', lineHeight: 1 } }, '⠿'),
-              // Level path badge
               h('code', {
                 style: {
-                  fontSize: '11px',
-                  background: '#e0e7ff',
-                  color: '#4338ca',
-                  padding: '1px 5px',
-                  borderRadius: '4px',
-                  flexShrink: 0,
+                  fontSize: '11px', background: '#e0e7ff', color: '#4338ca',
+                  padding: '1px 5px', borderRadius: '4px', flexShrink: 0,
                 }
               }, lp),
-              // Level title
               h('strong', {
                 style: { fontSize: '12px', color: '#374151', flexShrink: 0, maxWidth: '120px',
                          overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }
               }, node.step.levelTitle || '—'),
-              // Step title
               h('span', {
                 style: { fontSize: '12px', color: '#6b7280', flex: 1,
                          overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }
               }, node.step.title || '(no title)'),
-              // Edit button
               h('button', {
                 type: 'button',
-                onClick: function () {
-                  self.setState({ editingPath: isEditing ? null : lp });
-                },
+                onClick: function () { setEditingPath(isEditing ? null : lp); },
                 style: {
                   fontSize: '11px', padding: '2px 7px', cursor: 'pointer',
                   border: '1px solid #d1d5db', borderRadius: '4px',
                   background: isEditing ? '#6366f1' : '#fff',
-                  color: isEditing ? '#fff' : '#374151',
-                  flexShrink: 0,
+                  color: isEditing ? '#fff' : '#374151', flexShrink: 0,
                 }
               }, isEditing ? 'Done' : 'Edit'),
-              // Add child button
               h('button', {
                 type: 'button',
-                onClick: function () { self.handleAddChild(lp); },
+                onClick: function () { handleAddChild(lp); },
                 style: {
                   fontSize: '11px', padding: '2px 7px', cursor: 'pointer',
                   border: '1px solid #a5b4fc', borderRadius: '4px',
                   background: '#eef2ff', color: '#4f46e5', flexShrink: 0,
                 }
               }, '+ Child'),
-              // Delete button
               h('button', {
                 type: 'button',
-                onClick: function () { self.handleDelete(lp); },
+                onClick: function () { handleDelete(lp); },
                 style: {
                   fontSize: '11px', padding: '2px 7px', cursor: 'pointer',
                   border: '1px solid #fca5a5', borderRadius: '4px',
@@ -411,25 +369,18 @@
               }, '×')
             ),
 
-            // Inline edit panel
             isEditing && h('div', {
               style: {
-                marginLeft: (depth * 22 + 12) + 'px',
-                marginBottom: '8px',
-                padding: '10px',
-                background: '#f9fafb',
-                border: '1px solid #e5e7eb',
-                borderRadius: '6px',
-                display: 'grid',
-                gap: '8px',
+                marginLeft: (depth * 22 + 12) + 'px', marginBottom: '8px',
+                padding: '10px', background: '#f9fafb', border: '1px solid #e5e7eb',
+                borderRadius: '6px', display: 'grid', gap: '8px',
               }
             },
               h('label', { style: { display: 'block' } },
                 h('span', { style: { fontSize: '11px', fontWeight: 600, color: '#6b7280', display: 'block', marginBottom: '3px' } }, 'Level Title'),
                 h('input', {
-                  type: 'text',
-                  value: node.step.levelTitle,
-                  onChange: function (e) { self.handleFieldChange(lp, 'levelTitle', e.target.value); },
+                  type: 'text', value: node.step.levelTitle || '',
+                  onChange: function (e) { handleFieldChange(lp, 'levelTitle', e.target.value); },
                   style: {
                     width: '100%', padding: '5px 8px', fontSize: '13px', boxSizing: 'border-box',
                     border: '1px solid #d1d5db', borderRadius: '4px', background: '#fff',
@@ -439,9 +390,8 @@
               h('label', { style: { display: 'block' } },
                 h('span', { style: { fontSize: '11px', fontWeight: 600, color: '#6b7280', display: 'block', marginBottom: '3px' } }, 'Title'),
                 h('input', {
-                  type: 'text',
-                  value: node.step.title,
-                  onChange: function (e) { self.handleFieldChange(lp, 'title', e.target.value); },
+                  type: 'text', value: node.step.title || '',
+                  onChange: function (e) { handleFieldChange(lp, 'title', e.target.value); },
                   style: {
                     width: '100%', padding: '5px 8px', fontSize: '13px', boxSizing: 'border-box',
                     border: '1px solid #d1d5db', borderRadius: '4px', background: '#fff',
@@ -451,8 +401,8 @@
               h('label', { style: { display: 'block' } },
                 h('span', { style: { fontSize: '11px', fontWeight: 600, color: '#6b7280', display: 'block', marginBottom: '3px' } }, 'Description (Markdown)'),
                 h('textarea', {
-                  value: node.step.description,
-                  onChange: function (e) { self.handleFieldChange(lp, 'description', e.target.value); },
+                  value: node.step.description || '',
+                  onChange: function (e) { handleFieldChange(lp, 'description', e.target.value); },
                   rows: 5,
                   style: {
                     width: '100%', padding: '5px 8px', fontSize: '12px', boxSizing: 'border-box',
@@ -468,80 +418,77 @@
               )
             ),
 
-            // Render children
             h('div', null, node.children.map(function (child) {
-              return self.renderNode(child, depth + 1);
+              return renderNode(child, depth + 1);
             }))
           );
-        };
+        }
 
-        JourneyStepsControl.prototype.render = function () {
-          var self = this;
-          var steps = this.getSteps();
-          var root = buildTree(steps);
+        // ── Render ───────────────────────────────────────────────────────────
+        var steps = getSteps();
+        var root = buildTree(steps);
 
-          return h('div', { style: Object.assign({}, S, { padding: '0' }) },
-            // Header bar
-            h('div', {
-              style: {
-                display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                padding: '10px 12px',
-                borderBottom: root ? '1px solid #e5e7eb' : 'none',
-                background: '#f9fafb',
-                borderRadius: root ? '8px 8px 0 0' : '8px',
-                border: '1px solid #e5e7eb',
-              }
-            },
-              h('span', { style: { fontWeight: 700, fontSize: '13px', color: '#374151' } }, 'Journey Steps Tree'),
-              h('div', { style: { display: 'flex', gap: '6px', alignItems: 'center' } },
-                !root && h('button', {
-                  type: 'button',
-                  onClick: self.handleAddRoot,
-                  style: {
-                    padding: '5px 12px', background: '#4f46e5', color: '#fff',
-                    border: 'none', borderRadius: '6px', cursor: 'pointer', fontSize: '12px',
-                  }
-                }, '+ Add Root Node'),
-                h('span', { style: { fontSize: '11px', color: '#9ca3af' } },
-                  steps.length + ' step' + (steps.length !== 1 ? 's' : ''))
+        return h('div', {
+          style: {
+            backgroundColor: '#fff', borderRadius: '8px', border: '1px solid #e5e7eb',
+            fontFamily: 'ui-sans-serif, system-ui, sans-serif', fontSize: '13px', padding: '0',
+          }
+        },
+          h('div', {
+            style: {
+              display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+              padding: '10px 12px',
+              borderBottom: root ? '1px solid #e5e7eb' : 'none',
+              background: '#f9fafb',
+              borderRadius: root ? '8px 8px 0 0' : '8px',
+              border: '1px solid #e5e7eb',
+            }
+          },
+            h('span', { style: { fontWeight: 700, fontSize: '13px', color: '#374151' } }, 'Journey Steps Tree'),
+            h('div', { style: { display: 'flex', gap: '6px', alignItems: 'center' } },
+              !root && h('button', {
+                type: 'button',
+                onClick: handleAddRoot,
+                style: {
+                  padding: '5px 12px', background: '#4f46e5', color: '#fff',
+                  border: 'none', borderRadius: '6px', cursor: 'pointer', fontSize: '12px',
+                }
+              }, '+ Add Root Node'),
+              h('span', { style: { fontSize: '11px', color: '#9ca3af' } },
+                steps.length + ' step' + (steps.length !== 1 ? 's' : ''))
+            )
+          ),
+
+          root
+            ? h('div', {
+                style: {
+                  padding: '10px 12px 12px', border: '1px solid #e5e7eb',
+                  borderTop: 'none', borderRadius: '0 0 8px 8px', background: '#fff',
+                }
+              },
+                h('div', {
+                  style: { fontSize: '11px', color: '#9ca3af', marginBottom: '8px' }
+                }, '⠿ Drag to reorder or reparent · Click Edit to change content'),
+                renderNode(root, 0)
               )
-            ),
+            : h('div', {
+                style: {
+                  padding: '24px', textAlign: 'center',
+                  border: '1px solid #e5e7eb', borderTop: 'none',
+                  borderRadius: '0 0 8px 8px', background: '#fff',
+                }
+              },
+                h('p', { style: { color: '#9ca3af', fontStyle: 'italic', fontSize: '13px', margin: 0 } },
+                  'No steps yet. Add a root node to start building your roadmap.')
+              )
+        );
+      }
 
-            // Tree or empty state
-            root
-              ? h('div', {
-                  style: {
-                    padding: '10px 12px 12px',
-                    border: '1px solid #e5e7eb',
-                    borderTop: 'none',
-                    borderRadius: '0 0 8px 8px',
-                    background: '#fff',
-                  }
-                },
-                  h('div', {
-                    style: { fontSize: '11px', color: '#9ca3af', marginBottom: '8px' }
-                  }, '⠿ Drag to reorder or reparent · Click Edit to change content'),
-                  self.renderNode(root, 0)
-                )
-              : h('div', {
-                  style: {
-                    padding: '24px', textAlign: 'center',
-                    border: '1px solid #e5e7eb', borderTop: 'none',
-                    borderRadius: '0 0 8px 8px', background: '#fff',
-                  }
-                },
-                  h('p', { style: { color: '#9ca3af', fontStyle: 'italic', fontSize: '13px', margin: 0 } },
-                    'No steps yet. Add a root node to start building your roadmap.')
-                )
-          );
-        };
-
-        return JourneyStepsControl;
-      }());
-
-      // ── Widget Preview (read-only) ──────────────────────────────────────────
+      // ── Widget Preview (read-only, also functional) ─────────────────────────
 
       function JourneyStepsPreview(props) {
+        var React = window.React;
+        var h = React.createElement;
         var val = props.value;
         var steps = val ? (typeof val.toJS === 'function' ? val.toJS() : val) : [];
         return h('div', { style: { fontFamily: 'ui-sans-serif, system-ui, sans-serif', fontSize: '13px' } },
@@ -562,6 +509,7 @@
 
       try {
         window.CMS.registerWidget('journey-steps', JourneyStepsControl, JourneyStepsPreview);
+        console.log('[journey-steps] widget registered successfully');
       } catch (err) {
         console.error('[journey-steps] widget registration failed:', err);
       }
