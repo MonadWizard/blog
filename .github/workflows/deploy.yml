@@ -33,7 +33,6 @@ jobs:
 
       - name: Build Astro site
         run: |
-          # Ensure package.json has a build script such as "build": "astro build"
           npm run build
 
       - name: Upload Pages artifact
