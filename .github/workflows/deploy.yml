@@ -29,11 +29,11 @@ jobs:
 
       - name: Install dependencies
         run: |
-          if [ -f package-lock.json ]; then npm ci; elif [ -f pnpm-lock.yaml ]; then npm i -g pnpm && pnpm install; elif [ -f yarn.lock ]; then npm ci; else npm ci; fi
+          if [ -f package-lock.json ]; then npm ci; elif [ -f pnpm-lock.yaml ]; then npm i -g pnpm && pnpm install; elif [ -f yarn.lock ]; then yarn install --frozen-lockfile; else npm ci; fi
 
       - name: Build Astro site
         run: |
-          # Ensure package.json has an appropriate build script, e.g. "build": "astro build"
+          # Ensure package.json has a build script such as "build": "astro build"
           npm run build
 
       - name: Upload Pages artifact
