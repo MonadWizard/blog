@@ -1,8 +1,13 @@
 ---
 title: "PostgreSQL Dollar Quoting Inside Python Strings: A Backend Developer's Guide"
-description: "A deep dive into PostgreSQL dollar-quoting syntax, why it's essential for stored procedures in Python, and how to safely embed complex SQL inside Django and FastAPI codebases."
+description: A deep dive into PostgreSQL dollar-quoting syntax, why it's
+  essential for stored procedures in Python, and how to safely embed complex SQL
+  inside Django and FastAPI codebases.
 pubDate: 2025-06-01
-tags: ["PostgreSQL", "Python", "Django", "FastAPI", "Backend"]
+tags:
+  - PostgreSQL
+  - Python
+  - Backend
 draft: false
 ---
 
