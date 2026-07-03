@@ -12,12 +12,27 @@ interface TreeNode {
   levelPath: string;
 }
 
+interface TextLine {
+  text: string;
+  relY: number;
+  cls: 'rm-level' | 'rm-title';
+}
+
+interface Measurement {
+  width: number;
+  height: number;
+  lines: TextLine[];
+}
+
 interface LayoutNode {
   step: Step;
   levelPath: string;
   cx: number;
   cy: number;
   depth: number;
+  width: number;
+  height: number;
+  lines: TextLine[];
   children: LayoutNode[];
 }
 
@@ -69,14 +84,29 @@ function buildTree(steps: Step[]): TreeNode | null {
 
 // ── Layout constants ──────────────────────────────────────────────────────────
 
-const NODE_W  = 200;
-const NODE_H  = 72;
-const LEVEL_GAP  = 120;   // center-to-center vertical distance between depths
+const MIN_NODE_W = 150;
+const MAX_NODE_W = 240;
+const MIN_NODE_H = 64;
+const PAD_X = 16;
+const PAD_Y = 14;
+
+const LEVEL_FONT = 9;
+const LEVEL_CHAR_FACTOR = 0.68; // uppercase, heavier weight glyphs are wider
+const LEVEL_LETTER_SPACING_EM = 0.10;
+const LEVEL_LINE_H = 12;
+const MAX_LEVEL_LINES = 1;
+
+const TITLE_FONT = 12;
+const TITLE_CHAR_FACTOR = 0.58; // mixed-case bold
+const TITLE_LINE_H = 16;
+const MAX_TITLE_LINES = 2;
+
+const BLOCK_GAP = 6;      // gap between level label and title text
 const SIBLING_GAP = 20;   // horizontal gap between sibling subtrees
+const VERTICAL_GAP = 56;  // vertical gap between rows of boxes
 const PADDING = 48;
 
 // Depth-based fill colors — vivid, high-contrast on any background.
-// White text on all of them passes WCAG AA.
 const DEPTH_COLORS = [
   '#0f172a',  // depth 0 — slate-900  (root, most prominent)
   '#4338ca',  // depth 1 — indigo-700
@@ -84,7 +114,7 @@ const DEPTH_COLORS = [
   '#0f766e',  // depth 3 — teal-700
   '#1d4ed8',  // depth 4 — blue-700
 ];
-// Lighter tints for dark mode so text/border stay highlighted against a dark background.
+// Lighter tints for dark mode so boxes stay highlighted against a dark background.
 const DEPTH_COLORS_DARK = [
   '#cbd5e1',  // slate-300 — root
   '#a5b4fc',  // indigo-300
@@ -100,15 +130,122 @@ function nodeColorDark(depth: number) {
   return DEPTH_COLORS_DARK[Math.min(depth, DEPTH_COLORS_DARK.length - 1)];
 }
 
+// ── Text measurement & wrapping (estimated — no DOM available at build time) ───
+
+function estimateTextWidth(text: string, fontSize: number, charFactor: number, letterSpacingEm = 0): number {
+  return text.length * (fontSize * charFactor + fontSize * letterSpacingEm);
+}
+
+// Greedy word-wrap bounded by maxLines; ellipsizes whatever doesn't fit,
+// and hard-truncates any single line (even a lone long word) that still overflows maxWidth.
+function wrapText(
+  text: string,
+  fontSize: number,
+  charFactor: number,
+  maxWidth: number,
+  maxLines: number,
+  letterSpacingEm = 0,
+): string[] {
+  const width = (s: string) => estimateTextWidth(s, fontSize, charFactor, letterSpacingEm);
+  const words = text.replace(/\s+/g, ' ').trim().split(' ').filter(Boolean);
+  if (!words.length) return [''];
+
+  const lines: string[] = [];
+  let current = '';
+  let wordIndex = 0;
+
+  while (wordIndex < words.length && lines.length < maxLines) {
+    const word = words[wordIndex];
+    const candidate = current ? `${current} ${word}` : word;
+    if (!current || width(candidate) <= maxWidth) {
+      current = candidate;
+      wordIndex++;
+    } else {
+      lines.push(current);
+      current = '';
+    }
+  }
+  if (current) lines.push(current);
+
+  const truncatedByLineLimit = wordIndex < words.length;
+
+  return lines.map((line, idx) => {
+    const isLast = idx === lines.length - 1;
+    const needsEllipsis = isLast && truncatedByLineLimit;
+    if (width(line) <= maxWidth && !needsEllipsis) return line;
+    let shortened = line;
+    while (shortened.length > 1 && width(shortened + '…') > maxWidth) {
+      shortened = shortened.slice(0, -1);
+    }
+    return shortened.replace(/[.,;:\s]+$/, '') + '…';
+  });
+}
+
+function measureNode(step: Step): Measurement {
+  const maxTextWidth = MAX_NODE_W - PAD_X * 2;
+  const levelText = step.levelTitle.toUpperCase();
+  const levelLines = wrapText(levelText, LEVEL_FONT, LEVEL_CHAR_FACTOR, maxTextWidth, MAX_LEVEL_LINES, LEVEL_LETTER_SPACING_EM);
+  const titleLines = wrapText(step.title, TITLE_FONT, TITLE_CHAR_FACTOR, maxTextWidth, MAX_TITLE_LINES);
+
+  const widest = Math.max(
+    ...levelLines.map((l) => estimateTextWidth(l, LEVEL_FONT, LEVEL_CHAR_FACTOR, LEVEL_LETTER_SPACING_EM)),
+    ...titleLines.map((l) => estimateTextWidth(l, TITLE_FONT, TITLE_CHAR_FACTOR)),
+  );
+  // Small safety margin on top of the estimate — better to size slightly too wide than to clip.
+  const width = Math.min(MAX_NODE_W, Math.max(MIN_NODE_W, Math.ceil(widest * 1.08) + PAD_X * 2));
+
+  const textBlockHeight = levelLines.length * LEVEL_LINE_H + BLOCK_GAP + titleLines.length * TITLE_LINE_H;
+  const height = Math.max(MIN_NODE_H, Math.ceil(textBlockHeight + PAD_Y * 2));
+
+  const lines: TextLine[] = [];
+  let pos = -textBlockHeight / 2;
+  for (const line of levelLines) {
+    lines.push({ text: line, relY: pos + LEVEL_LINE_H * 0.78, cls: 'rm-level' });
+    pos += LEVEL_LINE_H;
+  }
+  pos += BLOCK_GAP;
+  for (const line of titleLines) {
+    lines.push({ text: line, relY: pos + TITLE_LINE_H * 0.78, cls: 'rm-title' });
+    pos += TITLE_LINE_H;
+  }
+
+  return { width, height, lines };
+}
+
 // ── Layout algorithm ──────────────────────────────────────────────────────────
 
-function subtreeWidth(node: TreeNode): number {
-  if (!node.children.length) return NODE_W;
-  const childWidths = node.children.map(subtreeWidth);
+function subtreeWidth(node: TreeNode, measurements: Map<string, Measurement>): number {
+  const w = measurements.get(node.levelPath)!.width;
+  if (!node.children.length) return w;
+  const childWidths = node.children.map((c) => subtreeWidth(c, measurements));
   return Math.max(
-    NODE_W,
-    childWidths.reduce((s, w) => s + w, 0) + (childWidths.length - 1) * SIBLING_GAP,
+    w,
+    childWidths.reduce((s, cw) => s + cw, 0) + (childWidths.length - 1) * SIBLING_GAP,
   );
+}
+
+function computeMeasurements(
+  node: TreeNode,
+  depth: number,
+  measurements: Map<string, Measurement>,
+  depthHeights: number[],
+) {
+  const m = measureNode(node.step);
+  measurements.set(node.levelPath, m);
+  depthHeights[depth] = Math.max(depthHeights[depth] ?? 0, m.height);
+  for (const child of node.children) computeMeasurements(child, depth + 1, measurements, depthHeights);
+}
+
+// Vertical center for each depth row, stacked by each row's tallest box.
+function computeRowCenters(depthHeights: number[]): number[] {
+  const centers: number[] = [];
+  let cursorY = PADDING;
+  for (let d = 0; d < depthHeights.length; d++) {
+    const h = depthHeights[d];
+    centers[d] = cursorY + h / 2;
+    cursorY += h + VERTICAL_GAP;
+  }
+  return centers;
 }
 
 function assignPositions(
@@ -116,19 +253,32 @@ function assignPositions(
   leftEdge: number,
   depth: number,
   allNodes: LayoutNode[],
+  measurements: Map<string, Measurement>,
+  rowCenters: number[],
 ): LayoutNode {
-  const sw = subtreeWidth(node);
+  const sw = subtreeWidth(node, measurements);
   const cx = leftEdge + sw / 2;
-  const cy = PADDING + depth * LEVEL_GAP;
+  const cy = rowCenters[depth];
+  const m = measurements.get(node.levelPath)!;
 
   const children: LayoutNode[] = [];
   let cursor = leftEdge;
   for (const child of node.children) {
-    children.push(assignPositions(child, cursor, depth + 1, allNodes));
-    cursor += subtreeWidth(child) + SIBLING_GAP;
+    children.push(assignPositions(child, cursor, depth + 1, allNodes, measurements, rowCenters));
+    cursor += subtreeWidth(child, measurements) + SIBLING_GAP;
   }
 
-  const ln: LayoutNode = { step: node.step, levelPath: node.levelPath, cx, cy, depth, children };
+  const ln: LayoutNode = {
+    step: node.step,
+    levelPath: node.levelPath,
+    cx,
+    cy,
+    depth,
+    width: m.width,
+    height: m.height,
+    lines: m.lines,
+    children,
+  };
   allNodes.push(ln);
   return ln;
 }
@@ -137,9 +287,9 @@ function assignPositions(
 function collectEdges(node: LayoutNode, edges: Edge[]) {
   for (const child of node.children) {
     const x1 = node.cx;
-    const y1 = node.cy + NODE_H / 2;
+    const y1 = node.cy + node.height / 2;
     const x2 = child.cx;
-    const y2 = child.cy - NODE_H / 2;
+    const y2 = child.cy - child.height / 2;
     // Control points at mid-height for a clean S-curve
     const my = (y1 + y2) / 2;
     edges.push({ d: `M ${x1},${y1} C ${x1},${my} ${x2},${my} ${x2},${y2}` });
@@ -152,26 +302,22 @@ function collectEdges(node: LayoutNode, edges: Edge[]) {
 const root = buildTree(steps);
 let nodes: LayoutNode[] = [];
 let edges: Edge[] = [];
-let svgWidth  = NODE_W + PADDING * 2;
-let svgHeight = NODE_H + PADDING * 2;
+let svgWidth  = PADDING * 2;
+let svgHeight = PADDING * 2;
 
 let layoutRoot: LayoutNode | null = null;
 if (root) {
-  layoutRoot = assignPositions(root, PADDING, 0, nodes);
+  const measurements = new Map<string, Measurement>();
+  const depthHeights: number[] = [];
+  computeMeasurements(root, 0, measurements, depthHeights);
+  const rowCenters = computeRowCenters(depthHeights);
+
+  layoutRoot = assignPositions(root, PADDING, 0, nodes, measurements, rowCenters);
   collectEdges(layoutRoot, edges);
-  svgWidth  = Math.max(...nodes.map((n) => n.cx + NODE_W / 2)) + PADDING;
-  svgHeight = Math.max(...nodes.map((n) => n.cy)) + NODE_H / 2 + PADDING;
+  svgWidth  = Math.max(...nodes.map((n) => n.cx + n.width / 2)) + PADDING;
+  svgHeight = Math.max(...nodes.map((n) => n.cy + n.height / 2)) + PADDING;
 }
 
-const darkModeNodeStyles = nodes.map((n) =>
-  `html.dark #rm-rect-${n.levelPath.replace(/\./g, '-')} { stroke: ${nodeColorDark(n.depth)}; }
-        html.dark #rm-title-${n.levelPath.replace(/\./g, '-')} { fill: ${nodeColorDark(n.depth)}; }
-        html.dark #rm-level-${n.levelPath.replace(/\./g, '-')} { fill: ${nodeColorDark(n.depth)}; }`
-).join('\n        ');
-
-function trunc(text: string, maxLen: number) {
-  return text.length > maxLen ? text.slice(0, maxLen - 1) + '…' : text;
-}
 ---
 
 {root ? (
@@ -180,11 +326,11 @@ function trunc(text: string, maxLen: number) {
       viewBox={`0 0 ${svgWidth} ${svgHeight}`}
       width={svgWidth}
       height={svgHeight}
-      style="max-width: 100%;"
+      style="max-width: 100%; height: auto; display: block; margin: 0 auto;"
       xmlns="http://www.w3.org/2000/svg"
       aria-label="Journey roadmap tree"
     >
-      <style>{`
+      <style>
         .rm-edge {
           fill: none;
           stroke: #94a3b8;
@@ -194,8 +340,37 @@ function trunc(text: string, maxLen: number) {
         html.dark .rm-edge { stroke: #475569; }
 
         .rm-link { cursor: pointer; }
-        .rm-link:hover .rm-rect { filter: brightness(1.25); }
+        .rm-link:hover .rm-rect { filter: brightness(1.2); }
         .rm-link:focus-visible .rm-rect { outline: 3px solid #fbbf24; outline-offset: 2px; }
+
+        /* Each node sets --fill-light/--fill-dark inline (per-depth color);
+           these rules just pick the right one for the active theme. */
+        .rm-rect {
+          fill: var(--fill-light);
+          stroke: none;
+          transition: filter 0.15s ease;
+        }
+        html.dark .rm-rect {
+          fill: var(--fill-dark);
+        }
+
+        /* Text color is the reverse of the box fill, so it always reads
+           clearly on top of the solid colored background. */
+        .rm-level, .rm-title {
+          fill: #ffffff;
+        }
+        html.dark .rm-level, html.dark .rm-title {
+          fill: #0f172a;
+        }
+
+        .rm-accent {
+          fill: #ffffff;
+          opacity: 0.22;
+        }
+        html.dark .rm-accent {
+          fill: #0f172a;
+          opacity: 0.28;
+        }
 
         .rm-level {
           font-size: 9px;
@@ -209,9 +384,7 @@ function trunc(text: string, maxLen: number) {
           font-family: ui-sans-serif, system-ui, sans-serif;
           font-weight: 700;
         }
-
-        ${darkModeNodeStyles}
-      `}</style>
+      </style>
 
       <defs>
         <marker id="rm-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
@@ -234,64 +407,52 @@ function trunc(text: string, maxLen: number) {
       <!-- Nodes -->
       {nodes.map((node) => {
         const safeId = node.levelPath.replace(/\./g, '-');
-        const x = node.cx - NODE_W / 2;
-        const y = node.cy - NODE_H / 2;
+        const x = node.cx - node.width / 2;
+        const y = node.cy - node.height / 2;
         return (
           <a
             href={`#step-${node.levelPath}`}
             class="rm-link"
             aria-label={`${node.step.levelTitle}: ${node.step.title}`}
           >
-            {/* Outlined rectangle — no fill, colored border only */}
+            {/* Solid, colored background — text below is the reverse (contrast) color.
+                Both theme colors are passed in as CSS vars since inline fill can't
+                react to the html.dark class the way a stylesheet rule can. */}
             <rect
               id={`rm-rect-${safeId}`}
               x={x}
               y={y}
-              width={NODE_W}
-              height={NODE_H}
+              width={node.width}
+              height={node.height}
               rx="10"
-              fill="none"
-              stroke={nodeColor(node.depth)}
-              stroke-width="2"
               class="rm-rect"
+              style={`--fill-light: ${nodeColor(node.depth)}; --fill-dark: ${nodeColorDark(node.depth)};`}
             />
 
             {/* Depth 0 (root) gets a bottom accent bar */}
             {node.depth === 0 && (
               <rect
                 x={x + 16}
-                y={y + NODE_H - 5}
-                width={NODE_W - 32}
+                y={y + node.height - 5}
+                width={node.width - 32}
                 height={4}
                 rx="2"
-                fill={nodeColor(node.depth)}
-                opacity="0.35"
+                class="rm-accent"
               />
             )}
 
-            {/* Category / level title */}
-            <text
-              id={`rm-level-${safeId}`}
-              x={node.cx}
-              y={node.cy - 10}
-              text-anchor="middle"
-              class="rm-level"
-              fill={nodeColor(node.depth)}
-            >
-              {trunc(node.step.levelTitle.toUpperCase(), 28)}
-            </text>
-
-            {/* Main step title */}
-            <text
-              id={`rm-title-${safeId}`}
-              x={node.cx}
-              y={node.cy + 10}
-              text-anchor="middle"
-              class="rm-title"
-              fill={nodeColor(node.depth)}
-            >
-              {trunc(node.step.title, 24)}
-            </text>
+            {/* Category / level title + main step title, each wrapped and
+                centered to fit fully inside the box */}
+            {node.lines.map((line) => (
+              <text
+                x={node.cx}
+                y={node.cy + line.relY}
+                text-anchor="middle"
+                class={line.cls}
+              >
+                {line.text}
+              </text>
+            ))}
           </a>
         );
       })}
