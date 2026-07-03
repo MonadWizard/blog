@@ -112,12 +112,18 @@ const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
   const postCount = document.getElementById('post-count')!;
   const total = postItems.length;
 
-  let activeTag = new URLSearchParams(window.location.search).get('tag') ?? '';
+  function parseTagsFromURL(): Set<string> {
+    const raw = new URLSearchParams(window.location.search).get('tags') ?? '';
+    return raw ? new Set(raw.split(',').map((t) => t.trim()).filter(Boolean)) : new Set();
+  }
+
+  let activeTags = parseTagsFromURL();
   let searchQuery = '';
 
   function setTagStyles() {
     tagBtns.forEach((btn) => {
-      const active = btn.dataset.tag === activeTag;
+      const tag = btn.dataset.tag ?? '';
+      const active = tag === '' ? activeTags.size === 0 : activeTags.has(tag);
       btn.className = [
         'tag-btn text-xs px-3 py-1 rounded-full font-medium border transition-colors',
         active
@@ -142,7 +148,8 @@ const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
         desc.includes(q) ||
         tags.some((t) => t.toLowerCase().includes(q));
 
-      const matchesTag = !activeTag || tags.includes(activeTag);
+      const matchesTag =
+        activeTags.size === 0 || tags.some((t) => activeTags.has(t));
 
       const show = matchesSearch && matchesTag;
       item.style.display = show ? '' : 'none';
@@ -159,14 +166,21 @@ const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
 
     // Keep URL in sync so filtered views are bookmarkable
     const url = new URL(window.location.href);
-    if (activeTag) url.searchParams.set('tag', activeTag);
-    else url.searchParams.delete('tag');
+    if (activeTags.size > 0) url.searchParams.set('tags', [...activeTags].join(','));
+    else url.searchParams.delete('tags');
     history.replaceState({}, '', url.toString());
   }
 
   tagBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
-      activeTag = btn.dataset.tag ?? '';
+      const tag = btn.dataset.tag ?? '';
+      if (tag === '') {
+        activeTags.clear();
+      } else if (activeTags.has(tag)) {
+        activeTags.delete(tag);
+      } else {
+        activeTags.add(tag);
+      }
       setTagStyles();
       filter();
     });
@@ -179,7 +193,7 @@ const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
 
   // Handle browser back/forward navigation
   window.addEventListener('popstate', () => {
-    activeTag = new URLSearchParams(window.location.search).get('tag') ?? '';
+    activeTags = parseTagsFromURL();
     setTagStyles();
     filter();
   });

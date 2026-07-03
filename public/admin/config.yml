@@ -30,6 +30,22 @@ media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
 collections:
+  - name: "tags"
+    label: "Tags"
+    label_singular: "Tag"
+    folder: "src/content/tags"
+    create: true
+    delete: true
+    extension: "json"
+    format: "json"
+    identifier_field: "name"
+    summary: "{{name}}"
+    fields:
+      - label: "Name"
+        name: "name"
+        widget: "string"
+        hint: "Display name, e.g. PostgreSQL, Django, FastAPI"
+
   - name: "blog"
     label: "Blog Posts"
     label_singular: "Blog Post"
@@ -60,8 +76,14 @@ collections:
 
       - label: "Tags"
         name: "tags"
-        widget: "list"
-        hint: "Comma-separated tags, e.g. PostgreSQL, Python, Django"
+        widget: "relation"
+        collection: "tags"
+        search_fields: ["name"]
+        value_field: "name"
+        display_fields: ["name"]
+        multiple: true
+        required: false
+        hint: "Pick from managed tags. Add new tags in the Tags section first."
 
       - label: "Draft"
         name: "draft"
