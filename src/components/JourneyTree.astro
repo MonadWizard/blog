@@ -164,7 +164,9 @@ if (root) {
 }
 
 const darkModeNodeStyles = nodes.map((n) =>
-  `html.dark #rm-rect-${n.levelPath.replace(/\./g, '-')} { fill: ${nodeColorDark(n.depth)}; }`
+  `html.dark #rm-rect-${n.levelPath.replace(/\./g, '-')} { stroke: ${nodeColorDark(n.depth)}; }
+        html.dark #rm-title-${n.levelPath.replace(/\./g, '-')} { fill: ${nodeColorDark(n.depth)}; }
+        html.dark #rm-level-${n.levelPath.replace(/\./g, '-')} { fill: ${nodeColorDark(n.depth)}; }`
 ).join('\n        ');
 
 function trunc(text: string, maxLen: number) {
@@ -201,13 +203,12 @@ function trunc(text: string, maxLen: number) {
           font-weight: 800;
           letter-spacing: 0.10em;
           text-transform: uppercase;
-          fill: #fde047;
+          opacity: 0.8;
         }
         .rm-title {
           font-size: 12px;
           font-family: ui-sans-serif, system-ui, sans-serif;
           font-weight: 700;
-          fill: #ffffff;
         }
 
         ${darkModeNodeStyles}
@@ -242,7 +243,7 @@ function trunc(text: string, maxLen: number) {
             class="rm-link"
             aria-label={`${node.step.levelTitle}: ${node.step.title}`}
           >
-            {/* Colored filled rectangle */}
+            {/* Outlined rectangle — no fill, colored border only */}
             <rect
               id={`rm-rect-${safeId}`}
               x={x}
@@ -250,11 +251,13 @@ function trunc(text: string, maxLen: number) {
               width={NODE_W}
               height={NODE_H}
               rx="10"
-              fill={nodeColor(node.depth)}
+              fill="none"
+              stroke={nodeColor(node.depth)}
+              stroke-width="2"
               class="rm-rect"
             />
 
-            {/* Depth 0 (root) gets a top accent bar */}
+            {/* Depth 0 (root) gets a bottom accent bar */}
             {node.depth === 0 && (
               <rect
                 x={x + 16}
@@ -262,26 +265,31 @@ function trunc(text: string, maxLen: number) {
                 width={NODE_W - 32}
                 height={4}
                 rx="2"
-                fill="rgba(255,255,255,0.25)"
+                fill={nodeColor(node.depth)}
+                opacity="0.35"
               />
             )}
 
             {/* Category / level title */}
             <text
+              id={`rm-level-${safeId}`}
               x={node.cx}
               y={node.cy - 10}
               text-anchor="middle"
               class="rm-level"
+              fill={nodeColor(node.depth)}
             >
               {trunc(node.step.levelTitle.toUpperCase(), 28)}
             </text>
 
             {/* Main step title */}
             <text
+              id={`rm-title-${safeId}`}
               x={node.cx}
               y={node.cy + 10}
               text-anchor="middle"
               class="rm-title"
+              fill={nodeColor(node.depth)}
             >
               {trunc(node.step.title, 24)}
             </text>
