@@ -84,13 +84,13 @@ const DEPTH_COLORS = [
   '#0f766e',  // depth 3 — teal-700
   '#1d4ed8',  // depth 4 — blue-700
 ];
-// Slightly lighter for dark mode (optional differentiation)
+// Lighter tints for dark mode so text/border stay highlighted against a dark background.
 const DEPTH_COLORS_DARK = [
-  '#1e293b',  // slate-800
-  '#4f46e5',  // indigo-600
-  '#8b5cf6',  // violet-500
-  '#0d9488',  // teal-600
-  '#2563eb',  // blue-600
+  '#cbd5e1',  // slate-300 — root
+  '#a5b4fc',  // indigo-300
+  '#c4b5fd',  // violet-300
+  '#5eead4',  // teal-300
+  '#93c5fd',  // blue-300
 ];
 
 function nodeColor(depth: number) {
@@ -203,7 +203,6 @@ function trunc(text: string, maxLen: number) {
           font-weight: 800;
           letter-spacing: 0.10em;
           text-transform: uppercase;
-          opacity: 0.8;
         }
         .rm-title {
           font-size: 12px;
