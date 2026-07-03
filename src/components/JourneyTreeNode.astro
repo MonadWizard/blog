@@ -1,0 +1,109 @@
+---
+// Recursive, vertically-stacked fallback for the roadmap tree (used below the
+// `md` breakpoint). Unlike the SVG tree, node width/text size here are plain
+// CSS values that never shrink to fit the viewport — only the stack height
+// and connector length grow or shrink with content, so boxes rearrange
+// instead of scaling down and text never overlaps.
+import JourneyTreeNode from './JourneyTreeNode.astro';
+
+interface Step {
+  levelPath: string;
+  levelTitle: string;
+  title: string;
+  description: string;
+}
+
+interface TreeNode {
+  step: Step;
+  children: TreeNode[];
+  levelPath: string;
+}
+
+interface Props {
+  node: TreeNode;
+  depth: number;
+}
+
+const { node, depth } = Astro.props;
+
+// Same palette as the SVG tree (JourneyTree.astro) so both views read as one design.
+const DEPTH_COLORS = ['#0f172a', '#4338ca', '#7c3aed', '#0f766e', '#1d4ed8'];
+const DEPTH_COLORS_DARK = ['#cbd5e1', '#a5b4fc', '#c4b5fd', '#5eead4', '#93c5fd'];
+
+const fillLight = DEPTH_COLORS[Math.min(depth, DEPTH_COLORS.length - 1)];
+const fillDark = DEPTH_COLORS_DARK[Math.min(depth, DEPTH_COLORS_DARK.length - 1)];
+---
+
+<li class="relative list-none">
+  {depth > 0 && (
+    <span class="rm-m-tick absolute -left-5 top-6 h-px w-5 border-t-2 border-dashed border-gray-300 dark:border-gray-700" aria-hidden="true"></span>
+  )}
+
+  <a
+    href={`#step-${node.step.levelPath}`}
+    class="rm-m-card relative block rounded-xl px-4 py-3"
+    style={`--fill-light: ${fillLight}; --fill-dark: ${fillDark};`}
+    aria-label={`${node.step.levelTitle}: ${node.step.title}`}
+  >
+    <div class="rm-m-level text-[10px] font-extrabold uppercase tracking-widest">
+      {node.step.levelTitle}
+    </div>
+    <div class="rm-m-title mt-0.5 text-sm font-bold leading-snug">
+      {node.step.title}
+    </div>
+    {depth === 0 && <span class="rm-m-accent absolute inset-x-4 bottom-1.5 h-1 rounded-full" />}
+  </a>
+
+  {node.children.length > 0 && (
+    <>
+      <div class="rm-m-arrow mx-auto h-5 w-px" aria-hidden="true"></div>
+      <ul class="rm-m-children ml-3 space-y-4 border-l-2 border-dashed border-gray-300 pl-5 dark:border-gray-700">
+        {node.children.map((child) => (
+          <JourneyTreeNode node={child} depth={depth + 1} />
+        ))}
+      </ul>
+    </>
+  )}
+</li>
+
+<style>
+  .rm-m-card {
+    background: var(--fill-light);
+    transition: filter 0.15s ease;
+  }
+  html.dark .rm-m-card {
+    background: var(--fill-dark);
+  }
+  .rm-m-card:hover {
+    filter: brightness(1.1);
+  }
+  .rm-m-card:focus-visible {
+    outline: 3px solid #fbbf24;
+    outline-offset: 2px;
+  }
+
+  .rm-m-level,
+  .rm-m-title {
+    color: #ffffff;
+  }
+  html.dark .rm-m-level,
+  html.dark .rm-m-title {
+    color: #0f172a;
+  }
+
+  .rm-m-accent {
+    background: #ffffff;
+    opacity: 0.22;
+  }
+  html.dark .rm-m-accent {
+    background: #0f172a;
+    opacity: 0.28;
+  }
+
+  .rm-m-arrow {
+    background: #94a3b8;
+  }
+  html.dark .rm-m-arrow {
+    background: #475569;
+  }
+</style>

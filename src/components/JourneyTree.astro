@@ -1,4 +1,6 @@
 ---
+import JourneyTreeNode from './JourneyTreeNode.astro';
+
 interface Step {
   levelPath: string;
   levelTitle: string;
@@ -321,12 +323,16 @@ if (root) {
 ---
 
 {root ? (
-  <div class="overflow-x-auto rounded-xl">
+  <>
+  {/* Below `lg`, boxes rearrange into a vertical stack (JourneyTreeNode) instead
+      of shrinking — this SVG tree keeps its true pixel size (never scaled down,
+      so text never shrinks) and only scrolls horizontally if it overflows. */}
+  <div class="hidden overflow-x-auto rounded-xl lg:block">
     <svg
       viewBox={`0 0 ${svgWidth} ${svgHeight}`}
       width={svgWidth}
       height={svgHeight}
-      style="max-width: 100%; height: auto; display: block; margin: 0 auto;"
+      style="display: block; margin: 0 auto;"
       xmlns="http://www.w3.org/2000/svg"
       aria-label="Journey roadmap tree"
     >
@@ -458,6 +464,11 @@ if (root) {
       })}
     </svg>
   </div>
+
+  <ul class="lg:hidden">
+    <JourneyTreeNode node={root} depth={0} />
+  </ul>
+  </>
 ) : (
   <p class="text-gray-400 italic text-sm">No steps defined for this journey yet.</p>
 )}
