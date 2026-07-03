@@ -6,7 +6,8 @@ description: A deep dive into PostgreSQL dollar-quoting syntax, why it's
 pubDate: 2025-06-01
 tags:
   - PostgreSQL
-  - Python Backend
+  - Python
+  - Backend
 draft: false
 ---
 
