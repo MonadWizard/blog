@@ -1,0 +1,137 @@
+---
+import { getCollection } from 'astro:content';
+import { marked } from 'marked';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import JourneyTree from '../../components/JourneyTree.astro';
+import JourneyStep from '../../components/JourneyStep.astro';
+
+export async function getStaticPaths() {
+  const journeys = await getCollection('journey', ({ data }) => !data.draft);
+  return journeys.map((journey) => ({
+    params: { slug: journey.id },
+    props: { journey },
+  }));
+}
+
+const { journey } = Astro.props;
+const { title, description, pubDate, updatedDate, tags, heroImage, steps } = journey.data;
+
+// Render step descriptions from markdown strings at build time
+const stepsWithHtml = steps.map((step) => {
+  const parts = step.levelPath.split('.');
+  const depth = parseInt(parts[0], 10);
+  return {
+    ...step,
+    depth,
+    descriptionHtml: marked.parse(step.description ?? '') as string,
+  };
+});
+
+const formattedDate = pubDate.toLocaleDateString('en-US', {
+  month: 'long',
+  day: 'numeric',
+  year: 'numeric',
+});
+const updatedFormatted = updatedDate?.toLocaleDateString('en-US', {
+  month: 'long',
+  day: 'numeric',
+  year: 'numeric',
+});
+---
+
+<BaseLayout title={`${title} — With Journey`} description={description} ogImage={heroImage}>
+  <Navbar />
+
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+
+    <!-- Hero header -->
+    <header class="mb-10">
+      {heroImage && (
+        <img
+          src={heroImage}
+          alt=""
+          class="w-full h-48 object-cover rounded-xl mb-8 opacity-90"
+          loading="eager"
+        />
+      )}
+
+      <div class="flex flex-wrap gap-2 mb-4">
+        {tags.map((tag) => (
+          <a
+            href={`${import.meta.env.BASE_URL}journey?tags=${encodeURIComponent(tag)}`}
+            class="inline-block text-xs px-2.5 py-0.5 bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 rounded-full font-medium border border-indigo-200 dark:border-indigo-800 hover:bg-indigo-100 dark:hover:bg-indigo-900 transition-colors"
+          >
+            {tag}
+          </a>
+        ))}
+      </div>
+
+      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-3 leading-tight">
+        {title}
+      </h1>
+      <p class="text-lg text-gray-500 dark:text-gray-400 mb-4 leading-relaxed">
+        {description}
+      </p>
+
+      <div class="flex items-center gap-3 text-sm text-gray-400 dark:text-gray-500">
+        <time datetime={pubDate.toISOString()}>{formattedDate}</time>
+        {updatedDate && (
+          <>
+            <span aria-hidden="true">·</span>
+            <span>Updated {updatedFormatted}</span>
+          </>
+        )}
+        <span aria-hidden="true">·</span>
+        <span>{steps.length} {steps.length === 1 ? 'step' : 'steps'}</span>
+      </div>
+    </header>
+
+    <!-- Tree visualization hero -->
+    {steps.length > 0 && (
+      <section class="mb-14 p-6 rounded-2xl bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-800">
+        <h2 class="text-sm font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-4">
+          Roadmap Overview
+        </h2>
+        <JourneyTree steps={steps} />
+        <p class="text-xs text-gray-400 dark:text-gray-600 mt-3 text-center">
+          Click any node to jump to that step ↓
+        </p>
+      </section>
+    )}
+
+    <!-- Step cards -->
+    {steps.length > 0 && (
+      <section>
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-8">Steps</h2>
+        <div>
+          {stepsWithHtml.map((step) => (
+            <JourneyStep
+              levelPath={step.levelPath}
+              levelTitle={step.levelTitle}
+              title={step.title}
+              descriptionHtml={step.descriptionHtml}
+              depth={step.depth}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Back link -->
+    <div class="mt-16 pt-8 border-t border-gray-100 dark:border-gray-800">
+      <a
+        href={`${import.meta.env.BASE_URL}journey`}
+        class="inline-flex items-center gap-2 text-sm text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 transition-colors"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+        All Journeys
+      </a>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>

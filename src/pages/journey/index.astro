@@ -1,0 +1,200 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import JourneyCard from '../../components/JourneyCard.astro';
+
+const allJourneys = await getCollection('journey', ({ data }) => !data.draft);
+const journeys = allJourneys.sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+);
+
+const allTags = [...new Set(journeys.flatMap((j) => j.data.tags))].sort();
+---
+
+<BaseLayout
+  title="With Journey — Rakib Hasan"
+  description="Structured skill roadmaps and problem-solving guides — from zero to advanced."
+>
+  <Navbar />
+
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <header class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">With Journey</h1>
+      <p id="journey-count" class="text-gray-500 dark:text-gray-400">
+        {journeys.length} {journeys.length === 1 ? 'roadmap' : 'roadmaps'} — skill journeys and problem-solving guides.
+      </p>
+    </header>
+
+    <!-- Search bar -->
+    <div class="relative mb-6">
+      <svg
+        class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none"
+        fill="none" stroke="currentColor" viewBox="0 0 24 24"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+      <input
+        id="search-input"
+        type="search"
+        placeholder="Search roadmaps by keyword or tag…"
+        autocomplete="off"
+        class="w-full pl-10 pr-4 py-2.5 text-sm rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+      />
+    </div>
+
+    <!-- Tag filter pills -->
+    {allTags.length > 0 && (
+      <div class="flex flex-wrap gap-2 mb-10">
+        <button
+          data-tag=""
+          class="tag-btn text-xs px-3 py-1 rounded-full font-medium border transition-colors
+            border-indigo-600 bg-indigo-600 text-white"
+        >
+          All
+        </button>
+        {allTags.map((tag) => (
+          <button
+            data-tag={tag}
+            class="tag-btn text-xs px-3 py-1 rounded-full font-medium border transition-colors
+              border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900
+              text-gray-600 dark:text-gray-400
+              hover:border-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-400"
+          >
+            {tag}
+          </button>
+        ))}
+      </div>
+    )}
+
+    <!-- No results -->
+    <p id="no-results" class="hidden text-gray-400 dark:text-gray-500 py-16 text-center text-sm">
+      No roadmaps match your search. Try a different keyword or tag.
+    </p>
+
+    <!-- Journey list -->
+    <div id="journey-list">
+      {journeys.map((journey) => (
+        <div
+          class="journey-item"
+          data-title={journey.data.title.toLowerCase()}
+          data-desc={journey.data.description.toLowerCase()}
+          data-steps={journey.data.steps.map((s) => s.title.toLowerCase()).join(' ')}
+          data-tags={JSON.stringify(journey.data.tags)}
+        >
+          <JourneyCard
+            title={journey.data.title}
+            description={journey.data.description}
+            pubDate={journey.data.pubDate}
+            tags={journey.data.tags}
+            slug={journey.id}
+            stepCount={journey.data.steps.length}
+            heroImage={journey.data.heroImage}
+          />
+        </div>
+      ))}
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<script>
+  const searchInput = document.getElementById('search-input') as HTMLInputElement;
+  const journeyItems = document.querySelectorAll<HTMLElement>('.journey-item');
+  const tagBtns = document.querySelectorAll<HTMLButtonElement>('.tag-btn');
+  const noResults = document.getElementById('no-results')!;
+  const journeyCount = document.getElementById('journey-count')!;
+  const total = journeyItems.length;
+
+  function parseTagsFromURL(): Set<string> {
+    const raw = new URLSearchParams(window.location.search).get('tags') ?? '';
+    return raw ? new Set(raw.split(',').map((t) => t.trim()).filter(Boolean)) : new Set();
+  }
+
+  let activeTags = parseTagsFromURL();
+  let searchQuery = '';
+
+  function setTagStyles() {
+    tagBtns.forEach((btn) => {
+      const tag = btn.dataset.tag ?? '';
+      const active = tag === '' ? activeTags.size === 0 : activeTags.has(tag);
+      btn.className = [
+        'tag-btn text-xs px-3 py-1 rounded-full font-medium border transition-colors',
+        active
+          ? 'border-indigo-600 bg-indigo-600 text-white'
+          : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400 hover:border-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-400',
+      ].join(' ');
+    });
+  }
+
+  function filter() {
+    const q = searchQuery.trim().toLowerCase();
+    let visible = 0;
+
+    journeyItems.forEach((item) => {
+      const title = item.dataset.title ?? '';
+      const desc = item.dataset.desc ?? '';
+      const steps = item.dataset.steps ?? '';
+      const tags: string[] = JSON.parse(item.dataset.tags ?? '[]');
+
+      const matchesSearch =
+        !q ||
+        title.includes(q) ||
+        desc.includes(q) ||
+        steps.includes(q) ||
+        tags.some((t) => t.toLowerCase().includes(q));
+
+      const matchesTag =
+        activeTags.size === 0 || tags.some((t) => activeTags.has(t));
+
+      const show = matchesSearch && matchesTag;
+      item.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+
+    noResults.classList.toggle('hidden', visible > 0);
+
+    if (visible === total) {
+      journeyCount.textContent = `${total} ${total === 1 ? 'roadmap' : 'roadmaps'} — skill journeys and problem-solving guides.`;
+    } else {
+      journeyCount.textContent = `${visible} of ${total} ${total === 1 ? 'roadmap' : 'roadmaps'} shown.`;
+    }
+
+    const url = new URL(window.location.href);
+    if (activeTags.size > 0) url.searchParams.set('tags', [...activeTags].join(','));
+    else url.searchParams.delete('tags');
+    history.replaceState({}, '', url.toString());
+  }
+
+  tagBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const tag = btn.dataset.tag ?? '';
+      if (tag === '') {
+        activeTags.clear();
+      } else if (activeTags.has(tag)) {
+        activeTags.delete(tag);
+      } else {
+        activeTags.add(tag);
+      }
+      setTagStyles();
+      filter();
+    });
+  });
+
+  searchInput.addEventListener('input', () => {
+    searchQuery = searchInput.value;
+    filter();
+  });
+
+  window.addEventListener('popstate', () => {
+    activeTags = parseTagsFromURL();
+    setTagStyles();
+    filter();
+  });
+
+  setTagStyles();
+  filter();
+</script>

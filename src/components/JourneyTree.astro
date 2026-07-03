@@ -1,0 +1,231 @@
+---
+interface Step {
+  levelPath: string;
+  levelTitle: string;
+  title: string;
+  description: string;
+}
+
+interface TreeNode {
+  step: Step;
+  children: TreeNode[];
+  levelPath: string;
+}
+
+interface LayoutNode {
+  step: Step;
+  levelPath: string;
+  cx: number;
+  cy: number;
+  children: LayoutNode[];
+}
+
+interface Edge {
+  d: string;
+}
+
+interface Props {
+  steps: Step[];
+}
+
+const { steps } = Astro.props;
+
+// ── Tree builder ──────────────────────────────────────────────────────────────
+
+function buildTree(steps: Step[]): TreeNode | null {
+  if (!steps.length) return null;
+
+  const nodeMap = new Map<string, TreeNode>();
+  for (const step of steps) {
+    nodeMap.set(step.levelPath, { step, children: [], levelPath: step.levelPath });
+  }
+
+  let root: TreeNode | null = null;
+  for (const node of nodeMap.values()) {
+    const parts = node.levelPath.split('.');
+    const depth = parseInt(parts[0], 10);
+    if (depth === 0) {
+      root = node;
+    } else {
+      const parentDepth = depth - 1;
+      const parentPath =
+        parentDepth === 0 ? '0' : `${parentDepth}.${parts.slice(1, -1).join('.')}`;
+      nodeMap.get(parentPath)?.children.push(node);
+    }
+  }
+
+  function sortChildren(node: TreeNode) {
+    const ownIdx = (n: TreeNode) => {
+      const p = n.levelPath.split('.');
+      return parseInt(p[p.length - 1], 10);
+    };
+    node.children.sort((a, b) => ownIdx(a) - ownIdx(b));
+    node.children.forEach(sortChildren);
+  }
+  if (root) sortChildren(root);
+  return root;
+}
+
+// ── Layout constants ──────────────────────────────────────────────────────────
+
+const NODE_W = 190;
+const NODE_H = 68;
+const LEVEL_GAP = 130;
+const SIBLING_GAP = 20;
+const PADDING = 44;
+
+// ── Layout algorithm ──────────────────────────────────────────────────────────
+
+function subtreeWidth(node: TreeNode): number {
+  if (!node.children.length) return NODE_W;
+  const childWidths = node.children.map(subtreeWidth);
+  const total =
+    childWidths.reduce((s, w) => s + w, 0) + (childWidths.length - 1) * SIBLING_GAP;
+  return Math.max(NODE_W, total);
+}
+
+function assignPositions(
+  node: TreeNode,
+  leftEdge: number,
+  depth: number,
+  allNodes: LayoutNode[],
+): LayoutNode {
+  const sw = subtreeWidth(node);
+  const cx = leftEdge + sw / 2;
+  const cy = PADDING + depth * LEVEL_GAP;
+
+  const children: LayoutNode[] = [];
+  let cursor = leftEdge;
+  for (const child of node.children) {
+    children.push(assignPositions(child, cursor, depth + 1, allNodes));
+    cursor += subtreeWidth(child) + SIBLING_GAP;
+  }
+
+  const ln: LayoutNode = { step: node.step, levelPath: node.levelPath, cx, cy, children };
+  allNodes.push(ln);
+  return ln;
+}
+
+function collectEdges(node: LayoutNode, edges: Edge[]) {
+  for (const child of node.children) {
+    const midY = (node.cy + NODE_H / 2 + child.cy - NODE_H / 2) / 2;
+    edges.push({
+      d: `M ${node.cx},${node.cy + NODE_H / 2} V ${midY} H ${child.cx} V ${child.cy - NODE_H / 2}`,
+    });
+    collectEdges(child, edges);
+  }
+}
+
+// ── Run layout ────────────────────────────────────────────────────────────────
+
+const root = buildTree(steps);
+let nodes: LayoutNode[] = [];
+let edges: Edge[] = [];
+let svgWidth = 280;
+let svgHeight = NODE_H + PADDING * 2;
+
+if (root) {
+  assignPositions(root, PADDING, 0, nodes);
+  collectEdges(root, edges);
+  svgWidth = Math.max(...nodes.map((n) => n.cx + NODE_W / 2)) + PADDING;
+  svgHeight = Math.max(...nodes.map((n) => n.cy)) + NODE_H / 2 + PADDING;
+}
+
+// Title truncation helper
+function trunc(text: string, maxLen: number) {
+  return text.length > maxLen ? text.slice(0, maxLen - 1) + '…' : text;
+}
+---
+
+{root ? (
+  <div class="overflow-x-auto py-4">
+    <svg
+      viewBox={`0 0 ${svgWidth} ${svgHeight}`}
+      width={svgWidth}
+      height={svgHeight}
+      style="max-width: 100%;"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-label="Journey roadmap tree"
+    >
+      <style>{`
+        .tree-edge { stroke: #a5b4fc; fill: none; stroke-width: 1.5; }
+        .tree-node-bg { fill: #fff; stroke: #a5b4fc; stroke-width: 1.5; rx: 10; }
+        .tree-node-level { fill: #6366f1; font-weight: 700; font-size: 11px; font-family: ui-sans-serif, system-ui, sans-serif; }
+        .tree-node-title { fill: #374151; font-size: 11px; font-family: ui-sans-serif, system-ui, sans-serif; }
+        .tree-node-badge { fill: #9ca3af; font-size: 10px; font-family: ui-monospace, monospace; }
+        .tree-node-link:hover .tree-node-bg { stroke: #6366f1; fill: #eef2ff; }
+        .tree-node-link:hover .tree-node-title { fill: #4f46e5; }
+        html.dark .tree-edge { stroke: #4f46e5; }
+        html.dark .tree-node-bg { fill: #1f2937; stroke: #4f46e5; }
+        html.dark .tree-node-level { fill: #818cf8; }
+        html.dark .tree-node-title { fill: #e5e7eb; }
+        html.dark .tree-node-badge { fill: #6b7280; }
+        html.dark .tree-node-link:hover .tree-node-bg { fill: #1e1b4b; stroke: #818cf8; }
+        html.dark .tree-node-link:hover .tree-node-title { fill: #a5b4fc; }
+      `}</style>
+
+      <defs>
+        <marker id="arrowhead" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+          <path d="M0,0 L7,3.5 L0,7 Z" fill="#a5b4fc" />
+        </marker>
+        <marker id="arrowhead-dark" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+          <path d="M0,0 L7,3.5 L0,7 Z" fill="#4f46e5" />
+        </marker>
+      </defs>
+
+      <!-- Edges -->
+      {edges.map((edge, i) => (
+        <path
+          key={i}
+          d={edge.d}
+          class="tree-edge"
+          marker-end="url(#arrowhead)"
+        />
+      ))}
+
+      <!-- Nodes -->
+      {nodes.map((node) => (
+        <a
+          href={`#step-${node.levelPath}`}
+          class="tree-node-link"
+          aria-label={`${node.step.levelTitle}: ${node.step.title}`}
+        >
+          <rect
+            x={node.cx - NODE_W / 2}
+            y={node.cy - NODE_H / 2}
+            width={NODE_W}
+            height={NODE_H}
+            rx="10"
+            class="tree-node-bg"
+          />
+          <text
+            x={node.cx}
+            y={node.cy - 12}
+            text-anchor="middle"
+            class="tree-node-level"
+          >
+            {trunc(node.step.levelTitle, 24)}
+          </text>
+          <text
+            x={node.cx}
+            y={node.cy + 6}
+            text-anchor="middle"
+            class="tree-node-title"
+          >
+            {trunc(node.step.title, 26)}
+          </text>
+          <text
+            x={node.cx}
+            y={node.cy + 22}
+            text-anchor="middle"
+            class="tree-node-badge"
+          >
+            {node.levelPath}
+          </text>
+        </a>
+      ))}
+    </svg>
+  </div>
+) : (
+  <p class="text-gray-400 italic text-sm">No steps defined for this journey yet.</p>
+)}

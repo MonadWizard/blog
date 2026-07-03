@@ -1,0 +1,70 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  tags: string[];
+  slug: string;
+  stepCount: number;
+  heroImage?: string;
+}
+
+const { title, description, pubDate, tags, slug, stepCount, heroImage } = Astro.props;
+
+const formattedDate = pubDate.toLocaleDateString('en-US', {
+  month: 'short',
+  day: 'numeric',
+  year: 'numeric',
+});
+---
+
+<article class="group flex gap-6 py-8 border-b border-gray-100 dark:border-gray-800/60 last:border-0">
+  <!-- Text content -->
+  <div class="flex-1 min-w-0">
+    <!-- Meta row -->
+    <div class="flex items-center gap-2 mb-2 text-xs text-gray-400 dark:text-gray-500">
+      <time datetime={pubDate.toISOString()}>{formattedDate}</time>
+      <span aria-hidden="true">·</span>
+      <span>{stepCount} {stepCount === 1 ? 'step' : 'steps'}</span>
+    </div>
+
+    <!-- Title -->
+    <a href={`${import.meta.env.BASE_URL}journey/${slug}`}>
+      <h2 class="text-xl font-bold leading-snug text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors mb-2 line-clamp-2">
+        {title}
+      </h2>
+    </a>
+
+    <!-- Excerpt -->
+    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed line-clamp-2 mb-4">
+      {description}
+    </p>
+
+    <!-- Tags -->
+    {tags.length > 0 && (
+      <div class="flex flex-wrap gap-2">
+        {tags.map((tag) => (
+          <a
+            href={`${import.meta.env.BASE_URL}journey?tags=${encodeURIComponent(tag)}`}
+            class="inline-block text-xs px-2.5 py-0.5 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full font-medium hover:bg-indigo-100 dark:hover:bg-indigo-900/40 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors"
+          >
+            {tag}
+          </a>
+        ))}
+      </div>
+    )}
+  </div>
+
+  <!-- Hero thumbnail -->
+  {heroImage && (
+    <a href={`${import.meta.env.BASE_URL}journey/${slug}`} class="flex-shrink-0 hidden sm:block">
+      <img
+        src={heroImage}
+        alt=""
+        class="w-28 h-20 object-cover rounded-lg opacity-90 group-hover:opacity-100 transition-opacity"
+        loading="lazy"
+        decoding="async"
+      />
+    </a>
+  )}
+</article>

@@ -101,3 +101,67 @@ collections:
         name: "body"
         widget: "markdown"
         hint: "Write the post content. Toggle between Rich Text and Markdown mode using the button above the editor."
+
+  - name: "journey"
+    label: "With Journey"
+    label_singular: "Journey"
+    folder: "src/content/journey"
+    create: true
+    delete: true
+    extension: "json"
+    format: "json"
+    identifier_field: "title"
+    summary: "{{title}}"
+    fields:
+      - label: "Title"
+        name: "title"
+        widget: "string"
+        hint: "The roadmap title, e.g. 'Django: Zero to Advanced'."
+
+      - label: "Description"
+        name: "description"
+        widget: "text"
+        hint: "One to two sentence summary of what this journey covers."
+
+      - label: "Publish Date"
+        name: "pubDate"
+        widget: "datetime"
+        format: "YYYY-MM-DD"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+
+      - label: "Updated Date"
+        name: "updatedDate"
+        widget: "datetime"
+        format: "YYYY-MM-DD"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+        required: false
+
+      - label: "Tags"
+        name: "tags"
+        widget: "relation"
+        collection: "tags"
+        search_fields: ["name"]
+        value_field: "name"
+        display_fields: ["name"]
+        multiple: true
+        required: false
+        hint: "Pick from managed tags. Add new tags in the Tags section first."
+
+      - label: "Draft"
+        name: "draft"
+        widget: "boolean"
+        default: true
+        hint: "When true, the journey is excluded from the public site."
+
+      - label: "Hero Image"
+        name: "heroImage"
+        widget: "image"
+        required: false
+        hint: "Optional cover image."
+
+      - label: "Steps"
+        name: "steps"
+        widget: "journey-steps"
+        hint: "Build the roadmap tree. Drag nodes to reorder or reparent them."
