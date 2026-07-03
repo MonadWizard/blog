@@ -1,19 +1,15 @@
 name: Deploy to GitHub Pages
 
 on:
-  # Trigger on push to main branch
   push:
     branches: [main]
-  # Allow manual trigger from the Actions tab
   workflow_dispatch:
 
-# Required permissions for GitHub Pages deployment
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Only one deployment at a time; don't cancel in-progress deploys
 concurrency:
   group: "pages"
   cancel-in-progress: false
@@ -26,8 +22,23 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Build Astro site and upload Pages artifact
-        uses: withastro/action@v6
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ]; then npm ci; elif [ -f pnpm-lock.yaml ]; then npm i -g pnpm && pnpm install; elif [ -f yarn.lock ]; then yarn install --frozen-lockfile; else npm ci; fi
+
+      - name: Build Astro site
+        run: |
+          npm run build
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./dist
 
   deploy:
     name: Deploy
