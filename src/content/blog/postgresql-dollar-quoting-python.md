@@ -1,8 +1,8 @@
 ---
-title: "PostgreSQL Dollar Quoting Inside Python Strings: A Backend Developer's Guide"
-description: A deep dive into PostgreSQL dollar-quoting syntax, why it's
-  essential for stored procedures in Python, and how to safely embed complex SQL
-  inside Django and FastAPI codebases.
+title: পাইথন স্ট্রিং-এর মধ্যে পোস্টগ্রেসকিউএল ডলার $$ কোটিং
+description: PostgreSQL-এর ডলার-কোটিং সিনট্যাক্সের গভীর বিশ্লেষণ, পাইথনের স্টোরড
+  প্রসিডিউরের জন্য এটি কেন অপরিহার্য, এবং Django ও FastAPI কোডবেসে কীভাবে
+  নিরাপদে জটিল SQL এম্বেড করা যায়।
 pubDate: 2025-06-01
 tags:
   - PostgreSQL
@@ -10,41 +10,38 @@ tags:
   - Backend
 draft: false
 ---
+## ডলার কোটিং কী?
 
-## What Is Dollar Quoting?
+PostgreSQL একটি নন-স্ট্যান্ডার্ড কোটিং পদ্ধতি সাপোর্ট করে, যাকে বলা হয় **ডলার কোটিং** (`$$`)। এর মাধ্যমে আপনি লিটারাল স্ট্রিং — এমনকি সিঙ্গেল কোট সহ — কোনো এসকেপিং ছাড়াই এমবেড করতে পারেন। পাইথন থেকে সরাসরি স্টোরড প্রসিডিউর ও ফাংশন লেখার সময় এটি অমূল্য।
 
-PostgreSQL supports a non-standard quoting mechanism called **dollar quoting** (`$$`). It lets you embed literal strings — including single quotes — without escaping, which is invaluable for writing stored procedures and functions directly from Python.
-
-Standard single-quote quoting breaks the moment your SQL body contains its own quotes:
+স্ট্যান্ডার্ড সিঙ্গেল-কোট কোটিং তখনই ভেঙে পড়ে, যখন আপনার SQL বডিতে নিজস্ব কোট থাকে:
 
 ```sql
--- This fails if the function body uses single quotes
+-- ফাংশন বডিতে সিঙ্গেল কোট থাকলে এটি ফেইল করে
 CREATE OR REPLACE FUNCTION greet(name TEXT) RETURNS TEXT AS '
   BEGIN
-    RETURN ''Hello, '' || name || ''!'';  -- double-escaped — messy
+    RETURN ''Hello, '' || name || ''!'';  -- ডাবল-এসকেপড — অগোছালো
   END;
 ' LANGUAGE plpgsql;
 ```
 
-Dollar quoting eliminates the escaping entirely:
+ডলার কোটিং এসকেপিং সম্পূর্ণভাবে দূর করে দেয়:
 
 ```sql
 CREATE OR REPLACE FUNCTION greet(name TEXT) RETURNS TEXT AS $$
   BEGIN
-    RETURN 'Hello, ' || name || '!';   -- clean, no escaping
+    RETURN 'Hello, ' || name || '!';   -- পরিষ্কার, কোনো এসকেপিং নেই
   END;
 $$ LANGUAGE plpgsql;
 ```
 
----
+## পাইথন স্ট্রিং-এর সমস্যা
 
-## The Python String Problem
+যখন আপনি ডলার-কোটেড SQL পাইথন স্ট্রিং-এর ভেতরে এমবেড করেন, তখন একটি সূক্ষ্ম সমস্যার মুখোমুখি হন: পাইথনের f-string এবং `.format()` উভয়েই `{` ও `}` কে ইন্টারপোলেশন ডেলিমিটার হিসেবে ব্যবহার করে, তবে এগুলো `$$` এর সাথে সংঘর্ষ করে না। আসল ফাঁদটি হলো raw string বা triple-quote ভুলভাবে ব্যবহার করা।
 
-When you embed dollar-quoted SQL inside a Python string, you hit a subtle issue: Python's f-strings and `.format()` both use `{` and `}` as interpolation delimiters, but they don't interfere with `$$`. The real trap is using **raw strings** or **triple-quotes** incorrectly.
+## নিরাপদ প্যাটার্ন
 
-### Safe Patterns
-
-**Triple-quoted raw string (recommended):**
+**Triple-quoted স্ট্রিং (প্রস্তাবিত):**
 
 ```python
 import psycopg2
@@ -73,7 +70,7 @@ def create_analytics_functions(conn):
     conn.commit()
 ```
 
-**Django migration with dollar-quoted function:**
+**ডলার-কোটেড ফাংশনসহ Django মাইগ্রেশন:**
 
 ```python
 from django.db import migrations
@@ -107,22 +104,20 @@ class Migration(migrations.Migration):
     ]
 ```
 
----
+## প্যারামিটারাইজড কোয়েরি এখনও প্রযোজ্য
 
-## Parameterized Queries Still Apply
-
-Dollar quoting handles **SQL structure**, not **user data**. Never interpolate user input into a dollar-quoted block — use parameterized queries for values:
+ডলার কোটিং SQL-এর **স্ট্রাকচার** সামলায়, ইউজার ডেটা নয়। ডলার-কোটেড ব্লকের ভেতরে কখনোই ইউজার ইনপুট ইন্টারপোলেট করবেন না — ভ্যালুর জন্য সবসময় প্যারামিটারাইজড কোয়েরি ব্যবহার করুন:
 
 ```python
-# BAD: SQL injection risk even with dollar quoting
+# খারাপ: ডলার কোটিং থাকা সত্ত্বেও SQL ইনজেকশনের ঝুঁকি
 def bad_search(conn, user_query: str):
     sql = f"""
     SELECT * FROM articles
     WHERE body @@ to_tsquery('english', $${user_query}$$);
     """
-    # ^^^ DO NOT DO THIS
+    # ^^^ এটি করবেন না
 
-# GOOD: parameterized value, dollar-quoted function body
+# ভালো: প্যারামিটারাইজড ভ্যালু, ডলার-কোটেড ফাংশন বডি
 def safe_search(conn, user_query: str):
     sql = """
     SELECT id, title, ts_rank(search_vector, query) AS rank
@@ -136,11 +131,9 @@ def safe_search(conn, user_query: str):
         return cur.fetchall()
 ```
 
----
+## FastAPI + asyncpg উদাহরণ
 
-## FastAPI + asyncpg Example
-
-With `asyncpg`, dollar quoting works identically — just use `$1`, `$2` for positional parameters (asyncpg-style), not `%s`:
+asyncpg-এর ক্ষেত্রে ডলার কোটিং হুবহু একইভাবে কাজ করে — শুধু positional প্যারামিটারের জন্য `%s` এর বদলে `$1`, `$2` (asyncpg-স্টাইল) ব্যবহার করুন:
 
 ```python
 from fastapi import FastAPI, Depends
@@ -177,20 +170,18 @@ async def setup_db(pool: asyncpg.Pool = Depends(get_pool)):
         await conn.execute(CREATE_UPSERT_FUNCTION)
 ```
 
----
+## Elasticsearch ইন্টিগ্রেশন নোট
 
-## Elasticsearch Integration Note
+PostgreSQL-এর কনটেন্ট Elasticsearch-এ ইনডেক্স করার সময় ফুল-টেক্সট সার্চ পাইপলাইনটি দেখতে এমন হয়:
 
-When indexing PostgreSQL content into Elasticsearch, the full-text search pipeline looks like:
+1. **PostgreSQL** — সোর্স অব ট্রুথ; tsvector ট্রিগার `search_vector` কলামটি আপডেটেড রাখে
+2. **Redis** — হট রিডের জন্য write-through ক্যাশ; pub/sub চ্যানেল ইনডেক্সারকে নোটিফাই করে
+3. **Elasticsearch** — একটি পাইথন ওয়ার্কারের মাধ্যমে ডিনরমালাইজড ডকুমেন্ট গ্রহণ করে, যা Redis চ্যানেল শোনে
 
-1. **PostgreSQL** — source of truth, tsvector triggers keep `search_vector` column fresh
-2. **Redis** — write-through cache for hot reads; pub/sub channel notifies the indexer
-3. **Elasticsearch** — receives denormalized documents via a Python worker that listens to the Redis channel
-
-The dollar-quoted trigger function above (`update_search_vector`) is the first step in this pipeline. The same event that updates `search_vector` can also push a Redis notification:
+উপরের ডলার-কোটেড ট্রিগার ফাংশনটি (`update_search_vector`) এই পাইপলাইনের প্রথম ধাপ। যে ইভেন্টটি `search_vector` আপডেট করে, সেটিই Redis-এ নোটিফিকেশন পাঠাতে পারে:
 
 ```python
-# In the same migration, extend the trigger function
+# একই মাইগ্রেশনে ট্রিগার ফাংশনটি সম্প্রসারিত করুন
 UPDATE_TRIGGER_SQL = """
 CREATE OR REPLACE FUNCTION update_search_vector()
 RETURNS TRIGGER AS $$
@@ -199,7 +190,7 @@ BEGIN
         setweight(to_tsvector('english', coalesce(NEW.title, '')), 'A') ||
         setweight(to_tsvector('english', coalesce(NEW.body, '')), 'B');
 
-    -- Notify the Elasticsearch indexer via pg_notify
+    -- pg_notify-এর মাধ্যমে Elasticsearch ইনডেক্সারকে নোটিফাই করুন
     PERFORM pg_notify('es_index_channel', NEW.id::TEXT);
 
     RETURN NEW;
@@ -208,15 +199,13 @@ $$ LANGUAGE plpgsql;
 """
 ```
 
----
+## সারসংক্ষেপ
 
-## Summary
+| প্যাটার্ন | ব্যবহারের ক্ষেত্র |
+|---------|-----------------|
+| `$$...$$` | মাইগ্রেশনে ফাংশন/প্রসিডিউর বডি |
+| `$body$...$body$` | নেস্টেড ডলার কোটিং, যখন বডিতেই `$$` থাকে |
+| `%s` / `$1` | ইউজার-সরবরাহকৃত ভ্যালু — সবসময় প্যারামিটারাইজড |
+| `psycopg2.sql.Identifier` | ডায়নামিক টেবিল/কলামের নাম — কখনোই f-string নয় |
 
-| Pattern | Use Case |
-|---|---|
-| `$$...$$` | Function/procedure bodies in migrations |
-| `$body$...$body$` | Nested dollar quoting when body itself contains `$$` |
-| `%s` / `$1` | User-supplied values — always parameterized |
-| `psycopg2.sql.Identifier` | Dynamic table/column names — never f-string |
-
-Dollar quoting is one of those PostgreSQL features that feels niche until you start writing real backend infrastructure — then it becomes indispensable.
+ডলার কোটিং PostgreSQL-এর সেই ফিচারগুলোর একটি, যা প্রথমে খুবই নিস (niche) মনে হয় — কিন্তু যখনই আপনি বাস্তব ব্যাকএন্ড ইনফ্রাস্ট্রাকচার লেখা শুরু করেন, তখন এটি অপরিহার্য হয়ে ওঠে।
