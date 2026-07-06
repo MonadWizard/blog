@@ -12,6 +12,7 @@ description: >-
 pubDate: 2020-07-06
 tags:
   - Backend
+  - Server
 draft: false
 ---
 journalctl হলো লিনাক্স সিস্টেমে লগ (Log) চেক করা এবং ট্রাবলশুট করার জন্য সবচেয়ে শক্তিশালী টুল। Systemd ভিত্তিক লিনাক্স ডিস্ট্রিবিউশনগুলোতে (যেমন: Ubuntu, CentOS, Debian) সমস্ত লগ `systemd-journald` সার্ভিসের মাধ্যমে একটি সেন্ট্রাল জায়গায় জমা হয়। আর এই লগগুলো পড়ার জন্যই `journalctl` ব্যবহার করা হয়।
