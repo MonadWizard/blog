@@ -1,5 +1,5 @@
 ---
-title: Monitoring Hub
+title: Monitoring Hub (Prometheus + Loki + Grafana)
 description: Here is your complete, consolidated documentation for setting up a
   production-ready **Monitoring Hub** on Amazon Linux 2023. This guide includes
   the exact configurations we tested and fixed.
