@@ -1,16 +1,31 @@
 ---
+type Marker = 'strength' | 'mock' | 'gate';
+
 interface Props {
   levelPath: string;
   levelTitle: string;
   title: string;
   descriptionHtml: string;
   depth: number;
+  markers?: Marker[];
 }
 
-const { levelPath, levelTitle, title, descriptionHtml, depth } = Astro.props;
+const { levelPath, levelTitle, title, descriptionHtml, depth, markers = [] } = Astro.props;
 
 const depthColors = ['#6366f1', '#8b5cf6', '#06b6d4', '#9ca3af'];
 const borderColor = depthColors[Math.min(depth, depthColors.length - 1)];
+
+const MARKER_EMOJI: Record<Marker, string> = { strength: '⭐', mock: '🎯', gate: '🔑' };
+const MARKER_LABEL: Record<Marker, string> = {
+  strength: 'Strength',
+  mock: 'Mock Interview',
+  gate: 'Phase Gate',
+};
+const MARKER_CLASS: Record<Marker, string> = {
+  strength: 'bg-amber-50 dark:bg-amber-950 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-800',
+  mock: 'bg-violet-50 dark:bg-violet-950 text-violet-700 dark:text-violet-400 border-violet-200 dark:border-violet-800',
+  gate: 'bg-rose-50 dark:bg-rose-950 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-800',
+};
 ---
 
 <div
@@ -28,6 +43,16 @@ const borderColor = depthColors[Math.min(depth, depthColors.length - 1)];
     </span>
     <h3 class="text-xl font-semibold text-gray-900 dark:text-white">{title}</h3>
   </div>
+
+  {markers.length > 0 && (
+    <div class="flex flex-wrap gap-1.5 mb-3">
+      {markers.map((m) => (
+        <span class={`inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full border ${MARKER_CLASS[m]}`}>
+          <span aria-hidden="true">{MARKER_EMOJI[m]}</span> {MARKER_LABEL[m]}
+        </span>
+      ))}
+    </div>
+  )}
 
   <div class="prose prose-sm dark:prose-invert max-w-none" set:html={descriptionHtml} />
 </div>

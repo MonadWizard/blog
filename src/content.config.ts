@@ -27,6 +27,7 @@ const stepSchema = z.object({
   levelTitle: z.string(),
   title: z.string(),
   description: z.string(),
+  markers: z.array(z.enum(['strength', 'mock', 'gate'])).default([]),
 });
 
 const journey = defineCollection({

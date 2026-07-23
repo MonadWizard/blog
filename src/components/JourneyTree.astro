@@ -1,12 +1,17 @@
 ---
 import JourneyTreeNode from './JourneyTreeNode.astro';
 
+type Marker = 'strength' | 'mock' | 'gate';
+
 interface Step {
   levelPath: string;
   levelTitle: string;
   title: string;
   description: string;
+  markers?: Marker[];
 }
+
+const MARKER_EMOJI: Record<Marker, string> = { strength: '⭐', mock: '🎯', gate: '🔑' };
 
 interface TreeNode {
   step: Step;
@@ -320,6 +325,13 @@ if (root) {
   svgHeight = Math.max(...nodes.map((n) => n.cy + n.height / 2)) + PADDING;
 }
 
+// Every depth is drawn on one shared horizontal row (org-chart layout), so a tree with a
+// very wide fanout at some depth (e.g. hundreds of leaf siblings across many branches)
+// produces an SVG too wide to be usable even with horizontal scroll. Past this width, skip
+// the SVG entirely and use the recursive stacked view (JourneyTreeNode) on all breakpoints.
+const SVG_MAX_WIDTH = 6000;
+const useSvg = root !== null && svgWidth <= SVG_MAX_WIDTH;
+
 ---
 
 {root ? (
@@ -327,6 +339,7 @@ if (root) {
   {/* Below `lg`, boxes rearrange into a vertical stack (JourneyTreeNode) instead
       of shrinking — this SVG tree keeps its true pixel size (never scaled down,
       so text never shrinks) and only scrolls horizontally if it overflows. */}
+  {useSvg && (
   <div class="hidden overflow-x-auto rounded-xl lg:block">
     <svg
       viewBox={`0 0 ${svgWidth} ${svgHeight}`}
@@ -390,6 +403,9 @@ if (root) {
           font-family: ui-sans-serif, system-ui, sans-serif;
           font-weight: 700;
         }
+        .rm-marker {
+          font-size: 12px;
+        }
       </style>
 
       <defs>
@@ -447,6 +463,18 @@ if (root) {
               />
             )}
 
+            {/* Marker badge (strength / mock / gate) in the top-right corner */}
+            {(node.step.markers?.length ?? 0) > 0 && (
+              <text
+                x={x + node.width - 8}
+                y={y + 15}
+                text-anchor="end"
+                class="rm-marker"
+              >
+                {node.step.markers!.map((m) => MARKER_EMOJI[m]).join('')}
+              </text>
+            )}
+
             {/* Category / level title + main step title, each wrapped and
                 centered to fit fully inside the box */}
             {node.lines.map((line) => (
@@ -464,8 +492,9 @@ if (root) {
       })}
     </svg>
   </div>
+  )}
 
-  <ul class="lg:hidden">
+  <ul class={useSvg ? 'lg:hidden' : ''}>
     <JourneyTreeNode node={root} depth={0} />
   </ul>
   </>

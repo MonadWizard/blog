@@ -6,12 +6,17 @@
 // instead of scaling down and text never overlaps.
 import JourneyTreeNode from './JourneyTreeNode.astro';
 
+type Marker = 'strength' | 'mock' | 'gate';
+
 interface Step {
   levelPath: string;
   levelTitle: string;
   title: string;
   description: string;
+  markers?: Marker[];
 }
+
+const MARKER_EMOJI: Record<Marker, string> = { strength: '⭐', mock: '🎯', gate: '🔑' };
 
 interface TreeNode {
   step: Step;
@@ -52,6 +57,11 @@ const fillDark = DEPTH_COLORS_DARK[Math.min(depth, DEPTH_COLORS_DARK.length - 1)
       {node.step.title}
     </div>
     {depth === 0 && <span class="rm-m-accent absolute inset-x-4 bottom-1.5 h-1 rounded-full" />}
+    {(node.step.markers?.length ?? 0) > 0 && (
+      <span class="absolute top-2 right-3 text-xs" aria-hidden="true">
+        {node.step.markers!.map((m) => MARKER_EMOJI[m]).join('')}
+      </span>
+    )}
   </a>
 
   {node.children.length > 0 && (
