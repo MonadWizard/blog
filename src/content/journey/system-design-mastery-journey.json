@@ -11,274 +11,266 @@
       "levelPath": "0",
       "levelTitle": "System Design Mastery",
       "title": "SYSTEM DESIGN MASTERY JOURNEY",
-      "description": "180 Days · 3 hours/day · 540 hours · 20 Mocks Prepared.\n\n**Legend:** ⭐ = your existing strength (rehearse articulation, don't re-learn) · 🎯 = scored mock interview · 🔑 = phase gate",
+      "description": "**What:** A complete, self-paced curriculum for reaching system-design interview mastery in 180 days at 3 hours/day (540 hours total), ending in 20 scored mock interviews.\n\n**How to complete:** Work top to bottom: Day 0 setup, then Phases 1–9 in strict order (each gates the next), running the 3 parallel tracks every week throughout. **Legend:** ⭐ = your existing strength (rehearse articulation, don't re-learn) · 🎯 = scored mock interview · 🔑 = phase gate.",
       "markers": []
     },
     {
       "levelPath": "1.0",
       "levelTitle": "180-Day Roadmap",
       "title": "📍 START — Day 0: Setup",
-      "description": "Foundational setup before Day 1 begins.",
+      "description": "**What:** The one-time logistics day before the clock starts — every tool and habit you'll lean on for the next 180 days gets set up once, here, so it never becomes friction later.\n\n**How to complete:** Work through all five setup items today, before Day 1. None of them are graded — you're done when the tools are installed and the calendar block exists.",
       "markers": []
     },
     {
       "levelPath": "2.0.0",
       "levelTitle": "📍 START — Day 0: Setup",
       "title": "Install Excalidraw / draw.io for diagramming",
-      "description": "Install Excalidraw / draw.io for diagramming",
+      "description": "**What:** A whiteboarding tool for sketching system diagrams — boxes, arrows, databases, queues — the same visual language interviewers expect on a whiteboard.\n\n**How to complete:** Install one (Excalidraw is faster to start with, browser-based, no account needed) and draw one throwaway diagram today just to learn the shortcuts.",
       "markers": []
     },
     {
       "levelPath": "2.0.1",
       "levelTitle": "📍 START — Day 0: Setup",
       "title": "Create markdown notes repo (git-tracked)",
-      "description": "Create markdown notes repo (git-tracked)",
+      "description": "**What:** A single git repository where every day's notes live as markdown files, giving you a searchable, versioned record of 180 days of learning.\n\n**How to complete:** Create a repo (e.g. `system-design-notes`), one markdown file per day or topic, and commit at the end of every study session — even short notes.",
       "markers": []
     },
     {
       "levelPath": "2.0.2",
       "levelTitle": "📍 START — Day 0: Setup",
       "title": "Set up screen+audio recording for self-review",
-      "description": "Set up screen+audio recording for self-review",
+      "description": "**What:** A way to record yourself talking through a design out loud, so you can watch it back later the way an interviewer would experience it.\n\n**How to complete:** Install OBS (or QuickTime/any screen recorder) and test it once now — record 60 seconds of you explaining any diagram, then play it back.",
       "markers": []
     },
     {
       "levelPath": "2.0.3",
       "levelTitle": "📍 START — Day 0: Setup",
       "title": "Order/download: Designing Data-Intensive Applications",
-      "description": "Order/download: Designing Data-Intensive Applications",
+      "description": "**What:** The single most-referenced system design book, covering storage engines, replication, partitioning, and consistency in more depth than any blog post.\n\n**How to complete:** Get a copy today (physical or ebook) — you'll be reading targeted chapters alongside Phases 1–3, not cover to cover in one sitting.",
       "markers": []
     },
     {
       "levelPath": "2.0.4",
       "levelTitle": "📍 START — Day 0: Setup",
       "title": "Block 3 hours/day in calendar — non-negotiable",
-      "description": "Block 3 hours/day in calendar — non-negotiable",
+      "description": "**What:** The actual time budget this entire 180-day plan is built on — without it reserved, every other day slips.\n\n**How to complete:** Open your calendar right now and create a recurring 3-hour daily block for the next 180 days before you close this tab.",
       "markers": []
     },
     {
       "levelPath": "1.1",
       "levelTitle": "180-Day Roadmap",
       "title": "🌳 PHASE 1 — FOUNDATIONS (Days 1–25)",
-      "description": "Goal: Fluency in estimation, networking, caching, relational internals.",
+      "description": "**What:** The base layer every later phase assumes you already have: fluent estimation, a working mental model of the network stack, sound API contracts, effective caching, and relational database internals.\n\n**How to complete:** Work the 5 branches below in order (they build on each other), then sit Gate 1. Don't advance to Phase 2 until you pass it.",
       "markers": []
     },
     {
       "levelPath": "2.1.0",
       "levelTitle": "🌳 PHASE 1 — FOUNDATIONS (Days 1–25)",
       "title": "Branch 1.1 — Estimation Fluency (Days 1–3)",
-      "description": "Branch 1.1 — Estimation Fluency (Days 1–3)",
+      "description": "**What:** The muscle of turning a vague prompt (\"design X for a billion users\") into concrete numbers — QPS, storage, bandwidth — before you've designed anything.\n\n**How to complete:** Work Days 1–3 in order; you're done when you can size an unfamiliar system to within an order of magnitude in under 5 minutes, unaided.",
       "markers": []
     },
     {
       "levelPath": "3.1.0.0",
       "levelTitle": "Branch 1.1 — Estimation Fluency (Days 1–3)",
       "title": "Day 1 · Latency numbers, orders of magnitude",
-      "description": "Deliverable: recite the full latency table from a blank page.",
+      "description": "**What:** The baseline latency figures (L1 cache, RAM, SSD, network round-trip, disk seek) that every other estimate in this roadmap is built on top of.\n\n**How to complete:** Study Jeff Dean's \"latency numbers every programmer should know\" table, then close it and rewrite the full table from a blank page until it's memorized.",
       "markers": []
     },
     {
       "levelPath": "3.1.0.1",
       "levelTitle": "Branch 1.1 — Estimation Fluency (Days 1–3)",
       "title": "Day 2 · Back-of-envelope: QPS, storage, bandwidth",
-      "description": "Deliverable: 10 estimation drills computed by hand.",
+      "description": "**What:** The three numbers you compute for almost any system design prompt: requests per second, bytes stored per year, and bytes moved per second.\n\n**How to complete:** Do 10 estimation drills by hand (e.g. \"storage for 500M photos/day\") without a calculator, showing your unit conversions at each step.",
       "markers": []
     },
     {
       "levelPath": "3.1.0.2",
       "levelTitle": "Branch 1.1 — Estimation Fluency (Days 1–3)",
       "title": "Day 3 · Peak vs average, growth modeling",
-      "description": "Deliverable: size a photo service + a chat service.",
+      "description": "**What:** Why average QPS underestimates real load — traffic spikes at peak hours, and systems must be sized for peak plus headroom, not the average.\n\n**How to complete:** Size a photo-sharing service and a chat service end-to-end, explicitly separating average load, peak multiplier, and a growth buffer for each.",
       "markers": []
     },
     {
       "levelPath": "2.1.1",
       "levelTitle": "🌳 PHASE 1 — FOUNDATIONS (Days 1–25)",
       "title": "Branch 1.2 — Network Layer (Days 4–11)",
-      "description": "Branch 1.2 — Network Layer (Days 4–11)",
+      "description": "**What:** Everything a request passes through between a client and your servers — transport protocols, TLS, HTTP versions, DNS, CDNs, and load balancers.\n\n**How to complete:** Work through Days 4–11 in order; you're done when you can trace a single HTTP request from browser to database and back, narrating every hop.",
       "markers": []
     },
     {
       "levelPath": "3.1.1.0",
       "levelTitle": "Branch 1.2 — Network Layer (Days 4–11)",
       "title": "Day 4 · TCP internals: handshake, congestion control, Nagle",
-      "description": "Day 4 · TCP internals: handshake, congestion control, Nagle",
+      "description": "**What:** The reliable-delivery protocol underneath almost everything — how it establishes a connection, avoids overwhelming the network, and batches small writes.\n\n**How to complete:** Draw the 3-way handshake from memory, then explain congestion control (slow start, AIMD) and what Nagle's algorithm trades off, out loud.",
       "markers": []
     },
     {
       "levelPath": "3.1.1.1",
       "levelTitle": "Branch 1.2 — Network Layer (Days 4–11)",
       "title": "Day 5 · UDP, QUIC — when to abandon TCP",
-      "description": "Day 5 · UDP, QUIC — when to abandon TCP",
+      "description": "**What:** The connectionless alternative to TCP, and QUIC — a modern protocol built on UDP that fixes TCP's head-of-line blocking for real-time and HTTP/3 traffic.\n\n**How to complete:** List 3 scenarios where UDP beats TCP (video calls, DNS, gaming) and explain, in one paragraph, what problem QUIC solves that TCP-over-TLS can't.",
       "markers": []
     },
     {
       "levelPath": "3.1.1.2",
       "levelTitle": "Branch 1.2 — Network Layer (Days 4–11)",
       "title": "Day 6 · TLS: handshake, resumption, mTLS, cert chains",
-      "description": "Day 6 · TLS: handshake, resumption, mTLS, cert chains",
+      "description": "**What:** The encryption layer that secures HTTP traffic — how two parties agree on keys, skip that work on reconnect, and how certificates prove identity.\n\n**How to complete:** Diagram a full TLS 1.3 handshake, then explain session resumption and how mTLS differs from ordinary TLS in one sentence each.",
       "markers": []
     },
     {
       "levelPath": "3.1.1.3",
       "levelTitle": "Branch 1.2 — Network Layer (Days 4–11)",
       "title": "Day 7 · HTTP/1.1 → HTTP/2 → HTTP/3, head-of-line blocking",
-      "description": "Day 7 · HTTP/1.1 → HTTP/2 → HTTP/3, head-of-line blocking",
+      "description": "**What:** How the request/response protocol evolved to fix its own bottlenecks — multiplexing in HTTP/2, then moving off TCP entirely in HTTP/3.\n\n**How to complete:** Explain head-of-line blocking at the TCP level and why HTTP/3 (over QUIC) fixes it where HTTP/2 could not, using a concrete example.",
       "markers": []
     },
     {
       "levelPath": "3.1.1.4",
       "levelTitle": "Branch 1.2 — Network Layer (Days 4–11)",
       "title": "Day 8 · DNS: resolution, TTL, anycast, GeoDNS",
-      "description": "Day 8 · DNS: resolution, TTL, anycast, GeoDNS",
+      "description": "**What:** The system that turns a domain name into an IP address, and how TTLs, anycast routing, and geo-aware answers control caching and traffic steering.\n\n**How to complete:** Trace a full DNS resolution path (recursive → root → TLD → authoritative) and explain how lowering a TTL before a migration reduces cutover risk.",
       "markers": []
     },
     {
       "levelPath": "3.1.1.5",
       "levelTitle": "Branch 1.2 — Network Layer (Days 4–11)",
       "title": "Day 9 · CDN architecture: PoPs, origin shield, invalidation",
-      "description": "Day 9 · CDN architecture: PoPs, origin shield, invalidation",
+      "description": "**What:** The globally distributed edge caches that serve static (and some dynamic) content close to users, shielding your origin servers from most traffic.\n\n**How to complete:** Explain what an origin shield protects against, and design a cache invalidation strategy for a CDN serving a news site's homepage.",
       "markers": []
     },
     {
       "levelPath": "3.1.1.6",
       "levelTitle": "Branch 1.2 — Network Layer (Days 4–11)",
       "title": "Day 10 · Load balancing L4 vs L7, algorithms, health checks",
-      "description": "Day 10 · Load balancing L4 vs L7, algorithms, health checks",
+      "description": "**What:** How incoming traffic gets spread across many servers — at the TCP level (L4, fast, protocol-blind) or the HTTP level (L7, smarter routing).\n\n**How to complete:** Compare L4 vs L7 load balancing with a concrete tradeoff each, and explain round-robin vs least-connections vs consistent-hashing balancing.",
       "markers": []
     },
     {
       "levelPath": "3.1.1.7",
       "levelTitle": "Branch 1.2 — Network Layer (Days 4–11)",
       "title": "Day 11 · Reverse proxies, API gateways, service mesh basics",
-      "description": "Day 11 · Reverse proxies, API gateways, service mesh basics",
+      "description": "**What:** The layers that sit in front of (reverse proxy, API gateway) or between (service mesh) your services, handling routing, auth, and observability.\n\n**How to complete:** Explain what an API gateway adds on top of a plain reverse proxy, and when a service mesh (e.g. Istio) becomes worth its operational cost.",
       "markers": []
     },
     {
       "levelPath": "2.1.2",
       "levelTitle": "🌳 PHASE 1 — FOUNDATIONS (Days 1–25)",
       "title": "Branch 1.3 — API Design (Days 12–15)",
-      "description": "Branch 1.3 — API Design (Days 12–15)",
+      "description": "**What:** The contract layer between clients and your system — REST, gRPC, GraphQL — and how that contract survives changing requirements over time.\n\n**How to complete:** Work through Days 12–15; you're done when you can justify a protocol choice (REST vs gRPC vs GraphQL) for a given client and defend a versioning strategy.",
       "markers": []
     },
     {
       "levelPath": "3.1.2.0",
       "levelTitle": "Branch 1.3 — API Design (Days 12–15)",
       "title": "Day 12 · REST: resources, idempotency, pagination patterns",
-      "description": "Day 12 · REST: resources, idempotency, pagination patterns",
+      "description": "**What:** The dominant HTTP API style — modeling state as resources with verbs, and the idempotency/pagination conventions that keep large REST APIs usable.\n\n**How to complete:** Design a paginated, idempotent REST API for a to-do list service, explicitly choosing cursor- vs offset-based pagination and justifying it.",
       "markers": []
     },
     {
       "levelPath": "3.1.2.1",
       "levelTitle": "Branch 1.3 — API Design (Days 12–15)",
       "title": "Day 13 · gRPC, protobuf, streaming RPC, schema evolution",
-      "description": "Day 13 · gRPC, protobuf, streaming RPC, schema evolution",
+      "description": "**What:** A binary, strongly-typed RPC framework built on HTTP/2 — faster and stricter than REST, with built-in support for streaming and schema versioning.\n\n**How to complete:** Write a small protobuf schema, then explain the field-numbering rules that let you evolve it without breaking old clients.",
       "markers": []
     },
     {
       "levelPath": "3.1.2.2",
       "levelTitle": "Branch 1.3 — API Design (Days 12–15)",
       "title": "Day 14 · GraphQL: resolvers, N+1, federation",
-      "description": "Day 14 · GraphQL: resolvers, N+1, federation",
+      "description": "**What:** A query language letting clients ask for exactly the fields they need across a graph of types — powerful, but prone to the N+1 query problem.\n\n**How to complete:** Explain how the N+1 problem arises in a GraphQL resolver and how DataLoader-style batching fixes it; sketch a federated schema across 2 services.",
       "markers": []
     },
     {
       "levelPath": "3.1.2.3",
       "levelTitle": "Branch 1.3 — API Design (Days 12–15)",
       "title": "Day 15 · Versioning, deprecation, contract testing",
-      "description": "Day 15 · Versioning, deprecation, contract testing",
+      "description": "**What:** How an API changes safely once it has real clients — version headers/URLs, deprecation windows, and automated tests that catch breaking changes.\n\n**How to complete:** Write a deprecation policy (timeline + client communication) for a public API endpoint, and describe how contract testing would catch a breaking change in CI.",
       "markers": []
     },
     {
       "levelPath": "2.1.3",
       "levelTitle": "🌳 PHASE 1 — FOUNDATIONS (Days 1–25)",
       "title": "Branch 1.4 — Caching Layer (Days 16–21)",
-      "description": "Branch 1.4 — Caching Layer (Days 16–21)",
+      "description": "**What:** The single highest-leverage technique for cutting latency and database load — and the set of failure modes (stampede, hot key) it introduces in exchange.\n\n**How to complete:** Work Days 16–21 in order; you're done when you can pick a caching strategy and eviction policy for a given workload and explain how it fails under load.",
       "markers": []
     },
     {
       "levelPath": "3.1.3.0",
       "levelTitle": "Branch 1.4 — Caching Layer (Days 16–21)",
       "title": "Day 16 · Strategies: aside, through, behind, refresh-ahead",
-      "description": "Day 16 · Strategies: aside, through, behind, refresh-ahead",
+      "description": "**What:** The four fundamental patterns for where the cache sits relative to reads and writes — each with different consistency and latency tradeoffs.\n\n**How to complete:** Draw all four (cache-aside, write-through, write-behind, refresh-ahead) and state which one you'd pick for a read-heavy product catalog, with why.",
       "markers": []
     },
     {
       "levelPath": "3.1.3.1",
       "levelTitle": "Branch 1.4 — Caching Layer (Days 16–21)",
       "title": "Day 17 · Eviction: LRU, LFU, ARC, W-TinyLFU; hit-rate math",
-      "description": "Day 17 · Eviction: LRU, LFU, ARC, W-TinyLFU; hit-rate math",
+      "description": "**What:** The policies that decide what gets kicked out of a full cache, and how to estimate the resulting hit rate for a given access pattern.\n\n**How to complete:** Compare LRU vs LFU vs W-TinyLFU on a workload with a small hot set, and compute the expected hit rate for a cache sized at 10% of the working set.",
       "markers": []
     },
     {
       "levelPath": "3.1.3.2",
       "levelTitle": "Branch 1.4 — Caching Layer (Days 16–21)",
       "title": "Day 18 · Failure modes: stampede, hot key, penetration",
-      "description": "Day 18 · Failure modes: stampede, hot key, penetration",
+      "description": "**What:** The three classic ways caching goes wrong: everyone recomputes the same expired key at once, one key gets disproportionate traffic, or requests for non-existent keys bypass the cache entirely.\n\n**How to complete:** For each failure mode, name one concrete mitigation (e.g. jittered TTLs, request coalescing, negative caching / bloom filters) and when you'd use it.",
       "markers": []
     },
     {
       "levelPath": "3.1.3.3",
       "levelTitle": "Branch 1.4 — Caching Layer (Days 16–21)",
       "title": "Day 19 · Redis internals: structures, memory, RDB vs AOF",
-      "description": "Day 19 · Redis internals: structures, memory, RDB vs AOF",
-      "markers": [
-        "strength"
-      ]
+      "description": "**What:** How Redis actually stores data in memory (its core data structures) and persists it to disk via snapshotting (RDB) or an append-only log (AOF).\n\n**How to complete:** Since this is a rehearsed strength, don't re-learn it — instead write out, unaided, the tradeoff between RDB and AOF and when you'd combine both.",
+      "markers": []
     },
     {
       "levelPath": "3.1.3.4",
       "levelTitle": "Branch 1.4 — Caching Layer (Days 16–21)",
       "title": "Day 20 · Redis Cluster, Sentinel, Streams, Lua",
-      "description": "Day 20 · Redis Cluster, Sentinel, Streams, Lua",
-      "markers": [
-        "strength"
-      ]
+      "description": "**What:** Redis's scaling and HA story (Cluster for sharding, Sentinel for failover) plus two power features: Streams for lightweight messaging and Lua for atomicity.\n\n**How to complete:** This is a rehearsed strength — practice articulating it fluently: explain how Redis Cluster shards keys and how Sentinel promotes a replica on failure.",
+      "markers": []
     },
     {
       "levelPath": "3.1.3.5",
       "levelTitle": "Branch 1.4 — Caching Layer (Days 16–21)",
       "title": "Day 21 · Multi-tier caching + coherence problems",
-      "description": "Day 21 · Multi-tier caching + coherence problems",
+      "description": "**What:** Stacking caches (browser → CDN → app → DB) for maximum speed, and the coherence problem that appears when one layer goes stale while others don't.\n\n**How to complete:** Design a 3-tier cache for a product page and describe exactly how an update propagates (or fails to) through all three tiers.",
       "markers": []
     },
     {
       "levelPath": "2.1.4",
       "levelTitle": "🌳 PHASE 1 — FOUNDATIONS (Days 1–25)",
       "title": "Branch 1.5 — Relational Internals (Days 22–24)",
-      "description": "Branch 1.5 — Relational Internals (Days 22–24)",
+      "description": "**What:** What actually happens inside Postgres/MySQL below the SQL layer — how rows are stored, how concurrent transactions don't see each other's half-finished work, and how indexes make queries fast.\n\n**How to complete:** Work Days 22–24; you're done when you can explain a query's execution plan and justify an index choice from first principles, not memorized rules.",
       "markers": []
     },
     {
       "levelPath": "3.1.4.0",
       "levelTitle": "Branch 1.5 — Relational Internals (Days 22–24)",
       "title": "Day 22 · Storage layout, MVCC, vacuum",
-      "description": "Day 22 · Storage layout, MVCC, vacuum",
-      "markers": [
-        "strength"
-      ]
+      "description": "**What:** How rows are physically laid out on disk, and MVCC — the mechanism that lets readers and writers proceed concurrently without blocking each other.\n\n**How to complete:** Rehearsed strength — practice explaining MVCC (row versions, xmin/xmax) and why vacuum exists to reclaim dead tuples, without notes.",
+      "markers": []
     },
     {
       "levelPath": "3.1.4.1",
       "levelTitle": "Branch 1.5 — Relational Internals (Days 22–24)",
       "title": "Day 23 · Isolation levels, phantoms, SSI, lock escalation",
-      "description": "Day 23 · Isolation levels, phantoms, SSI, lock escalation",
+      "description": "**What:** The spectrum of guarantees (read committed → serializable) about what a transaction can see mid-flight, and the anomalies each level still allows.\n\n**How to complete:** Give a concrete example of a phantom read and explain how Serializable Snapshot Isolation (SSI) prevents it without pessimistic locking.",
       "markers": []
     },
     {
       "levelPath": "3.1.4.2",
       "levelTitle": "Branch 1.5 — Relational Internals (Days 22–24)",
       "title": "Day 24 · Indexing: B-tree, GIN, GiST, BRIN, partial, covering",
-      "description": "Day 24 · Indexing: B-tree, GIN, GiST, BRIN, partial, covering",
-      "markers": [
-        "strength"
-      ]
+      "description": "**What:** The index types Postgres offers beyond the default B-tree, each suited to a different data shape (full-text, geometric, append-only, filtered).\n\n**How to complete:** Rehearsed strength — for a given query, practice picking the right index type (e.g. GIN for JSONB, BRIN for time-ordered logs) and justifying it aloud.",
+      "markers": []
     },
     {
       "levelPath": "2.1.5",
       "levelTitle": "🌳 PHASE 1 — FOUNDATIONS (Days 1–25)",
       "title": "🎯 GATE 1 — Day 25 · MOCK #1: URL Shortener",
-      "description": "**Tests:** estimation, hashing, cache design, read-heavy scale\n\n**🔑 Exit criteria:**\n- Size any system to ±1 order of magnitude in <5 min\n- Trace an HTTP request browser→DB→browser without notes",
+      "description": "**What:** The first scored checkpoint — a full mock interview that forces you to combine everything from Phase 1 (estimation, networking, caching, relational basics) under real time pressure.\n\n**How to complete:** Sit the mock cold, timed to 45 minutes, then score yourself against: estimation, hashing, cache design, read-heavy scale. Don't move on until you can truthfully check off:\n- Size any system to ±1 order of magnitude in <5 min\n- Trace an HTTP request browser→DB→browser without notes",
       "markers": [
         "mock",
         "gate"
@@ -288,225 +280,217 @@
       "levelPath": "1.2",
       "levelTitle": "180-Day Roadmap",
       "title": "🌳 PHASE 2 — DATA LAYER MASTERY (Days 26–50)",
-      "description": "Goal: Pick the right storage engine for any access pattern and defend it.",
+      "description": "**What:** Everything that determines whether a system can actually hold and serve its data at scale — the storage engine and access pattern behind every design.\n\n**How to complete:** Work the 5 branches in order, then sit Gate 2. Don't advance until you can defend a storage choice against two named alternatives.",
       "markers": []
     },
     {
       "levelPath": "2.2.0",
       "levelTitle": "🌳 PHASE 2 — DATA LAYER MASTERY (Days 26–50)",
       "title": "Branch 2.1 — Postgres in Production (Days 26–30)",
-      "description": "Branch 2.1 — Postgres in Production (Days 26–30)",
+      "description": "**What:** Running a relational database for real — connection limits, replicas, failover, and the query-plan literacy to fix a slow query instead of guessing.\n\n**How to complete:** Work Days 26–30 in order; you're done when you can read an EXPLAIN ANALYZE output and propose a concrete fix for a slow join.",
       "markers": []
     },
     {
       "levelPath": "3.2.0.0",
       "levelTitle": "Branch 2.1 — Postgres in Production (Days 26–30)",
       "title": "Day 26 · Connection pooling, PgBouncer modes, sizing math",
-      "description": "Day 26 · Connection pooling, PgBouncer modes, sizing math",
-      "markers": [
-        "strength"
-      ]
+      "description": "**What:** Why a database can't handle thousands of raw client connections, and how PgBouncer's session/transaction/statement modes trade isolation for capacity.\n\n**How to complete:** Rehearsed strength — practice deriving a pool size from (max_connections, concurrent app instances) and explaining transaction-mode PgBouncer.",
+      "markers": []
     },
     {
       "levelPath": "3.2.0.1",
       "levelTitle": "Branch 2.1 — Postgres in Production (Days 26–30)",
       "title": "Day 27 · Read replicas, replication lag, read-your-writes",
-      "description": "Day 27 · Read replicas, replication lag, read-your-writes",
+      "description": "**What:** Scaling reads by copying data to follower nodes, and the staleness window (replication lag) that can make a user's own write appear to vanish.\n\n**How to complete:** Design a read-your-writes guarantee for a user profile page that reads from a replica, explaining exactly where you'd route the post-write read.",
       "markers": []
     },
     {
       "levelPath": "3.2.0.2",
       "levelTitle": "Branch 2.1 — Postgres in Production (Days 26–30)",
       "title": "Day 28 · HA: streaming replication, Patroni, split-brain",
-      "description": "Day 28 · HA: streaming replication, Patroni, split-brain",
+      "description": "**What:** Automated primary failover for Postgres, and the split-brain risk when two nodes both believe they're the primary at once.\n\n**How to complete:** Explain how Patroni uses a distributed consensus store (etcd/Consul) to prevent split-brain during a failover, step by step.",
       "markers": []
     },
     {
       "levelPath": "3.2.0.3",
       "levelTitle": "Branch 2.1 — Postgres in Production (Days 26–30)",
       "title": "Day 29 · Query optimization: EXPLAIN ANALYZE, join strategies",
-      "description": "Day 29 · Query optimization: EXPLAIN ANALYZE, join strategies",
-      "markers": [
-        "strength"
-      ]
+      "description": "**What:** Reading Postgres's actual query execution plan to find the real bottleneck (sequential scan, bad join order, missing index) instead of guessing.\n\n**How to complete:** Rehearsed strength — practice reading an EXPLAIN ANALYZE output live and narrating exactly which line reveals the problem and why.",
+      "markers": []
     },
     {
       "levelPath": "3.2.0.4",
       "levelTitle": "Branch 2.1 — Postgres in Production (Days 26–30)",
       "title": "Day 30 · Normalization vs denormalization — when to duplicate",
-      "description": "Day 30 · Normalization vs denormalization — when to duplicate",
+      "description": "**What:** The tradeoff between a clean normalized schema (no duplication, more joins) and a denormalized one (duplicated data, faster reads, harder writes).\n\n**How to complete:** Take one normalized schema and denormalize one table for a specific read pattern, explaining exactly what write-path complexity you accepted.",
       "markers": []
     },
     {
       "levelPath": "2.2.1",
       "levelTitle": "🌳 PHASE 2 — DATA LAYER MASTERY (Days 26–50)",
       "title": "Branch 2.2 — Storage Engines (Days 31–35)",
-      "description": "Branch 2.2 — Storage Engines (Days 31–35)",
+      "description": "**What:** How different databases store data under the hood — log-structured (LSM) vs B-tree, and the distributed engines (Cassandra, DynamoDB) built on top of them.\n\n**How to complete:** Work Days 31–35; you're done when you can name a storage engine for a given access pattern and state its write/read amplification tradeoff.",
       "markers": []
     },
     {
       "levelPath": "3.2.1.0",
       "levelTitle": "Branch 2.2 — Storage Engines (Days 31–35)",
       "title": "Day 31 · LSM trees: memtable, SSTable, compaction",
-      "description": "Day 31 · LSM trees: memtable, SSTable, compaction",
+      "description": "**What:** The write-optimized storage structure behind Cassandra, RocksDB, and many NoSQL stores — buffering writes in memory, flushing sorted files, and merging them.\n\n**How to complete:** Draw the memtable → SSTable → compaction pipeline and explain why LSM trees favor write throughput over read latency.",
       "markers": []
     },
     {
       "levelPath": "3.2.1.1",
       "levelTitle": "Branch 2.2 — Storage Engines (Days 31–35)",
       "title": "Day 32 · B-tree vs LSM: write/read/space amplification",
-      "description": "Day 32 · B-tree vs LSM: write/read/space amplification",
+      "description": "**What:** The three-way tradeoff between the two dominant storage structures — how much extra I/O or space each pays for a given workload.\n\n**How to complete:** Fill in a comparison table (write amp, read amp, space amp) for B-tree vs LSM and state which wins for a write-heavy time-series workload.",
       "markers": []
     },
     {
       "levelPath": "3.2.1.2",
       "levelTitle": "Branch 2.2 — Storage Engines (Days 31–35)",
       "title": "Day 33 · Cassandra: ring, tunable consistency, hinted handoff",
-      "description": "Day 33 · Cassandra: ring, tunable consistency, hinted handoff",
+      "description": "**What:** A leaderless, ring-partitioned database where you tune the consistency/availability tradeoff per query via read/write quorum settings.\n\n**How to complete:** Explain how consistent hashing places a key on Cassandra's ring, and how hinted handoff covers a temporarily unreachable replica.",
       "markers": []
     },
     {
       "levelPath": "3.2.1.3",
       "levelTitle": "Branch 2.2 — Storage Engines (Days 31–35)",
       "title": "Day 34 · DynamoDB: partition keys, GSI/LSI, single-table design",
-      "description": "Day 34 · DynamoDB: partition keys, GSI/LSI, single-table design",
+      "description": "**What:** A managed key-value/document store where partition key choice and index design (GSI/LSI) determine both performance and cost.\n\n**How to complete:** Design a single-table DynamoDB schema for an e-commerce order system, choosing partition/sort keys and one GSI, and justify each choice.",
       "markers": []
     },
     {
       "levelPath": "3.2.1.4",
       "levelTitle": "Branch 2.2 — Storage Engines (Days 31–35)",
       "title": "Day 35 · Hot partitions and write-sharding mitigation",
-      "description": "Day 35 · Hot partitions and write-sharding mitigation",
+      "description": "**What:** What happens when one partition key absorbs disproportionate traffic (a celebrity user, a viral item), and the sharding tricks that spread the load.\n\n**How to complete:** Propose a write-sharding scheme (e.g. suffixing the partition key) for a hot counter, and explain how you'd merge the shards on read.",
       "markers": []
     },
     {
       "levelPath": "2.2.2",
       "levelTitle": "🌳 PHASE 2 — DATA LAYER MASTERY (Days 26–50)",
       "title": "Branch 2.3 — Non-Relational & Files (Days 36–40)",
-      "description": "Branch 2.3 — Non-Relational & Files (Days 36–40)",
+      "description": "**What:** Storage systems built for data that doesn't fit rows and columns — documents, blobs, content-addressed chunks, distributed filesystems, and distributed SQL.\n\n**How to complete:** Work Days 36–40; you're done when you can pick between a document store, object storage, or distributed SQL for a given data shape and justify it.",
       "markers": []
     },
     {
       "levelPath": "3.2.2.0",
       "levelTitle": "Branch 2.3 — Non-Relational & Files (Days 36–40)",
       "title": "Day 36 · Document stores: MongoDB, embedded vs referenced",
-      "description": "Day 36 · Document stores: MongoDB, embedded vs referenced",
+      "description": "**What:** A schema-flexible store for JSON-like documents, and the embedding-vs-referencing decision that mirrors normalization tradeoffs in a new shape.\n\n**How to complete:** Model a blog-with-comments in MongoDB two ways (embedded, referenced) and state which access pattern makes each the right choice.",
       "markers": []
     },
     {
       "levelPath": "3.2.2.1",
       "levelTitle": "Branch 2.3 — Non-Relational & Files (Days 36–40)",
       "title": "Day 37 · Object storage: S3 internals, multipart, lifecycle",
-      "description": "Day 37 · Object storage: S3 internals, multipart, lifecycle",
+      "description": "**What:** Flat, infinitely-scalable blob storage — how large uploads are split into parts, and how lifecycle rules automatically tier or expire old objects.\n\n**How to complete:** Explain the multipart upload protocol (init, part upload, complete) and design a lifecycle policy that moves old objects to cold storage after 90 days.",
       "markers": []
     },
     {
       "levelPath": "3.2.2.2",
       "levelTitle": "Branch 2.3 — Non-Relational & Files (Days 36–40)",
       "title": "Day 38 · Content-addressed storage, chunking, Rabin dedup",
-      "description": "Day 38 · Content-addressed storage, chunking, Rabin dedup",
+      "description": "**What:** Storing data by the hash of its content instead of a path, and Rabin fingerprinting — a way to chunk files so identical content dedupes even after edits.\n\n**How to complete:** Explain why content-addressing gives free deduplication, and how Rabin chunking (vs fixed-size chunking) survives a small insertion in the middle of a file.",
       "markers": []
     },
     {
       "levelPath": "3.2.2.3",
       "levelTitle": "Branch 2.3 — Non-Relational & Files (Days 36–40)",
       "title": "Day 39 · Distributed FS: GFS, HDFS, Colossus",
-      "description": "Day 39 · Distributed FS: GFS, HDFS, Colossus",
+      "description": "**What:** Filesystems built for the same clusters running MapReduce/Spark — how they replicate blocks and separate metadata (namenode) from data (datanodes).\n\n**How to complete:** Draw the read path for HDFS (client → namenode → datanode) and explain why namenode availability is a classic single point of failure to solve.",
       "markers": []
     },
     {
       "levelPath": "3.2.2.4",
       "levelTitle": "Branch 2.3 — Non-Relational & Files (Days 36–40)",
       "title": "Day 40 · Distributed SQL: Spanner, CockroachDB, TiDB, Vitess",
-      "description": "Day 40 · Distributed SQL: Spanner, CockroachDB, TiDB, Vitess",
+      "description": "**What:** Systems that give you SQL and horizontal scale together — via true global clocks (Spanner) or Raft-replicated shards (CockroachDB, TiDB).\n\n**How to complete:** Explain what TrueTime buys Spanner that a normal clock can't, and how CockroachDB achieves similar guarantees without atomic clocks.",
       "markers": []
     },
     {
       "levelPath": "2.2.3",
       "levelTitle": "🌳 PHASE 2 — DATA LAYER MASTERY (Days 26–50)",
       "title": "Branch 2.4 — Search Infrastructure (Days 41–45)",
-      "description": "Branch 2.4 — Search Infrastructure (Days 41–45)",
+      "description": "**What:** How full-text search actually works — inverted indexes, tokenization, and relevance scoring — culminating in operating Elasticsearch at scale.\n\n**How to complete:** Work Days 41–45; you're done when you can size an Elasticsearch cluster and explain your own CDC→ES pipeline end to end without notes.",
       "markers": []
     },
     {
       "levelPath": "3.2.3.0",
       "levelTitle": "Branch 2.4 — Search Infrastructure (Days 41–45)",
       "title": "Day 41 · Inverted indexes, postings, compression, skip lists",
-      "description": "Day 41 · Inverted indexes, postings, compression, skip lists",
+      "description": "**What:** The core data structure of search — mapping each term to the list of documents containing it, compressed and skip-listed for fast intersection.\n\n**How to complete:** Build a tiny inverted index by hand for 5 sentences, then explain why postings lists are compressed with delta + variable-byte encoding.",
       "markers": []
     },
     {
       "levelPath": "3.2.3.1",
       "levelTitle": "Branch 2.4 — Search Infrastructure (Days 41–45)",
       "title": "Day 42 · Tokenization, analyzers, stemming, n-grams",
-      "description": "Day 42 · Tokenization, analyzers, stemming, n-grams",
+      "description": "**What:** How raw text becomes searchable terms — splitting, lowercasing, stemming to a root form, and n-grams for partial/fuzzy matching.\n\n**How to complete:** Trace \"Running shoes!\" through a standard analyzer step by step, then explain when you'd add an n-gram tokenizer instead (e.g. autocomplete).",
       "markers": []
     },
     {
       "levelPath": "3.2.3.2",
       "levelTitle": "Branch 2.4 — Search Infrastructure (Days 41–45)",
       "title": "Day 43 · Scoring: TF-IDF, BM25, precision vs recall",
-      "description": "Day 43 · Scoring: TF-IDF, BM25, precision vs recall",
+      "description": "**What:** How search engines rank matching documents — term frequency weighted against how common a term is overall — and the precision/recall tradeoff in tuning it.\n\n**How to complete:** Compute a toy TF-IDF score by hand for one term/document, then explain what BM25 changes about TF-IDF's saturation behavior.",
       "markers": []
     },
     {
       "levelPath": "3.2.3.3",
       "levelTitle": "Branch 2.4 — Search Infrastructure (Days 41–45)",
       "title": "Day 44 · Elasticsearch architecture, shard sizing math",
-      "description": "Day 44 · Elasticsearch architecture, shard sizing math",
-      "markers": [
-        "strength"
-      ]
+      "description": "**What:** How Elasticsearch clusters shard and replicate an index across nodes, and the sizing math (shard count vs data volume vs node count) that keeps it healthy.\n\n**How to complete:** Rehearsed strength — practice deriving a shard count for a given daily index volume and retention period, out loud, from the sizing formula.",
+      "markers": []
     },
     {
       "levelPath": "3.2.3.4",
       "levelTitle": "Branch 2.4 — Search Infrastructure (Days 41–45)",
       "title": "Day 45 · ES at scale: refresh, bulk index, hot-warm-cold",
-      "description": "Case study: your own CDC → ES pipeline.",
-      "markers": [
-        "strength"
-      ]
+      "description": "**What:** Operating Elasticsearch under real write load — refresh interval tuning, bulk indexing, and tiering old indices to cheaper \"warm\"/\"cold\" nodes.\n\n**How to complete:** Rehearsed strength — narrate your own CDC → Elasticsearch pipeline end to end as a 5-minute case study, including one real tuning decision you made.",
+      "markers": []
     },
     {
       "levelPath": "2.2.4",
       "levelTitle": "🌳 PHASE 2 — DATA LAYER MASTERY (Days 26–50)",
       "title": "Branch 2.5 — Probabilistic & Hashing (Days 46–49)",
-      "description": "Branch 2.5 — Probabilistic & Hashing (Days 46–49)",
+      "description": "**What:** Space-efficient approximate data structures that trade a small, bounded error for massive memory savings — plus the hashing schemes that keep distributed data balanced.\n\n**How to complete:** Work Days 46–49; you're done when you can pick a probabilistic structure for a given constraint (memory vs exactness) and explain its error bound.",
       "markers": []
     },
     {
       "levelPath": "3.2.4.0",
       "levelTitle": "Branch 2.5 — Probabilistic & Hashing (Days 46–49)",
       "title": "Day 46 · Vector search: embeddings, HNSW, IVF, hybrid",
-      "description": "Day 46 · Vector search: embeddings, HNSW, IVF, hybrid",
+      "description": "**What:** Finding the nearest vectors to a query embedding at scale — via graph-based (HNSW) or cluster-based (IVF) approximate nearest-neighbor indexes.\n\n**How to complete:** Explain how HNSW's layered graph structure speeds up search versus brute-force cosine similarity, and when you'd combine vector search with keyword filters.",
       "markers": []
     },
     {
       "levelPath": "3.2.4.1",
       "levelTitle": "Branch 2.5 — Probabilistic & Hashing (Days 46–49)",
       "title": "Day 47 · Bloom, Cuckoo, quotient filters; false-positive math",
-      "description": "Day 47 · Bloom, Cuckoo, quotient filters; false-positive math",
+      "description": "**What:** Probabilistic set-membership structures that answer \"maybe present\" or \"definitely absent\" in a fraction of the memory a real set would need.\n\n**How to complete:** Compute the expected false-positive rate for a Bloom filter given its size and hash count, and explain one advantage Cuckoo filters have over Bloom filters.",
       "markers": []
     },
     {
       "levelPath": "3.2.4.2",
       "levelTitle": "Branch 2.5 — Probabilistic & Hashing (Days 46–49)",
       "title": "Day 48 · HyperLogLog, Count-Min Sketch",
-      "description": "Day 48 · HyperLogLog, Count-Min Sketch",
+      "description": "**What:** Approximating cardinality (\"how many unique visitors\") and frequency (\"how often did X appear\") in near-constant memory regardless of dataset size.\n\n**How to complete:** Explain, at a high level, how HyperLogLog uses the position of leading zeros in hashes to estimate cardinality, and Count-Min Sketch's error tradeoff.",
       "markers": []
     },
     {
       "levelPath": "3.2.4.3",
       "levelTitle": "Branch 2.5 — Probabilistic & Hashing (Days 46–49)",
       "title": "Day 49 · Consistent hashing, jump hash, rendezvous hashing",
-      "description": "Day 49 · Consistent hashing, jump hash, rendezvous hashing",
+      "description": "**What:** The hashing schemes that let you add/remove nodes from a distributed system while remapping only a small fraction of keys, instead of nearly all of them.\n\n**How to complete:** Draw consistent hashing's ring and show, concretely, how few keys move when one node is added — then explain when jump hash is a simpler, better fit.",
       "markers": []
     },
     {
       "levelPath": "2.2.5",
       "levelTitle": "🌳 PHASE 2 — DATA LAYER MASTERY (Days 26–50)",
       "title": "🎯 GATE 2 — Day 50 · MOCK #2: Distributed Key-Value Store",
-      "description": "**Tests:** partitioning, replication, consistency, engine choice\n\n**🔑 Exit criteria:**\n- For any access pattern: name an engine, beat two alternatives, state the cost of your choice",
+      "description": "**What:** The Phase 2 checkpoint — a mock that forces you to choose and defend a storage engine, partitioning scheme, and consistency model under interview conditions.\n\n**How to complete:** Sit the mock cold, timed to 45 minutes, then score yourself against: partitioning, replication, consistency, engine choice. Don't move on until you can truthfully check off:\n- For any access pattern: name an engine, beat two alternatives, state the cost of your choice",
       "markers": [
         "mock",
         "gate"
@@ -516,226 +500,224 @@
       "levelPath": "1.3",
       "levelTitle": "180-Day Roadmap",
       "title": "🌳 PHASE 3 — DISTRIBUTED SYSTEMS THEORY (Days 51–75)",
-      "description": "Goal: Reason correctly about consistency, consensus, partial failure — this is what separates senior from mid-level answers.",
+      "description": "**What:** The theory that separates senior answers from mid-level ones: reasoning correctly about consistency, consensus, and partial failure instead of gesturing at buzzwords.\n\n**How to complete:** Work the 6 branches in order — they build directly on each other — then sit Gate 3. Don't advance until every consistency claim you make is precise.",
       "markers": []
     },
     {
       "levelPath": "2.3.0",
       "levelTitle": "🌳 PHASE 3 — DISTRIBUTED SYSTEMS THEORY (Days 51–75)",
       "title": "Branch 3.1 — Consistency Foundations (Days 51–53)",
-      "description": "Branch 3.1 — Consistency Foundations (Days 51–53)",
+      "description": "**What:** The vocabulary for talking precisely about what a distributed system guarantees — CAP, PACELC, and the full spectrum from linearizable to eventual consistency.\n\n**How to complete:** Work Days 51–53; you're done when you can classify a real system's guarantees correctly instead of reflexively citing CAP.",
       "markers": []
     },
     {
       "levelPath": "3.3.0.0",
       "levelTitle": "Branch 3.1 — Consistency Foundations (Days 51–53)",
       "title": "Day 51 · CAP — what it actually says, and common misuses",
-      "description": "Day 51 · CAP — what it actually says, and common misuses",
+      "description": "**What:** The theorem that a partitioned system must choose consistency or availability — and the many ways it gets misquoted as \"pick 2 of 3, always\".\n\n**How to complete:** Write, in your own words, what CAP actually claims (only during a partition) and name one common CAP misconception you've heard in interviews.",
       "markers": []
     },
     {
       "levelPath": "3.3.0.1",
       "levelTitle": "Branch 3.1 — Consistency Foundations (Days 51–53)",
       "title": "Day 52 · PACELC; classify five real systems",
-      "description": "Day 52 · PACELC; classify five real systems",
+      "description": "**What:** CAP's extension: even without a partition, you still trade latency for consistency — PACELC makes that everyday tradeoff explicit.\n\n**How to complete:** Classify 5 real systems (e.g. DynamoDB, Spanner, MongoDB, Cassandra, Postgres) on the PA/EL axis and justify each placement in one line.",
       "markers": []
     },
     {
       "levelPath": "3.3.0.2",
       "levelTitle": "Branch 3.1 — Consistency Foundations (Days 51–53)",
       "title": "Day 53 · Full spectrum: linearizable → eventual; session guarantees",
-      "description": "Day 53 · Full spectrum: linearizable → eventual; session guarantees",
+      "description": "**What:** The full ladder of consistency models between the strongest (linearizable) and weakest (eventual), including session guarantees like read-your-writes.\n\n**How to complete:** Order 6 consistency models from strongest to weakest and give one system that provides each, from linearizable down to eventual.",
       "markers": []
     },
     {
       "levelPath": "2.3.1",
       "levelTitle": "🌳 PHASE 3 — DISTRIBUTED SYSTEMS THEORY (Days 51–75)",
       "title": "Branch 3.2 — Replication & Partitioning (Days 54–59)",
-      "description": "Branch 3.2 — Replication & Partitioning (Days 54–59)",
+      "description": "**What:** How data gets copied across nodes for durability (replication) and split across nodes for scale (partitioning) — and everything that can go wrong in each.\n\n**How to complete:** Work Days 54–59; you're done when you can design a replication + partitioning scheme for a new system and name its failure modes upfront.",
       "markers": []
     },
     {
       "levelPath": "3.3.1.0",
       "levelTitle": "Branch 3.2 — Replication & Partitioning (Days 54–59)",
       "title": "Day 54 · Single-leader mechanics, failover pitfalls, lost updates",
-      "description": "Day 54 · Single-leader mechanics, failover pitfalls, lost updates",
+      "description": "**What:** The most common replication topology — one writer, many readers — and the lost-update and stale-failover bugs that appear when it fails over badly.\n\n**How to complete:** Walk through a failover where an unacknowledged write is lost, and propose one mitigation (e.g. synchronous replication to at least one follower).",
       "markers": []
     },
     {
       "levelPath": "3.3.1.1",
       "levelTitle": "Branch 3.2 — Replication & Partitioning (Days 54–59)",
       "title": "Day 55 · Multi-leader, conflict detection, geo-distributed writes",
-      "description": "Day 55 · Multi-leader, conflict detection, geo-distributed writes",
+      "description": "**What:** Accepting writes at multiple nodes (often per-region) for low-latency geo-distributed writes, at the cost of needing to detect and resolve conflicts.\n\n**How to complete:** Design a conflict resolution strategy (last-write-wins vs merge) for a geo-distributed shopping cart and explain what each strategy loses.",
       "markers": []
     },
     {
       "levelPath": "3.3.1.2",
       "levelTitle": "Branch 3.2 — Replication & Partitioning (Days 54–59)",
       "title": "Day 56 · Leaderless (Dynamo-style), quorums, W+R>N math",
-      "description": "Day 56 · Leaderless (Dynamo-style), quorums, W+R>N math",
+      "description": "**What:** No designated leader — clients write to and read from a quorum of replicas, and the W+R>N inequality is what guarantees overlap between them.\n\n**How to complete:** Pick N/W/R values for a given availability/consistency target and prove, with the inequality, that a read is guaranteed to see the latest write.",
       "markers": []
     },
     {
       "levelPath": "3.3.1.3",
       "levelTitle": "Branch 3.2 — Replication & Partitioning (Days 54–59)",
       "title": "Day 57 · Anti-entropy, Merkle trees, gossip protocols",
-      "description": "Day 57 · Anti-entropy, Merkle trees, gossip protocols",
+      "description": "**What:** How leaderless systems repair replicas that drifted out of sync — comparing Merkle tree hashes to find differences efficiently, and gossip to spread state.\n\n**How to complete:** Explain how a Merkle tree comparison avoids transferring an entire dataset to find a handful of differing keys between two replicas.",
       "markers": []
     },
     {
       "levelPath": "3.3.1.4",
       "levelTitle": "Branch 3.2 — Replication & Partitioning (Days 54–59)",
       "title": "Day 58 · Secondary indexes in partitioned data: local vs global",
-      "description": "Day 58 · Secondary indexes in partitioned data: local vs global",
+      "description": "**What:** Once data is sharded by primary key, indexing by a different field means choosing between a local index (per-shard, fast write, scatter-gather read) or a global one (fast read, cross-shard write).\n\n**How to complete:** For a given query pattern, choose local vs global secondary indexing and state the exact write-path cost of your choice.",
       "markers": []
     },
     {
       "levelPath": "3.3.1.5",
       "levelTitle": "Branch 3.2 — Replication & Partitioning (Days 54–59)",
       "title": "Day 59 · Rebalancing, request routing, ZooKeeper/etcd",
-      "description": "Day 59 · Rebalancing, request routing, ZooKeeper/etcd",
+      "description": "**What:** How a cluster moves data when nodes are added/removed without downtime, and the coordination service (ZooKeeper/etcd) that tracks where each shard lives.\n\n**How to complete:** Describe a rebalancing plan that avoids a thundering herd of data movement, and explain what ZooKeeper/etcd stores to make request routing correct.",
       "markers": []
     },
     {
       "levelPath": "2.3.2",
       "levelTitle": "🌳 PHASE 3 — DISTRIBUTED SYSTEMS THEORY (Days 51–75)",
       "title": "Branch 3.3 — Consensus (Days 60–63)",
-      "description": "Branch 3.3 — Consensus (Days 60–63)",
+      "description": "**What:** How a group of unreliable nodes agrees on a single value or leader — the algorithmic core (Paxos, Raft) underneath every strongly-consistent distributed system.\n\n**How to complete:** Work Days 60–63; you're done when you can explain Raft's leader election and log replication well enough to reason about a split-brain incident.",
       "markers": []
     },
     {
       "levelPath": "3.3.2.0",
       "levelTitle": "Branch 3.3 — Consensus (Days 60–63)",
       "title": "Day 60 · Paxos conceptually; safety vs liveness",
-      "description": "Day 60 · Paxos conceptually; safety vs liveness",
+      "description": "**What:** The original consensus algorithm — notoriously hard to implement, but the conceptual root of every algorithm that lets nodes agree despite failures.\n\n**How to complete:** Explain, without the formal proof, why Paxos guarantees safety (never two different values chosen) even though it can't guarantee liveness always.",
       "markers": []
     },
     {
       "levelPath": "3.3.2.1",
       "levelTitle": "Branch 3.3 — Consensus (Days 60–63)",
       "title": "Day 61 · Raft: election, log replication, membership change",
-      "description": "Day 61 · Raft: election, log replication, membership change",
+      "description": "**What:** The consensus algorithm designed to be understandable — explicit leader election, a replicated log, and a defined protocol for changing cluster membership.\n\n**How to complete:** Draw a Raft leader election (term increment, vote request, majority) and explain how log replication commits an entry only after majority ack.",
       "markers": []
     },
     {
       "levelPath": "3.3.2.2",
       "levelTitle": "Branch 3.3 — Consensus (Days 60–63)",
       "title": "Day 62 · Split brain, fencing tokens, STONITH + real postmortems",
-      "description": "Day 62 · Split brain, fencing tokens, STONITH + real postmortems",
+      "description": "**What:** What happens when a network partition causes two nodes to both believe they're the leader, and the techniques (fencing tokens, STONITH) that prevent damage.\n\n**How to complete:** Read one real split-brain postmortem and explain how a fencing token would have prevented the stale leader from committing a conflicting write.",
       "markers": []
     },
     {
       "levelPath": "3.3.2.3",
       "levelTitle": "Branch 3.3 — Consensus (Days 60–63)",
       "title": "Day 63 · Distributed locks, lease expiry, the Redlock debate",
-      "description": "Day 63 · Distributed locks, lease expiry, the Redlock debate",
+      "description": "**What:** Using a distributed system to coordinate mutual exclusion — and why lease expiry timing makes this subtler than a local lock, sparking the Redlock debate.\n\n**How to complete:** Explain the core objection Martin Kleppmann raised against Redlock, and when a fencing-token-based lock is safer than a bare distributed lock.",
       "markers": []
     },
     {
       "levelPath": "2.3.3",
       "levelTitle": "🌳 PHASE 3 — DISTRIBUTED SYSTEMS THEORY (Days 51–75)",
       "title": "Branch 3.4 — Time & Causality (Days 64–66)",
-      "description": "Branch 3.4 — Time & Causality (Days 64–66)",
+      "description": "**What:** Why \"what time is it\" is a genuinely hard distributed systems problem, and the clock schemes (logical, vector, hybrid) built to work around it.\n\n**How to complete:** Work Days 64–66; you're done when you can explain why Spanner needs TrueTime and what a vector clock actually orders.",
       "markers": []
     },
     {
       "levelPath": "3.3.3.0",
       "levelTitle": "Branch 3.4 — Time & Causality (Days 64–66)",
       "title": "Day 64 · NTP drift, monotonic vs wall clock, skew bugs",
-      "description": "Day 64 · NTP drift, monotonic vs wall clock, skew bugs",
+      "description": "**What:** Why physical clocks on different machines disagree even with NTP, and why code must distinguish a monotonic clock (for durations) from wall-clock time.\n\n**How to complete:** Describe one real bug class caused by using wall-clock time for a duration measurement, and how a monotonic clock avoids it.",
       "markers": []
     },
     {
       "levelPath": "3.3.3.1",
       "levelTitle": "Branch 3.4 — Time & Causality (Days 64–66)",
       "title": "Day 65 · Lamport clocks, vector clocks, version vectors",
-      "description": "Day 65 · Lamport clocks, vector clocks, version vectors",
+      "description": "**What:** Logical clocks that capture causal order (\"happened-before\") without relying on synchronized physical time — and how vector clocks detect concurrent (conflicting) events that Lamport clocks can't.\n\n**How to complete:** Assign Lamport timestamps to a 3-event causal chain by hand, then explain what a vector clock reveals about two events that a Lamport clock hides.",
       "markers": []
     },
     {
       "levelPath": "3.3.3.2",
       "levelTitle": "Branch 3.4 — Time & Causality (Days 64–66)",
       "title": "Day 66 · Hybrid logical clocks, TrueTime, Spanner's approach",
-      "description": "Day 66 · Hybrid logical clocks, TrueTime, Spanner's approach",
+      "description": "**What:** Combining physical and logical time (HLC), or bounding physical clock uncertainty explicitly (TrueTime) to get external consistency without full synchronization.\n\n**How to complete:** Explain how Spanner's \"commit wait\" uses TrueTime's uncertainty bound to guarantee external consistency across data centers.",
       "markers": []
     },
     {
       "levelPath": "2.3.4",
       "levelTitle": "🌳 PHASE 3 — DISTRIBUTED SYSTEMS THEORY (Days 51–75)",
       "title": "Branch 3.5 — Transactions Across Services (Days 67–70)",
-      "description": "Branch 3.5 — Transactions Across Services (Days 67–70)",
+      "description": "**What:** How to keep multiple services' data consistent when a single database transaction can't span them — 2PC's failure, sagas, and idempotency as the fallback.\n\n**How to complete:** Work Days 67–70; you're done when you can design a saga with compensations for a multi-service booking flow.",
       "markers": []
     },
     {
       "levelPath": "3.3.4.0",
       "levelTitle": "Branch 3.5 — Transactions Across Services (Days 67–70)",
       "title": "Day 67 · 2PC: protocol, blocking problem, why it's avoided",
-      "description": "Day 67 · 2PC: protocol, blocking problem, why it's avoided",
+      "description": "**What:** The classic protocol for atomic commit across multiple databases — and the blocking problem (a crashed coordinator freezes all participants) that made it fall out of favor.\n\n**How to complete:** Walk through 2PC's prepare/commit phases and identify exactly where a coordinator crash leaves participants blocked indefinitely.",
       "markers": []
     },
     {
       "levelPath": "3.3.4.1",
       "levelTitle": "Branch 3.5 — Transactions Across Services (Days 67–70)",
       "title": "Day 68 · Sagas: choreography vs orchestration, compensation",
-      "description": "Day 68 · Sagas: choreography vs orchestration, compensation",
+      "description": "**What:** A sequence of local transactions with compensating actions to undo prior steps on failure — coordinated either by events (choreography) or a central orchestrator.\n\n**How to complete:** Design a saga for \"book flight + hotel\" both ways (choreography, orchestration) and write the compensating action for each step.",
       "markers": []
     },
     {
       "levelPath": "3.3.4.2",
       "levelTitle": "Branch 3.5 — Transactions Across Services (Days 67–70)",
       "title": "Day 69 · Outbox pattern, transactional messaging, CDC correctness",
-      "description": "Day 69 · Outbox pattern, transactional messaging, CDC correctness",
-      "markers": [
-        "strength"
-      ]
+      "description": "**What:** Writing a business change and its outgoing event atomically (via an outbox table) so a message broker publish can never silently diverge from the DB write.\n\n**How to complete:** Rehearsed strength — narrate the outbox pattern end to end and explain exactly what correctness problem it solves that a direct publish-after-commit doesn't.",
+      "markers": []
     },
     {
       "levelPath": "3.3.4.3",
       "levelTitle": "Branch 3.5 — Transactions Across Services (Days 67–70)",
       "title": "Day 70 · Idempotency keys, dedup windows, \"effectively-once\"",
-      "description": "Day 70 · Idempotency keys, dedup windows, \"effectively-once\"",
+      "description": "**What:** Since true exactly-once delivery is impossible over a network, idempotency keys and dedup windows are how you fake it at the application layer.\n\n**How to complete:** Design an idempotency-key scheme for a payment API, including how long you retain keys and what you return on a duplicate request.",
       "markers": []
     },
     {
       "levelPath": "2.3.5",
       "levelTitle": "🌳 PHASE 3 — DISTRIBUTED SYSTEMS THEORY (Days 51–75)",
       "title": "Branch 3.6 — Failure Reasoning (Days 71–74)",
-      "description": "Branch 3.6 — Failure Reasoning (Days 71–74)",
+      "description": "**What:** How to reason about partial failure precisely — detecting it, tolerating malicious/corrupted nodes, and stating invariants clearly enough to defend a design.\n\n**How to complete:** Work Days 71–74, ending with a full aloud recap of Phase 3 with no notes.",
       "markers": []
     },
     {
       "levelPath": "3.3.5.0",
       "levelTitle": "Branch 3.6 — Failure Reasoning (Days 71–74)",
       "title": "Day 71 · Failure detection, phi-accrual, timeouts vs correctness",
-      "description": "Day 71 · Failure detection, phi-accrual, timeouts vs correctness",
+      "description": "**What:** Why you can never distinguish \"slow\" from \"dead\" with certainty, and how phi-accrual failure detectors give a probabilistic answer instead of a hard timeout.\n\n**How to complete:** Explain why a fixed timeout is always a tradeoff between false positives and detection speed, and how phi-accrual adapts to network jitter instead.",
       "markers": []
     },
     {
       "levelPath": "3.3.5.1",
       "levelTitle": "Branch 3.6 — Failure Reasoning (Days 71–74)",
       "title": "Day 72 · Byzantine faults — and why they usually don't matter",
-      "description": "Day 72 · Byzantine faults — and why they usually don't matter",
+      "description": "**What:** Faults where a node actively lies or behaves arbitrarily (not just crashes) — rare in a single trusted datacenter, but central to blockchain-style systems.\n\n**How to complete:** Explain why most internal distributed systems assume crash-stop (not Byzantine) faults, and name one context where that assumption breaks down.",
       "markers": []
     },
     {
       "levelPath": "3.3.5.2",
       "levelTitle": "Branch 3.6 — Failure Reasoning (Days 71–74)",
       "title": "Day 73 · Invariants, safety and liveness properties",
-      "description": "Day 73 · Invariants, safety and liveness properties",
+      "description": "**What:** The two categories every correctness claim falls into: safety (\"nothing bad ever happens\") and liveness (\"something good eventually happens\").\n\n**How to complete:** State one safety and one liveness property for a distributed lock service, and explain why proving safety is usually easier than proving liveness.",
       "markers": []
     },
     {
       "levelPath": "3.3.5.3",
       "levelTitle": "Branch 3.6 — Failure Reasoning (Days 71–74)",
       "title": "Day 74 · Consolidation: explain all of Phase 3 aloud, no notes",
-      "description": "Day 74 · Consolidation: explain all of Phase 3 aloud, no notes",
+      "description": "**What:** The integration day — proving Phase 3's theory (consistency, replication, consensus, time, transactions, failure) is usable under pressure, not just read.\n\n**How to complete:** Record yourself explaining all six Phase 3 branches aloud, back to back, with zero notes, then watch it back and note every hesitation.",
       "markers": []
     },
     {
       "levelPath": "2.3.6",
       "levelTitle": "🌳 PHASE 3 — DISTRIBUTED SYSTEMS THEORY (Days 51–75)",
       "title": "🎯 GATE 3 — Day 75 · MOCK #3: Distributed Transaction / Booking System",
-      "description": "**Tests:** sagas, isolation, inventory consistency, failure handling\n\n**🔑 Exit criteria:**\n- State precisely what consistency guarantee any design provides, and what breaks under a network partition",
+      "description": "**What:** The Phase 3 checkpoint — a mock built specifically to force saga design, isolation reasoning, and explicit statements about what breaks under partition.\n\n**How to complete:** Sit the mock cold, timed to 45 minutes, then score yourself against: sagas, isolation, inventory consistency, failure handling. Don't move on until you can truthfully check off:\n- State precisely what consistency guarantee any design provides, and what breaks under a network partition",
       "markers": [
         "mock",
         "gate"
@@ -745,184 +727,182 @@
       "levelPath": "1.4",
       "levelTitle": "180-Day Roadmap",
       "title": "🌳 PHASE 4 — STREAMING & EVENT-DRIVEN (Days 76–95)",
-      "description": "Goal: Design event pipelines with correct delivery semantics — strength area, make it dominant.",
+      "description": "**What:** Event-driven design — the pattern behind feeds, notifications, and analytics pipelines, and a genuine existing strength worth making dominant.\n\n**How to complete:** Work the 5 branches in order, then sit Gate 4. Since this is a strength area, focus reps on articulation speed, not re-learning the material.",
       "markers": []
     },
     {
       "levelPath": "2.4.0",
       "levelTitle": "🌳 PHASE 4 — STREAMING & EVENT-DRIVEN (Days 76–95)",
       "title": "Branch 4.1 — Messaging Fundamentals (Days 76–77)",
-      "description": "Branch 4.1 — Messaging Fundamentals (Days 76–77)",
+      "description": "**What:** The vocabulary and guarantees underlying every messaging system — queue vs pub-sub vs log, and what \"delivery guarantee\" actually promises.\n\n**How to complete:** Work Days 76–77; you're done when you can explain why a log (Kafka) behaves differently from a queue (SQS) for the same message.",
       "markers": []
     },
     {
       "levelPath": "3.4.0.0",
       "levelTitle": "Branch 4.1 — Messaging Fundamentals (Days 76–77)",
       "title": "Day 76 · Queue vs pub-sub vs log — semantics differ fundamentally",
-      "description": "Day 76 · Queue vs pub-sub vs log — semantics differ fundamentally",
+      "description": "**What:** Three different messaging shapes: a queue (one consumer per message), pub-sub (many independent subscribers), and a log (replayable, ordered, retained).\n\n**How to complete:** For a given use case (order processing, notifications, analytics), pick the right primitive of the three and explain why the other two would misbehave.",
       "markers": []
     },
     {
       "levelPath": "3.4.0.1",
       "levelTitle": "Branch 4.1 — Messaging Fundamentals (Days 76–77)",
       "title": "Day 77 · Delivery guarantees, ordering, backpressure",
-      "description": "Day 77 · Delivery guarantees, ordering, backpressure",
+      "description": "**What:** The three axes every message system must be evaluated on: how many times a message is delivered, whether order is preserved, and what happens when consumers fall behind.\n\n**How to complete:** State the exact conditions under which \"exactly-once\" delivery is actually achievable, and design a backpressure strategy for a slow consumer.",
       "markers": []
     },
     {
       "levelPath": "2.4.1",
       "levelTitle": "🌳 PHASE 4 — STREAMING & EVENT-DRIVEN (Days 76–95)",
       "title": "Branch 4.2 — Kafka Deep Dive (Days 78–81)",
-      "description": "Branch 4.2 — Kafka Deep Dive (Days 78–81)",
+      "description": "**What:** The dominant distributed log — how it partitions, replicates, and lets producers/consumers scale independently.\n\n**How to complete:** Work Days 78–81; you're done when you can explain Kafka's architecture and consumer rebalancing without hesitation.",
       "markers": []
     },
     {
       "levelPath": "3.4.1.0",
       "levelTitle": "Branch 4.2 — Kafka Deep Dive (Days 78–81)",
       "title": "Day 78 · Architecture: partitions, segments, ISR, controller",
-      "description": "Day 78 · Architecture: partitions, segments, ISR, controller",
-      "markers": [
-        "strength"
-      ]
+      "description": "**What:** How a Kafka topic is split into ordered partitions, each partition into segment files, replicated to an in-sync-replica (ISR) set, coordinated by a controller.\n\n**How to complete:** Rehearsed strength — practice drawing Kafka's architecture from a blank page: topic → partitions → segments → ISR → controller.",
+      "markers": []
     },
     {
       "levelPath": "3.4.1.1",
       "levelTitle": "Branch 4.2 — Kafka Deep Dive (Days 78–81)",
       "title": "Day 79 · Producers: batching, acks, idempotent producer",
-      "description": "Day 79 · Producers: batching, acks, idempotent producer",
+      "description": "**What:** How producers trade latency for throughput (batching) and durability (acks=0/1/all), and how the idempotent producer avoids duplicate writes on retry.\n\n**How to complete:** Explain the durability difference between acks=1 and acks=all, and how the idempotent producer's sequence numbers prevent duplicate writes after a retry.",
       "markers": []
     },
     {
       "levelPath": "3.4.1.2",
       "levelTitle": "Branch 4.2 — Kafka Deep Dive (Days 78–81)",
       "title": "Day 80 · Consumer groups, rebalancing, sticky assignment",
-      "description": "Day 80 · Consumer groups, rebalancing, sticky assignment",
+      "description": "**What:** How multiple consumer instances split a topic's partitions among themselves, and what happens (a rebalance) when membership changes.\n\n**How to complete:** Walk through a consumer joining an existing group and explain why sticky assignment reduces unnecessary partition movement during rebalance.",
       "markers": []
     },
     {
       "levelPath": "3.4.1.3",
       "levelTitle": "Branch 4.2 — Kafka Deep Dive (Days 78–81)",
       "title": "Day 81 · Log compaction, retention, tiered storage",
-      "description": "Day 81 · Log compaction, retention, tiered storage",
+      "description": "**What:** Alternatives to simple time-based deletion — compaction keeps only the latest value per key, and tiered storage offloads old segments to cheaper storage.\n\n**How to complete:** Explain when you'd use compacted retention (e.g. a changelog topic) instead of time-based retention, and what tiered storage trades off.",
       "markers": []
     },
     {
       "levelPath": "2.4.2",
       "levelTitle": "🌳 PHASE 4 — STREAMING & EVENT-DRIVEN (Days 76–95)",
       "title": "Branch 4.3 — Stream Processing (Days 82–86)",
-      "description": "Branch 4.3 — Stream Processing (Days 82–86)",
+      "description": "**What:** Computing over unbounded data as it arrives — windowing, state, and the architectural patterns (event sourcing, CQRS) that stream processing enables.\n\n**How to complete:** Work Days 82–86; you're done when you can design a windowed aggregation and explain how it stays correct under late-arriving data.",
       "markers": []
     },
     {
       "levelPath": "3.4.2.0",
       "levelTitle": "Branch 4.3 — Stream Processing (Days 82–86)",
       "title": "Day 82 · Kafka Streams / Flink, local state stores",
-      "description": "Day 82 · Kafka Streams / Flink, local state stores",
+      "description": "**What:** Stream processing frameworks that maintain local state (e.g. a running aggregate) co-located with the compute, backed by a changelog for recovery.\n\n**How to complete:** Explain why a stream processor keeps state locally instead of round-tripping to a database, and how that state recovers after a crash.",
       "markers": []
     },
     {
       "levelPath": "3.4.2.1",
       "levelTitle": "Branch 4.3 — Stream Processing (Days 82–86)",
       "title": "Day 83 · Windowing: tumbling, sliding, session; watermarks",
-      "description": "Day 83 · Windowing: tumbling, sliding, session; watermarks",
+      "description": "**What:** The three ways to group an unbounded stream into finite chunks for aggregation, and watermarks — the mechanism for deciding a window is \"done\" despite out-of-order arrivals.\n\n**How to complete:** Define all three window types precisely and explain what a watermark of \"5 minutes late\" actually changes about when a window's result is emitted.",
       "markers": []
     },
     {
       "levelPath": "3.4.2.2",
       "levelTitle": "Branch 4.3 — Stream Processing (Days 82–86)",
       "title": "Day 84 · Event sourcing: replay, snapshots, tradeoffs",
-      "description": "Day 84 · Event sourcing: replay, snapshots, tradeoffs",
+      "description": "**What:** Storing every state change as an immutable event and deriving current state by replaying them — with snapshots to avoid replaying from the beginning every time.\n\n**How to complete:** Design an event-sourced schema for a shopping cart, including a snapshot strategy, and state one real cost of this approach versus storing current state directly.",
       "markers": []
     },
     {
       "levelPath": "3.4.2.3",
       "levelTitle": "Branch 4.3 — Stream Processing (Days 82–86)",
       "title": "Day 85 · CQRS: read/write separation, projection lag",
-      "description": "Day 85 · CQRS: read/write separation, projection lag",
+      "description": "**What:** Splitting the write model from the read model entirely, so reads can be shaped for query performance — at the cost of a projection lag between write and read.\n\n**How to complete:** Design a CQRS split for an order system and explain concretely how a client should handle the read-after-write lag on the projection.",
       "markers": []
     },
     {
       "levelPath": "3.4.2.4",
       "levelTitle": "Branch 4.3 — Stream Processing (Days 82–86)",
       "title": "Day 86 · Exactly-once in streams; Flink checkpointing",
-      "description": "Day 86 · Exactly-once in streams; Flink checkpointing",
+      "description": "**What:** How stream processors approximate exactly-once semantics end to end via checkpointing (consistent snapshots) and transactional sinks.\n\n**How to complete:** Explain Flink's checkpoint barrier mechanism and how it, combined with a transactional sink, delivers effectively-once processing.",
       "markers": []
     },
     {
       "levelPath": "2.4.3",
       "levelTitle": "🌳 PHASE 4 — STREAMING & EVENT-DRIVEN (Days 76–95)",
       "title": "Branch 4.4 — Operational Streaming (Days 87–89)",
-      "description": "Branch 4.4 — Operational Streaming (Days 87–89)",
+      "description": "**What:** The operational realities of running streaming systems in production — schema changes, poison messages, and choosing among the many broker options.\n\n**How to complete:** Work Days 87–89; you're done when you can design a DLQ strategy and justify a broker choice for a given latency/durability need.",
       "markers": []
     },
     {
       "levelPath": "3.4.3.0",
       "levelTitle": "Branch 4.4 — Operational Streaming (Days 87–89)",
       "title": "Day 87 · Schema registry, Avro/Protobuf compatibility modes",
-      "description": "Day 87 · Schema registry, Avro/Protobuf compatibility modes",
+      "description": "**What:** A central service that validates producer/consumer schemas against each other, enforcing compatibility modes (backward/forward/full) so evolution doesn't break consumers.\n\n**How to complete:** Explain the difference between backward and forward compatibility for a schema change, and which mode you'd enforce for a topic with many independent consumers.",
       "markers": []
     },
     {
       "levelPath": "3.4.3.1",
       "levelTitle": "Branch 4.4 — Operational Streaming (Days 87–89)",
       "title": "Day 88 · DLQs, poison pills, retry topics",
-      "description": "Day 88 · DLQs, poison pills, retry topics",
+      "description": "**What:** What to do with a message that a consumer can never successfully process — route it to a dead-letter queue instead of blocking the whole partition forever.\n\n**How to complete:** Design a retry-topic chain (retry-1m, retry-10m, DLQ) for a payment consumer and state your criteria for when a message is truly \"poison\".",
       "markers": []
     },
     {
       "levelPath": "3.4.3.2",
       "levelTitle": "Branch 4.4 — Operational Streaming (Days 87–89)",
       "title": "Day 89 · Pulsar, NATS, SQS/SNS, Kinesis — selection criteria",
-      "description": "Day 89 · Pulsar, NATS, SQS/SNS, Kinesis — selection criteria",
+      "description": "**What:** The landscape of alternatives to Kafka, each optimized differently — multi-tenancy (Pulsar), lightweight simplicity (NATS), or fully managed (SQS/Kinesis).\n\n**How to complete:** Given a specific constraint (e.g. \"no ops team\", \"multi-tenant SaaS\"), pick the right broker from this list and name the one thing Kafka would cost you there.",
       "markers": []
     },
     {
       "levelPath": "2.4.4",
       "levelTitle": "🌳 PHASE 4 — STREAMING & EVENT-DRIVEN (Days 76–95)",
       "title": "Branch 4.5 — Analytics Storage (Days 90–94)",
-      "description": "Branch 4.5 — Analytics Storage (Days 90–94)",
+      "description": "**What:** Where streamed data ends up for analysis — the lakehouse formats and OLAP engines built to query huge volumes of append-mostly data fast.\n\n**How to complete:** Work Days 90–94; you're done when you can pick a table format and OLAP engine for a given analytics workload.",
       "markers": []
     },
     {
       "levelPath": "3.4.4.0",
       "levelTitle": "Branch 4.5 — Analytics Storage (Days 90–94)",
       "title": "Day 90 · Lambda vs Kappa vs unified; reprocessing strategy",
-      "description": "Day 90 · Lambda vs Kappa vs unified; reprocessing strategy",
+      "description": "**What:** Architectural patterns for combining batch and streaming — running both pipelines (Lambda), streaming-only (Kappa), or a single unified engine — and how each replays history when logic changes.\n\n**How to complete:** Compare Lambda vs Kappa's reprocessing story explicitly: what does each require you to do when a bug in the processing logic is found after the fact?",
       "markers": []
     },
     {
       "levelPath": "3.4.4.1",
       "levelTitle": "Branch 4.5 — Analytics Storage (Days 90–94)",
       "title": "Day 91 · Lakehouse, Iceberg/Delta table formats",
-      "description": "Day 91 · Lakehouse, Iceberg/Delta table formats",
+      "description": "**What:** Table formats that add ACID transactions, schema evolution, and time travel on top of plain files in a data lake, closing the gap with a warehouse.\n\n**How to complete:** Explain what problem Iceberg/Delta's metadata layer solves that raw Parquet files in S3 don't (e.g. atomic multi-file commits, snapshot isolation).",
       "markers": []
     },
     {
       "levelPath": "3.4.4.2",
       "levelTitle": "Branch 4.5 — Analytics Storage (Days 90–94)",
       "title": "Day 92 · Parquet, ORC, encoding, predicate pushdown",
-      "description": "Day 92 · Parquet, ORC, encoding, predicate pushdown",
+      "description": "**What:** Columnar file formats optimized for analytical scans, and predicate pushdown — skipping whole row groups using stored min/max statistics.\n\n**How to complete:** Explain why columnar storage speeds up an aggregation query, and how predicate pushdown lets a query skip reading irrelevant row groups entirely.",
       "markers": []
     },
     {
       "levelPath": "3.4.4.3",
       "levelTitle": "Branch 4.5 — Analytics Storage (Days 90–94)",
       "title": "Day 93 · ClickHouse, Druid, Pinot",
-      "description": "Day 93 · ClickHouse, Druid, Pinot",
+      "description": "**What:** Purpose-built OLAP engines for sub-second aggregation queries over huge event volumes — each with different ingestion and indexing tradeoffs.\n\n**How to complete:** Pick one of the three for a real-time dashboard use case and name the specific ingestion or indexing feature that made it the right choice.",
       "markers": []
     },
     {
       "levelPath": "3.4.4.4",
       "levelTitle": "Branch 4.5 — Analytics Storage (Days 90–94)",
       "title": "Day 94 · Time-series: downsampling, cardinality, retention",
-      "description": "Day 94 · Time-series: downsampling, cardinality, retention",
+      "description": "**What:** The specific challenges of time-series data — high cardinality tags exploding storage, and downsampling/retention policies to keep it bounded.\n\n**How to complete:** Design a downsampling policy (raw → 1min → 1hr rollups) for metrics data and explain how high-cardinality tags could blow up this scheme.",
       "markers": []
     },
     {
       "levelPath": "2.4.5",
       "levelTitle": "🌳 PHASE 4 — STREAMING & EVENT-DRIVEN (Days 76–95)",
       "title": "🎯 GATE 4 — Day 95 · MOCK #4: Real-Time Analytics Pipeline",
-      "description": "**Tests:** streaming, windowing, OLAP storage, late data\n\n**🔑 Exit criteria:**\n- Design an end-to-end pipeline and state exactly where duplicates, reordering, and data loss can occur",
+      "description": "**What:** The Phase 4 checkpoint — a mock that forces an end-to-end streaming design with explicit reasoning about where duplicates, reordering, or loss can occur.\n\n**How to complete:** Sit the mock cold, timed to 45 minutes, then score yourself against: streaming, windowing, OLAP storage, late data. Don't move on until you can truthfully check off:\n- Design an end-to-end pipeline and state exactly where duplicates, reordering, and data loss can occur",
       "markers": [
         "mock",
         "gate"
@@ -932,49 +912,49 @@
       "levelPath": "1.5",
       "levelTitle": "180-Day Roadmap",
       "title": "🌳 PHASE 5 — PRODUCT SYSTEMS I (Days 96–120)",
-      "description": "Goal: The canonical interview questions — pattern fluency.",
+      "description": "**What:** The canonical interview questions — feed, chat, search, rate limiter — where pattern fluency, not novel insight, is what gets rewarded.\n\n**How to complete:** Work the 4 branches and 2 checkpoints in order, then sit Gate 5. Start your job application pipeline the same week — the loops take weeks to run.",
       "markers": []
     },
     {
       "levelPath": "2.5.0",
       "levelTitle": "🌳 PHASE 5 — PRODUCT SYSTEMS I (Days 96–120)",
       "title": "Branch 5.1 — Feed & Social Graph (Days 96–99)",
-      "description": "Branch 5.1 — Feed & Social Graph (Days 96–99)",
+      "description": "**What:** The canonical \"design a news feed\" problem — how to generate a personalized, ranked feed for users with wildly different follower/following counts.\n\n**How to complete:** Work Days 96–99; you're done when you can design a feed's fanout strategy and defend it against the celebrity-account edge case.",
       "markers": []
     },
     {
       "levelPath": "3.5.0.0",
       "levelTitle": "Branch 5.1 — Feed & Social Graph (Days 96–99)",
       "title": "Day 96 · Fanout-on-write vs read vs hybrid; celebrity problem",
-      "description": "Day 96 · Fanout-on-write vs read vs hybrid; celebrity problem",
+      "description": "**What:** The core feed design decision — precompute each follower's feed on post (write), assemble it on request (read), or mix both — and why celebrity accounts break the naive write-fanout approach.\n\n**How to complete:** Explain exactly why fanout-on-write fails for a celebrity with 100M followers, and design the hybrid approach that handles both cases.",
       "markers": []
     },
     {
       "levelPath": "3.5.0.1",
       "levelTitle": "Branch 5.1 — Feed & Social Graph (Days 96–99)",
       "title": "Day 97 · Ranking: freshness decay, engagement signals",
-      "description": "Day 97 · Ranking: freshness decay, engagement signals",
+      "description": "**What:** Ordering a feed by more than recency — combining a freshness-decay function with engagement signals (likes, comments, dwell time) into a ranking score.\n\n**How to complete:** Write a toy ranking formula combining freshness decay and one engagement signal, and explain how you'd A/B test a change to its weights.",
       "markers": []
     },
     {
       "levelPath": "3.5.0.2",
       "levelTitle": "Branch 5.1 — Feed & Social Graph (Days 96–99)",
       "title": "Day 98 · Social graph storage, adjacency, TAO-style design",
-      "description": "Day 98 · Social graph storage, adjacency, TAO-style design",
+      "description": "**What:** Storing who-follows-whom at massive scale — adjacency list modeling and Facebook's TAO as a reference architecture for a graph-as-cache system.\n\n**How to complete:** Design a social graph storage layer for \"who follows X\" and \"does X follow Y\" queries, and explain what TAO's caching layer adds on top of the DB.",
       "markers": []
     },
     {
       "levelPath": "3.5.0.3",
       "levelTitle": "Branch 5.1 — Feed & Social Graph (Days 96–99)",
       "title": "Day 99 · Graph DBs, traversal cost, denormalized edges",
-      "description": "Day 99 · Graph DBs, traversal cost, denormalized edges",
+      "description": "**What:** When a dedicated graph database earns its keep versus a denormalized edge table in a relational/KV store, based on traversal depth and query pattern.\n\n**How to complete:** State the traversal-depth threshold where a graph DB starts winning over denormalized edge tables, with a concrete query example.",
       "markers": []
     },
     {
       "levelPath": "2.5.1",
       "levelTitle": "🌳 PHASE 5 — PRODUCT SYSTEMS I (Days 96–120)",
       "title": "🎯 CHECKPOINT — Day 100 · MOCK #5: News Feed (Twitter/Instagram)",
-      "description": "**Tests:** fanout strategy, ranking, celebrity problem, cache layers",
+      "description": "**What:** A scored mock testing whether Branch 5.1's fanout/ranking/graph material holds up under live interview conditions.\n\n**How to complete:** Sit the mock cold, timed to 45 minutes, then score yourself against: fanout strategy, ranking, celebrity problem, cache layers.",
       "markers": [
         "mock"
       ]
@@ -983,88 +963,84 @@
       "levelPath": "2.5.2",
       "levelTitle": "🌳 PHASE 5 — PRODUCT SYSTEMS I (Days 96–120)",
       "title": "Branch 5.2 — Realtime & Messaging (Days 101–110)",
-      "description": "Branch 5.2 — Realtime & Messaging (Days 101–110)",
+      "description": "**What:** The full \"design WhatsApp/Messenger\" problem — persistent connections at scale, message ordering, multi-device sync, and reliable push notifications.\n\n**How to complete:** Work Days 101–110 in order; you're done when you can design a chat system's connection layer, ordering, and notification pipeline end to end.",
       "markers": []
     },
     {
       "levelPath": "3.5.2.0",
       "levelTitle": "Branch 5.2 — Realtime & Messaging (Days 101–110)",
       "title": "Day 101 · WebSocket, SSE, long-poll — connection scaling",
-      "description": "Day 101 · WebSocket, SSE, long-poll — connection scaling",
+      "description": "**What:** The three techniques for pushing data to clients without constant polling, and how each scales differently to millions of open connections.\n\n**How to complete:** Compare WebSocket, SSE, and long-polling on connection cost and bidirectionality, and pick the right one for a chat app versus a live scoreboard.",
       "markers": []
     },
     {
       "levelPath": "3.5.2.1",
       "levelTitle": "Branch 5.2 — Realtime & Messaging (Days 101–110)",
       "title": "Day 102 · Connection gateways, sticky routing, the C10M problem",
-      "description": "Day 102 · Connection gateways, sticky routing, the C10M problem",
+      "description": "**What:** Dedicated gateway servers that hold millions of persistent connections, routing messages to whichever gateway a user is stuck to (sticky routing).\n\n**How to complete:** Explain why holding 10M concurrent connections (C10M) requires event-driven I/O instead of thread-per-connection, and how sticky routing finds the right gateway.",
       "markers": []
     },
     {
       "levelPath": "3.5.2.2",
       "levelTitle": "Branch 5.2 — Realtime & Messaging (Days 101–110)",
       "title": "Day 103 · Message IDs, ordering, gap detection, sequence numbers",
-      "description": "Day 103 · Message IDs, ordering, gap detection, sequence numbers",
+      "description": "**What:** Giving every message a position a client can use to detect gaps and reorder out-of-sequence deliveries, which is essential once you have multiple gateways.\n\n**How to complete:** Design a per-conversation sequence number scheme and explain how a client detects and recovers from a gap in the sequence.",
       "markers": []
     },
     {
       "levelPath": "3.5.2.3",
       "levelTitle": "Branch 5.2 — Realtime & Messaging (Days 101–110)",
       "title": "Day 104 · Delivery receipts, read state, multi-device fanout",
-      "description": "Day 104 · Delivery receipts, read state, multi-device fanout",
+      "description": "**What:** Tracking sent/delivered/read status per message per device, and fanning out a single message correctly across a user's phone, web, and desktop clients.\n\n**How to complete:** Design the delivery-receipt state machine (sent → delivered → read) for a user with 3 logged-in devices, and state where each transition is recorded.",
       "markers": []
     },
     {
       "levelPath": "3.5.2.4",
       "levelTitle": "Branch 5.2 — Realtime & Messaging (Days 101–110)",
       "title": "Day 105 · Offline queues, sync protocol, cold start",
-      "description": "Day 105 · Offline queues, sync protocol, cold start",
+      "description": "**What:** Queuing messages for a device that's offline, and the sync protocol a client runs on reconnect to catch up without re-downloading everything.\n\n**How to complete:** Design a reconnect sync protocol using a last-seen sequence number, and state your queue retention limit for a device offline for a week.",
       "markers": []
     },
     {
       "levelPath": "3.5.2.5",
       "levelTitle": "Branch 5.2 — Realtime & Messaging (Days 101–110)",
       "title": "Day 106 · Group fanout, large groups, broadcast amplification",
-      "description": "Day 106 · Group fanout, large groups, broadcast amplification",
+      "description": "**What:** The amplification problem when one message to a 10,000-member group becomes 10,000 individual deliveries, and the strategies to bound that cost.\n\n**How to complete:** Propose a fanout strategy for a 50,000-member broadcast channel that avoids naive 1-to-50,000 amplification at send time.",
       "markers": []
     },
     {
       "levelPath": "3.5.2.6",
       "levelTitle": "Branch 5.2 — Realtime & Messaging (Days 101–110)",
       "title": "Day 107 · Presence & typing indicators — cheap approximations",
-      "description": "Day 107 · Presence & typing indicators — cheap approximations",
+      "description": "**What:** Why exact real-time presence for millions of users is expensive, and the approximations (heartbeats, debounced typing events) that make it cheap enough.\n\n**How to complete:** Design a presence system using periodic heartbeats and explain the staleness window you're accepting in exchange for lower write volume.",
       "markers": []
     },
     {
       "levelPath": "3.5.2.7",
       "levelTitle": "Branch 5.2 — Realtime & Messaging (Days 101–110)",
       "title": "Day 108 · E2E encryption: Signal protocol, design implications",
-      "description": "Day 108 · E2E encryption: Signal protocol, design implications",
+      "description": "**What:** How end-to-end encryption changes system design — the server can no longer read message content, which breaks server-side search, moderation, and multi-device sync naively.\n\n**How to complete:** Explain the Signal protocol's double-ratchet at a high level, and name one product feature (e.g. server-side search) that E2E encryption forces you to redesign.",
       "markers": []
     },
     {
       "levelPath": "3.5.2.8",
       "levelTitle": "Branch 5.2 — Realtime & Messaging (Days 101–110)",
       "title": "Day 109 · Push infra: APNs/FCM, tokens, retries, priorities",
-      "description": "Day 109 · Push infra: APNs/FCM, tokens, retries, priorities",
-      "markers": [
-        "strength"
-      ]
+      "description": "**What:** Delivering notifications to a backgrounded/closed app via the platform push services — device tokens, retry behavior, and priority levels.\n\n**How to complete:** Rehearsed strength — practice explaining device token rotation and how you'd handle a burst of retries from APNs/FCM without duplicate notifications.",
+      "markers": []
     },
     {
       "levelPath": "3.5.2.9",
       "levelTitle": "Branch 5.2 — Realtime & Messaging (Days 101–110)",
       "title": "Day 110 · Notification dedup, batching, digest, quiet hours",
-      "description": "Case study: your own 100M+/day notification platform.",
-      "markers": [
-        "strength"
-      ]
+      "description": "**What:** Preventing notification fatigue at scale — deduplicating near-identical notifications, batching into digests, and respecting quiet hours per user.\n\n**How to complete:** Rehearsed strength — narrate your own 100M+/day notification platform as a 5-minute case study covering dedup, batching, and quiet-hours logic.",
+      "markers": []
     },
     {
       "levelPath": "2.5.3",
       "levelTitle": "🌳 PHASE 5 — PRODUCT SYSTEMS I (Days 96–120)",
       "title": "🎯 CHECKPOINT — Day 111 · MOCK #6: WhatsApp / Messenger",
-      "description": "**Tests:** connection scaling, ordering, multi-device sync, offline",
+      "description": "**What:** A scored mock testing Branch 5.2's connection scaling, ordering, and sync material under interview time pressure.\n\n**How to complete:** Sit the mock cold, timed to 45 minutes, then score yourself against: connection scaling, ordering, multi-device sync, offline.",
       "markers": [
         "mock"
       ]
@@ -1073,77 +1049,77 @@
       "levelPath": "2.5.4",
       "levelTitle": "🌳 PHASE 5 — PRODUCT SYSTEMS I (Days 96–120)",
       "title": "Branch 5.3 — Search & Crawl (Days 112–115)",
-      "description": "Branch 5.3 — Search & Crawl (Days 112–115)",
+      "description": "**What:** The infrastructure behind search-as-you-type and web-scale crawling — tries for autocomplete, ranking pipelines, and detecting near-duplicate pages.\n\n**How to complete:** Work Days 112–115; you're done when you can design an autocomplete service and a polite, fresh web crawler.",
       "markers": []
     },
     {
       "levelPath": "3.5.4.0",
       "levelTitle": "Branch 5.3 — Search & Crawl (Days 112–115)",
       "title": "Day 112 · Autocomplete: tries, top-k, prefix sharding",
-      "description": "Day 112 · Autocomplete: tries, top-k, prefix sharding",
+      "description": "**What:** Serving ranked suggestions for a partial query in milliseconds using a trie (or precomputed top-k per prefix) sharded across servers for scale.\n\n**How to complete:** Design a prefix-sharded autocomplete service for a search box and explain how you'd keep the top-k suggestions per prefix fresh as query popularity shifts.",
       "markers": []
     },
     {
       "levelPath": "3.5.4.1",
       "levelTitle": "Branch 5.3 — Search & Crawl (Days 112–115)",
       "title": "Day 113 · Ranking pipeline: retrieval → ranking → blending",
-      "description": "Day 113 · Ranking pipeline: retrieval → ranking → blending",
+      "description": "**What:** The multi-stage pattern behind most large-scale search/recommendation systems: cheaply retrieve a candidate set, then expensively rank it, then blend in business rules.\n\n**How to complete:** Sketch a 3-stage pipeline (retrieval, ranking, blending) for a search product and explain why doing full ranking on the entire corpus wouldn't scale.",
       "markers": []
     },
     {
       "levelPath": "3.5.4.2",
       "levelTitle": "Branch 5.3 — Search & Crawl (Days 112–115)",
       "title": "Day 114 · Web crawler: frontier, politeness, freshness",
-      "description": "Day 114 · Web crawler: frontier, politeness, freshness",
+      "description": "**What:** The components of a large-scale crawler — a URL frontier to prioritize what to fetch next, politeness rules (rate limits per host), and freshness policies for re-crawling.\n\n**How to complete:** Design a crawler's frontier prioritization and politeness policy, and explain how you'd decide which pages to re-crawl more often.",
       "markers": []
     },
     {
       "levelPath": "3.5.4.3",
       "levelTitle": "Branch 5.3 — Search & Crawl (Days 112–115)",
       "title": "Day 115 · Near-duplicate detection: SimHash, MinHash, shingling",
-      "description": "Day 115 · Near-duplicate detection: SimHash, MinHash, shingling",
+      "description": "**What:** Detecting pages that are nearly (not exactly) identical using locality-sensitive hashing techniques that make similar documents hash to similar values.\n\n**How to complete:** Explain how SimHash's bit-difference threshold detects near-duplicates, and why shingling (overlapping n-grams) is the preprocessing step that makes it work.",
       "markers": []
     },
     {
       "levelPath": "2.5.5",
       "levelTitle": "🌳 PHASE 5 — PRODUCT SYSTEMS I (Days 96–120)",
       "title": "Branch 5.4 — Traffic Control & Abuse (Days 116–119)",
-      "description": "Branch 5.4 — Traffic Control & Abuse (Days 116–119)",
+      "description": "**What:** Protecting a system from its own users — rate limiting individual clients and detecting/mitigating coordinated abuse and attacks.\n\n**How to complete:** Work Days 116–119; you're done when you can design a distributed rate limiter and name concrete abuse-mitigation layers.",
       "markers": []
     },
     {
       "levelPath": "3.5.5.0",
       "levelTitle": "Branch 5.4 — Traffic Control & Abuse (Days 116–119)",
       "title": "Day 116 · Token/leaky bucket, sliding window — comparison",
-      "description": "Day 116 · Token/leaky bucket, sliding window — comparison",
+      "description": "**What:** The core rate-limiting algorithms — token bucket (allows bursts), leaky bucket (smooths output), and sliding window (accurate but more state) — each with a different burst/accuracy tradeoff.\n\n**How to complete:** Implement the token bucket algorithm on paper for a single client, then explain when sliding-window counters are worth their extra memory cost over it.",
       "markers": []
     },
     {
       "levelPath": "3.5.5.1",
       "levelTitle": "Branch 5.4 — Traffic Control & Abuse (Days 116–119)",
       "title": "Day 117 · Distributed rate limiting: local+global hybrid",
-      "description": "Day 117 · Distributed rate limiting: local+global hybrid",
+      "description": "**What:** Rate limiting correctly across many servers — pure local counters undercount shared limits, and pure global counters add latency; hybrids balance both.\n\n**How to complete:** Design a hybrid rate limiter (local approximate counter + periodic global sync via Redis) and state the over-limit error your design tolerates.",
       "markers": []
     },
     {
       "levelPath": "3.5.5.2",
       "levelTitle": "Branch 5.4 — Traffic Control & Abuse (Days 116–119)",
       "title": "Day 118 · Bot detection, fingerprinting, CAPTCHA tradeoffs",
-      "description": "Day 118 · Bot detection, fingerprinting, CAPTCHA tradeoffs",
+      "description": "**What:** Distinguishing automated abuse from real users via behavioral signals and device fingerprinting, and the user-friction cost every CAPTCHA imposes.\n\n**How to complete:** Name 3 signals (beyond IP) you'd use to fingerprint a bot, and explain the tradeoff of adding a CAPTCHA step to a signup flow.",
       "markers": []
     },
     {
       "levelPath": "3.5.5.3",
       "levelTitle": "Branch 5.4 — Traffic Control & Abuse (Days 116–119)",
       "title": "Day 119 · DDoS mitigation layers, scrubbing, edge rules",
-      "description": "Day 119 · DDoS mitigation layers, scrubbing, edge rules",
+      "description": "**What:** The layered defense against volumetric attacks — edge/CDN absorption, scrubbing centers that filter malicious traffic, and application-layer rules.\n\n**How to complete:** Describe the layered path a DDoS attack meets (edge → scrubbing → app rules) and where a Layer 7 attack specifically needs to be caught.",
       "markers": []
     },
     {
       "levelPath": "2.5.6",
       "levelTitle": "🌳 PHASE 5 — PRODUCT SYSTEMS I (Days 96–120)",
       "title": "🎯 GATE 5 — Day 120 · MOCK #7: Distributed Rate Limiter + Abuse Defense",
-      "description": "**Tests:** consistency vs latency, adversarial design\n\n**🔑 Exit criteria:**\n- Design a feed, a chat system, and a rate limiter from cold start in 45 minutes each\n\n⚠️ **ACTION:** Start applying + requesting referrals NOW — loops take 6–10 weeks; early interviews are themselves practice.",
+      "description": "**What:** The Phase 5 checkpoint — a mock combining consistency-vs-latency reasoning with adversarial thinking about how a design gets abused.\n\n**How to complete:** Sit the mock cold, timed to 45 minutes, then score yourself against: consistency vs latency, adversarial design. Don't move on until you can truthfully check off:\n- Design a feed, a chat system, and a rate limiter from cold start in 45 minutes each\n\n⚠️ **ACTION:** Start applying + requesting referrals NOW — loops take 6–10 weeks; early interviews are themselves practice.",
       "markers": [
         "mock",
         "gate"
@@ -1153,63 +1129,63 @@
       "levelPath": "1.6",
       "levelTitle": "180-Day Roadmap",
       "title": "🌳 PHASE 6 — PRODUCT SYSTEMS II (Days 121–145)",
-      "description": "Goal: The harder problems where most candidates thin out.",
+      "description": "**What:** The harder product-system questions — video, geospatial matching, money, and collaborative editing — where most candidates thin out under follow-up questions.\n\n**How to complete:** Work the 5 branches and 3 checkpoints in order, then sit Gate 6. By the end, no common FAANG design question should feel unfamiliar.",
       "markers": []
     },
     {
       "levelPath": "2.6.0",
       "levelTitle": "🌳 PHASE 6 — PRODUCT SYSTEMS II (Days 121–145)",
       "title": "Branch 6.1 — Video & Streaming (Days 121–126)",
-      "description": "Branch 6.1 — Video & Streaming (Days 121–126)",
+      "description": "**What:** The full YouTube/Netflix pipeline — ingest, transcode, package, adaptively stream, and distribute video at global scale, live or on-demand.\n\n**How to complete:** Work Days 121–126; you're done when you can design a video pipeline from upload to adaptive playback and explain live-streaming's tighter latency budget.",
       "markers": []
     },
     {
       "levelPath": "3.6.0.0",
       "levelTitle": "Branch 6.1 — Video & Streaming (Days 121–126)",
       "title": "Day 121 · Chunked resumable upload, validation, ingest",
-      "description": "Day 121 · Chunked resumable upload, validation, ingest",
+      "description": "**What:** Uploading large video files reliably over unreliable connections by splitting into chunks that can resume after a failure, then validating and ingesting them.\n\n**How to complete:** Design a chunked resumable upload protocol and explain how a client resumes after a connection drop without re-uploading completed chunks.",
       "markers": []
     },
     {
       "levelPath": "3.6.0.1",
       "levelTitle": "Branch 6.1 — Video & Streaming (Days 121–126)",
       "title": "Day 122 · Transcoding: ladders, codecs, GPU farms, orchestration",
-      "description": "Day 122 · Transcoding: ladders, codecs, GPU farms, orchestration",
+      "description": "**What:** Converting one uploaded video into many resolution/bitrate variants (a \"ladder\") using codec choices and GPU-accelerated farms, orchestrated as a pipeline.\n\n**How to complete:** Design a transcoding ladder (e.g. 240p–4K) for a single upload and explain how you'd orchestrate and parallelize that job across a GPU farm.",
       "markers": []
     },
     {
       "levelPath": "3.6.0.2",
       "levelTitle": "Branch 6.1 — Video & Streaming (Days 121–126)",
       "title": "Day 123 · Packaging: HLS, DASH, CMAF, DRM basics",
-      "description": "Day 123 · Packaging: HLS, DASH, CMAF, DRM basics",
+      "description": "**What:** Packaging transcoded video into segments and a manifest that players can adaptively stream, plus the DRM layer that protects licensed content.\n\n**How to complete:** Explain what an HLS/DASH manifest actually contains, and how DRM's encryption + license server model prevents unauthorized playback.",
       "markers": []
     },
     {
       "levelPath": "3.6.0.3",
       "levelTitle": "Branch 6.1 — Video & Streaming (Days 121–126)",
       "title": "Day 124 · Adaptive bitrate: player heuristics, buffer models, QoE",
-      "description": "Day 124 · Adaptive bitrate: player heuristics, buffer models, QoE",
+      "description": "**What:** How a video player decides which bitrate variant to fetch next based on buffer health and throughput estimates, optimizing for quality of experience (QoE).\n\n**How to complete:** Describe a buffer-based ABR heuristic (when to step up/down bitrate) and name the QoE metric you'd optimize it against (e.g. rebuffer ratio).",
       "markers": []
     },
     {
       "levelPath": "3.6.0.4",
       "levelTitle": "Branch 6.1 — Video & Streaming (Days 121–126)",
       "title": "Day 125 · Netflix Open Connect, ISP embedding, prepositioning",
-      "description": "Day 125 · Netflix Open Connect, ISP embedding, prepositioning",
+      "description": "**What:** Netflix's approach to CDN — embedding caching appliances directly inside ISP networks and prepositioning popular content overnight before demand hits.\n\n**How to complete:** Explain what problem embedding CDN nodes inside an ISP solves that a third-party CDN can't, and how prepositioning reduces peak-hour origin load.",
       "markers": []
     },
     {
       "levelPath": "3.6.0.5",
       "levelTitle": "Branch 6.1 — Video & Streaming (Days 121–126)",
       "title": "Day 126 · Live: ingest, LL-HLS, WebRTC, fanout tree, latency budget",
-      "description": "Day 126 · Live: ingest, LL-HLS, WebRTC, fanout tree, latency budget",
+      "description": "**What:** Live streaming's much tighter latency budget — low-latency HLS or WebRTC for ingest/delivery, and a fanout tree to distribute one live stream to millions.\n\n**How to complete:** Compare LL-HLS vs WebRTC's latency/scale tradeoff, and design a fanout tree that distributes one live ingest stream to a million concurrent viewers.",
       "markers": []
     },
     {
       "levelPath": "2.6.1",
       "levelTitle": "🌳 PHASE 6 — PRODUCT SYSTEMS II (Days 121–145)",
       "title": "🎯 CHECKPOINT — Day 127 · MOCK #8: YouTube / Netflix",
-      "description": "**Tests:** transcoding pipeline, CDN strategy, ABR, storage economics",
+      "description": "**What:** A scored mock testing whether Branch 6.1's transcoding, CDN, and ABR material holds up as a full end-to-end design under interview pressure.\n\n**How to complete:** Sit the mock cold, timed to 45 minutes, then score yourself against: transcoding pipeline, CDN strategy, ABR, storage economics.",
       "markers": [
         "mock"
       ]
@@ -1218,42 +1194,42 @@
       "levelPath": "2.6.2",
       "levelTitle": "🌳 PHASE 6 — PRODUCT SYSTEMS II (Days 121–145)",
       "title": "Branch 6.2 — Geospatial & Matching (Days 128–131)",
-      "description": "Branch 6.2 — Geospatial & Matching (Days 128–131)",
+      "description": "**What:** The full Uber/Lyft problem — indexing moving objects on a map, matching supply to demand in real time, and predicting arrival times.\n\n**How to complete:** Work Days 128–131; you're done when you can design a dispatch system's geospatial index and matching logic end to end.",
       "markers": []
     },
     {
       "levelPath": "3.6.2.0",
       "levelTitle": "Branch 6.2 — Geospatial & Matching (Days 128–131)",
       "title": "Day 128 · Geohash, quadtree, S2, H3 — query patterns",
-      "description": "Day 128 · Geohash, quadtree, S2, H3 — query patterns",
+      "description": "**What:** The main ways to index 2D location data for fast proximity queries — each encoding scheme (geohash, quadtree, Google's S2, Uber's H3) with different cell-shape and query tradeoffs.\n\n**How to complete:** Pick one indexing scheme for \"find all drivers within 2km\" and explain why its cell shape/resolution suits that query better than the alternatives.",
       "markers": []
     },
     {
       "levelPath": "3.6.2.1",
       "levelTitle": "Branch 6.2 — Geospatial & Matching (Days 128–131)",
       "title": "Day 129 · Proximity search, k-nearest, dynamic objects",
-      "description": "Day 129 · Proximity search, k-nearest, dynamic objects",
+      "description": "**What:** Finding the k nearest points to a query location when the points themselves are constantly moving, unlike static point-in-polygon search.\n\n**How to complete:** Design a k-nearest-drivers query over a geospatial index that updates as drivers move every few seconds, without re-indexing everything each update.",
       "markers": []
     },
     {
       "levelPath": "3.6.2.2",
       "levelTitle": "Branch 6.2 — Geospatial & Matching (Days 128–131)",
       "title": "Day 130 · Ride matching: supply/demand, dispatch, surge",
-      "description": "Day 130 · Ride matching: supply/demand, dispatch, surge",
+      "description": "**What:** Assigning available drivers to waiting riders in real time, and the surge-pricing mechanism that rebalances supply and demand under a shortage.\n\n**How to complete:** Design a dispatch algorithm that balances rider wait time against driver idle time, and explain what signal triggers your surge multiplier.",
       "markers": []
     },
     {
       "levelPath": "3.6.2.3",
       "levelTitle": "Branch 6.2 — Geospatial & Matching (Days 128–131)",
       "title": "Day 131 · ETA prediction, routing, map-matching",
-      "description": "Day 131 · ETA prediction, routing, map-matching",
+      "description": "**What:** Predicting arrival time using road-network routing plus historical/live traffic data, and map-matching — snapping noisy GPS points onto the actual road graph.\n\n**How to complete:** Explain why raw GPS points need map-matching before routing, and name one signal (beyond distance) your ETA model should incorporate.",
       "markers": []
     },
     {
       "levelPath": "2.6.3",
       "levelTitle": "🌳 PHASE 6 — PRODUCT SYSTEMS II (Days 121–145)",
       "title": "🎯 CHECKPOINT — Day 132 · MOCK #9: Uber / Lyft Dispatch",
-      "description": "**Tests:** geospatial indexing, matching, realtime updates",
+      "description": "**What:** A scored mock testing Branch 6.2's geospatial indexing and real-time matching material as a full design under interview conditions.\n\n**How to complete:** Sit the mock cold, timed to 45 minutes, then score yourself against: geospatial indexing, matching, realtime updates.",
       "markers": [
         "mock"
       ]
@@ -1262,42 +1238,42 @@
       "levelPath": "2.6.4",
       "levelTitle": "🌳 PHASE 6 — PRODUCT SYSTEMS II (Days 121–145)",
       "title": "Branch 6.3 — Money & Correctness (Days 133–136)",
-      "description": "Branch 6.3 — Money & Correctness (Days 133–136)",
+      "description": "**What:** Systems where a bug means real financial loss — inventory holds, double-entry ledgers, payment state machines, and fraud detection.\n\n**How to complete:** Work Days 133–136; you're done when you can design a payment flow that's provably idempotent and a ledger that's provably reconcilable.",
       "markers": []
     },
     {
       "levelPath": "3.6.4.0",
       "levelTitle": "Branch 6.3 — Money & Correctness (Days 133–136)",
       "title": "Day 133 · Inventory: holds, TTL reservations, oversell policy",
-      "description": "Day 133 · Inventory: holds, TTL reservations, oversell policy",
+      "description": "**What:** Reserving inventory during checkout with a time-boxed hold, and the explicit policy decision about whether a small oversell risk is acceptable in exchange for higher throughput.\n\n**How to complete:** Design a TTL-based inventory hold for checkout, including what happens if the hold expires before payment completes, and justify your oversell tolerance.",
       "markers": []
     },
     {
       "levelPath": "3.6.4.1",
       "levelTitle": "Branch 6.3 — Money & Correctness (Days 133–136)",
       "title": "Day 134 · Double-entry ledger, immutability, reconciliation",
-      "description": "Day 134 · Double-entry ledger, immutability, reconciliation",
+      "description": "**What:** Recording every financial change as two balanced, immutable entries (debit and credit) so the books can always be independently reconciled.\n\n**How to complete:** Model a refund as a double-entry transaction and explain how immutability (append-only, no updates) is what makes reconciliation trustworthy.",
       "markers": []
     },
     {
       "levelPath": "3.6.4.2",
       "levelTitle": "Branch 6.3 — Money & Correctness (Days 133–136)",
       "title": "Day 135 · Auth, capture, refund, chargeback; idempotency keys",
-      "description": "Day 135 · Auth, capture, refund, chargeback; idempotency keys",
+      "description": "**What:** The full payment lifecycle as a state machine, and why every state transition needs an idempotency key given that networks retry.\n\n**How to complete:** Draw the auth → capture → refund → chargeback state machine, and explain exactly where a missing idempotency key would cause a double charge.",
       "markers": []
     },
     {
       "levelPath": "3.6.4.3",
       "levelTitle": "Branch 6.3 — Money & Correctness (Days 133–136)",
       "title": "Day 136 · Fraud: rules + ML, velocity checks, graph signals",
-      "description": "Day 136 · Fraud: rules + ML, velocity checks, graph signals",
+      "description": "**What:** Combining fast deterministic rules (velocity checks — too many attempts too quickly) with ML scoring and graph signals (shared devices/cards across accounts).\n\n**How to complete:** Design a layered fraud check (rules first, ML score second) for a checkout flow, and name one graph-based signal that catches coordinated fraud rules miss.",
       "markers": []
     },
     {
       "levelPath": "2.6.5",
       "levelTitle": "🌳 PHASE 6 — PRODUCT SYSTEMS II (Days 121–145)",
       "title": "🎯 CHECKPOINT — Day 137 · MOCK #10: Payment / Ledger System",
-      "description": "**Tests:** correctness, idempotency, double-entry, reconciliation",
+      "description": "**What:** A scored mock testing whether Branch 6.3's correctness-first material holds up when an interviewer pushes on idempotency and reconciliation.\n\n**How to complete:** Sit the mock cold, timed to 45 minutes, then score yourself against: correctness, idempotency, double-entry, reconciliation.",
       "markers": [
         "mock"
       ]
@@ -1306,70 +1282,70 @@
       "levelPath": "2.6.6",
       "levelTitle": "🌳 PHASE 6 — PRODUCT SYSTEMS II (Days 121–145)",
       "title": "Branch 6.4 — Collaboration & Sync (Days 138–141)",
-      "description": "Branch 6.4 — Collaboration & Sync (Days 138–141)",
+      "description": "**What:** The Google Docs problem — letting multiple people edit the same document concurrently and converge on the same result without a central lock.\n\n**How to complete:** Work Days 138–141; you're done when you can explain how CRDTs guarantee convergence without operational transform's central-server dependency.",
       "markers": []
     },
     {
       "levelPath": "3.6.6.0",
       "levelTitle": "Branch 6.4 — Collaboration & Sync (Days 138–141)",
       "title": "Day 138 · Operational transform mechanics (Google Docs lineage)",
-      "description": "Day 138 · Operational transform mechanics (Google Docs lineage)",
+      "description": "**What:** The original technique for concurrent editing — transforming each operation against concurrent ones so all clients converge, typically via a central server that serializes operations.\n\n**How to complete:** Walk through two concurrent inserts at the same position and show how OT transforms one against the other to reach a consistent result.",
       "markers": []
     },
     {
       "levelPath": "3.6.6.1",
       "levelTitle": "Branch 6.4 — Collaboration & Sync (Days 138–141)",
       "title": "Day 139 · CRDTs: state-based vs op-based, convergence",
-      "description": "Day 139 · CRDTs: state-based vs op-based, convergence",
+      "description": "**What:** Data structures that mathematically guarantee convergence from concurrent updates without a central coordinator — replicating either full state or individual operations.\n\n**How to complete:** Explain, with a simple example (e.g. a G-Counter), why a CRDT's merge function is guaranteed to converge regardless of message order.",
       "markers": []
     },
     {
       "levelPath": "3.6.6.2",
       "levelTitle": "Branch 6.4 — Collaboration & Sync (Days 138–141)",
       "title": "Day 140 · Cursor/presence sync, undo in collaborative context",
-      "description": "Day 140 · Cursor/presence sync, undo in collaborative context",
+      "description": "**What:** Syncing ephemeral state (where each user's cursor is) separately from durable document state, and why undo becomes ambiguous once edits interleave across users.\n\n**How to complete:** Design a low-latency cursor-presence channel separate from the document sync channel, and explain what \"undo\" should mean when another user edited in between.",
       "markers": []
     },
     {
       "levelPath": "3.6.6.3",
       "levelTitle": "Branch 6.4 — Collaboration & Sync (Days 138–141)",
       "title": "Day 141 · File sync: delta sync, conflict resolution, versioning",
-      "description": "Day 141 · File sync: delta sync, conflict resolution, versioning",
+      "description": "**What:** Syncing whole files (Dropbox-style) efficiently by transferring only changed bytes (delta sync), and resolving conflicts when the same file changes on two devices while offline.\n\n**How to complete:** Design a delta-sync protocol for a large file and describe your conflict resolution policy (e.g. keep-both-copies) when two offline edits collide.",
       "markers": []
     },
     {
       "levelPath": "2.6.7",
       "levelTitle": "🌳 PHASE 6 — PRODUCT SYSTEMS II (Days 121–145)",
       "title": "Branch 6.5 — Orchestration (Days 142–144)",
-      "description": "Branch 6.5 — Orchestration (Days 142–144)",
+      "description": "**What:** Systems that reliably run other work on a schedule or as long-running workflows — distributed cron, DAG engines, and durable execution frameworks.\n\n**How to complete:** Work Days 142–144; you're done when you can explain how a durable execution engine like Temporal survives a worker crash mid-workflow.",
       "markers": []
     },
     {
       "levelPath": "3.6.7.0",
       "levelTitle": "Branch 6.5 — Orchestration (Days 142–144)",
       "title": "Day 142 · Distributed cron, DAG engines, backfills",
-      "description": "Day 142 · Distributed cron, DAG engines, backfills",
+      "description": "**What:** Running scheduled jobs exactly once across a cluster (not once per node), modeling job dependencies as a DAG, and safely re-running historical (backfill) jobs.\n\n**How to complete:** Design a distributed cron that guarantees a job runs on exactly one node, and explain how you'd safely backfill a week of missed daily jobs.",
       "markers": []
     },
     {
       "levelPath": "3.6.7.1",
       "levelTitle": "Branch 6.5 — Orchestration (Days 142–144)",
       "title": "Day 143 · Temporal/Cadence, durable execution",
-      "description": "Day 143 · Temporal/Cadence, durable execution",
+      "description": "**What:** Frameworks that make long-running, multi-step workflows durable — a workflow's code can crash and resume exactly where it left off, replaying from an event history.\n\n**How to complete:** Explain how Temporal's event-history replay lets a workflow resume after a worker crash without re-executing already-completed steps.",
       "markers": []
     },
     {
       "levelPath": "3.6.7.2",
       "levelTitle": "Branch 6.5 — Orchestration (Days 142–144)",
       "title": "Day 144 · Multi-tenancy: isolation, noisy neighbor, quotas",
-      "description": "Day 144 · Multi-tenancy: isolation, noisy neighbor, quotas",
+      "description": "**What:** Sharing infrastructure across many tenants safely — isolating one tenant's failure or heavy usage (noisy neighbor) from affecting others via quotas and limits.\n\n**How to complete:** Design a quota system that stops one tenant's spike from degrading other tenants sharing the same cluster, and name your isolation boundary (process, container, node).",
       "markers": []
     },
     {
       "levelPath": "2.6.8",
       "levelTitle": "🌳 PHASE 6 — PRODUCT SYSTEMS II (Days 121–145)",
       "title": "🎯 GATE 6 — Day 145 · MOCK #11: Google Drive / Collaborative Docs",
-      "description": "**Tests:** sync protocol, conflict resolution, CRDT/OT, versioning\n\n**🔑 Exit criteria:**\n- No common FAANG design question is unfamiliar territory",
+      "description": "**What:** The Phase 6 checkpoint, and the last of the \"harder\" product systems — a mock on real-time sync and conflict resolution under pressure.\n\n**How to complete:** Sit the mock cold, timed to 45 minutes, then score yourself against: sync protocol, conflict resolution, CRDT/OT, versioning. Don't move on until you can truthfully check off:\n- No common FAANG design question is unfamiliar territory",
       "markers": [
         "mock",
         "gate"
@@ -1379,56 +1355,56 @@
       "levelPath": "1.7",
       "levelTitle": "180-Day Roadmap",
       "title": "🌳 PHASE 7 — ML & MODERN INFRASTRUCTURE (Days 146–160)",
-      "description": "Goal: 2026-era topics most candidates cannot handle.\n\n🔑 **Exit criteria:** Design ML-serving/RAG without hedging; discuss cost unprompted.",
+      "description": "**What:** The 2026-era topics most candidates cannot handle — recommendation serving, LLM infrastructure, and the platform/cost layer underneath every design.\n\n**How to complete:** Work the 3 branches and 2 checkpoints in order. 🔑 **Exit criteria:** design ML-serving/RAG without hedging, and discuss cost unprompted.",
       "markers": []
     },
     {
       "levelPath": "2.7.0",
       "levelTitle": "🌳 PHASE 7 — ML & MODERN INFRASTRUCTURE (Days 146–160)",
       "title": "Branch 7.1 — Recommendation & Serving (Days 146–150)",
-      "description": "Branch 7.1 — Recommendation & Serving (Days 146–150)",
+      "description": "**What:** The multi-stage architecture behind real recommendation systems — from generating candidates to ranking them to serving predictions within a latency budget.\n\n**How to complete:** Work Days 146–150; you're done when you can design a multi-stage recommendation pipeline and explain training-serving skew.",
       "markers": []
     },
     {
       "levelPath": "3.7.0.0",
       "levelTitle": "Branch 7.1 — Recommendation & Serving (Days 146–150)",
       "title": "Day 146 · Candidate gen → ranking → policy (multi-stage)",
-      "description": "Day 146 · Candidate gen → ranking → policy (multi-stage)",
+      "description": "**What:** The standard architecture for recommendations at scale — cheaply narrow millions of items to hundreds (candidate gen), expensively rank those (ranking), then apply business policy on top.\n\n**How to complete:** Sketch the 3-stage pipeline for a video recommendation feed and explain why skipping straight to ranking on the full catalog wouldn't scale.",
       "markers": []
     },
     {
       "levelPath": "3.7.0.1",
       "levelTitle": "Branch 7.1 — Recommendation & Serving (Days 146–150)",
       "title": "Day 147 · Feature stores, online/offline parity, training-serving skew",
-      "description": "Day 147 · Feature stores, online/offline parity, training-serving skew",
+      "description": "**What:** A central system for computing and serving ML features consistently in both training (batch) and serving (real-time), avoiding training-serving skew.\n\n**How to complete:** Explain a concrete way training-serving skew creeps in (e.g. a feature computed differently offline vs online) and how a feature store prevents it.",
       "markers": []
     },
     {
       "levelPath": "3.7.0.2",
       "levelTitle": "Branch 7.1 — Recommendation & Serving (Days 146–150)",
       "title": "Day 148 · Embedding retrieval at scale, ANN serving",
-      "description": "Day 148 · Embedding retrieval at scale, ANN serving",
+      "description": "**What:** Serving nearest-neighbor lookups over millions of learned embedding vectors within a tight latency budget, using approximate nearest-neighbor indexes.\n\n**How to complete:** Explain why exact nearest-neighbor search doesn't scale to millions of embeddings, and how an ANN index trades a small accuracy loss for speed.",
       "markers": []
     },
     {
       "levelPath": "3.7.0.3",
       "levelTitle": "Branch 7.1 — Recommendation & Serving (Days 146–150)",
       "title": "Day 149 · Model serving: batching, GPU utilization, latency budgets",
-      "description": "Day 149 · Model serving: batching, GPU utilization, latency budgets",
+      "description": "**What:** Serving ML model inference efficiently — dynamically batching requests to keep GPUs utilized, while staying inside a per-request latency budget.\n\n**How to complete:** Design a dynamic batching strategy for a model server and explain the tradeoff between batch size (throughput) and per-request latency.",
       "markers": []
     },
     {
       "levelPath": "3.7.0.4",
       "levelTitle": "Branch 7.1 — Recommendation & Serving (Days 146–150)",
       "title": "Day 150 · A/B infra: assignment, guardrails, interference",
-      "description": "Day 150 · A/B infra: assignment, guardrails, interference",
+      "description": "**What:** The infrastructure for running experiments safely at scale — consistent user assignment, automatic guardrail metrics, and detecting cross-experiment interference.\n\n**How to complete:** Design a consistent hashing-based assignment scheme for an A/B test and name one guardrail metric you'd auto-halt the experiment on.",
       "markers": []
     },
     {
       "levelPath": "2.7.1",
       "levelTitle": "🌳 PHASE 7 — ML & MODERN INFRASTRUCTURE (Days 146–160)",
       "title": "🎯 CHECKPOINT — Day 151 · MOCK #12: Recommendation System",
-      "description": "**Tests:** multi-stage retrieval, feature stores, serving latency",
+      "description": "**What:** A scored mock testing Branch 7.1's multi-stage retrieval and serving-latency material as a full design under interview conditions.\n\n**How to complete:** Sit the mock cold, timed to 45 minutes, then score yourself against: multi-stage retrieval, feature stores, serving latency.",
       "markers": [
         "mock"
       ]
@@ -1437,42 +1413,42 @@
       "levelPath": "2.7.2",
       "levelTitle": "🌳 PHASE 7 — ML & MODERN INFRASTRUCTURE (Days 146–160)",
       "title": "Branch 7.2 — LLM Infrastructure (Days 152–155)",
-      "description": "Branch 7.2 — LLM Infrastructure (Days 152–155)",
+      "description": "**What:** The infrastructure layer specific to serving and building on top of large language models — efficient inference and retrieval-augmented generation (RAG).\n\n**How to complete:** Work Days 152–155; you're done when you can design a RAG pipeline and discuss its cost/latency tradeoffs unprompted.",
       "markers": []
     },
     {
       "levelPath": "3.7.2.0",
       "levelTitle": "Branch 7.2 — LLM Infrastructure (Days 152–155)",
       "title": "Day 152 · KV cache, continuous batching, speculative decoding",
-      "description": "Day 152 · KV cache, continuous batching, speculative decoding",
+      "description": "**What:** The three main techniques for making LLM inference fast and cheap — caching attention keys/values across tokens, batching requests dynamically, and speculatively generating tokens with a smaller draft model.\n\n**How to complete:** Explain what the KV cache actually stores and why it lets each new token be generated in roughly constant time instead of reprocessing the full prompt.",
       "markers": []
     },
     {
       "levelPath": "3.7.2.1",
       "levelTitle": "Branch 7.2 — LLM Infrastructure (Days 152–155)",
       "title": "Day 153 · RAG: chunking, retrieval, reranking, evaluation",
-      "description": "Day 153 · RAG: chunking, retrieval, reranking, evaluation",
+      "description": "**What:** Grounding an LLM's answers in retrieved documents instead of relying purely on parametric memory — chunking documents, retrieving relevant ones, reranking, and evaluating the whole pipeline.\n\n**How to complete:** Design a RAG pipeline end to end (chunking strategy, retrieval method, reranker) and describe one metric you'd use to evaluate answer quality.",
       "markers": []
     },
     {
       "levelPath": "3.7.2.2",
       "levelTitle": "Branch 7.2 — LLM Infrastructure (Days 152–155)",
       "title": "Day 154 · Vector DB internals: HNSW tuning, filtering, freshness",
-      "description": "Day 154 · Vector DB internals: HNSW tuning, filtering, freshness",
+      "description": "**What:** Operating a vector database for RAG retrieval in production — tuning HNSW's recall/speed tradeoff, filtering by metadata, and keeping the index fresh as documents change.\n\n**How to complete:** Explain what HNSW parameter you'd tune to trade recall for latency, and how you'd support metadata filtering (e.g. by tenant) without a full rescan.",
       "markers": []
     },
     {
       "levelPath": "3.7.2.3",
       "levelTitle": "Branch 7.2 — LLM Infrastructure (Days 152–155)",
       "title": "Day 155 · Prompt/context pipelines, caching, cost control",
-      "description": "Day 155 · Prompt/context pipelines, caching, cost control",
+      "description": "**What:** Managing the cost and latency of LLM calls in a real product — caching repeated prompts/responses, and structuring context windows deliberately.\n\n**How to complete:** Design a prompt-caching strategy for a support-chatbot product and estimate the cost reduction from caching a common system prompt prefix.",
       "markers": []
     },
     {
       "levelPath": "2.7.3",
       "levelTitle": "🌳 PHASE 7 — ML & MODERN INFRASTRUCTURE (Days 146–160)",
       "title": "🎯 CHECKPOINT — Day 156 · MOCK #13: LLM-Powered Product (RAG at scale)",
-      "description": "**Tests:** retrieval, cost, latency, evaluation",
+      "description": "**What:** A scored mock testing whether Branch 7.2's RAG and serving material holds up when pushed on cost, latency, and evaluation.\n\n**How to complete:** Sit the mock cold, timed to 45 minutes, then score yourself against: retrieval, cost, latency, evaluation.",
       "markers": [
         "mock"
       ]
@@ -1480,178 +1456,176 @@
     {
       "levelPath": "2.7.4",
       "levelTitle": "🌳 PHASE 7 — ML & MODERN INFRASTRUCTURE (Days 146–160)",
-      "title": "🌿 Branch 7.3 — Platform & Economics (Days 157–160)",
-      "description": "🌿 Branch 7.3 — Platform & Economics (Days 157–160)",
+      "title": "Branch 7.3 — Platform & Economics (Days 157–160)",
+      "description": "**What:** The platform layer every modern system sits on top of, and the cost lens senior engineers apply to every infrastructure decision.\n\n**How to complete:** Work Days 157–160; you're done when you discuss unit economics unprompted in any design, not only when asked.",
       "markers": []
     },
     {
       "levelPath": "3.7.4.0",
-      "levelTitle": "🌿 Branch 7.3 — Platform & Economics (Days 157–160)",
+      "levelTitle": "Branch 7.3 — Platform & Economics (Days 157–160)",
       "title": "Day 157 · Kubernetes for design interviews: scheduling, HPA, operators",
-      "description": "Day 157 · Kubernetes for design interviews: scheduling, HPA, operators",
+      "description": "**What:** The container orchestration layer most systems run on — how the scheduler places pods, HPA scales them automatically, and operators automate application-specific operations.\n\n**How to complete:** Explain what the Kubernetes scheduler considers when placing a pod, and how HPA decides when to add replicas based on a metric.",
       "markers": []
     },
     {
       "levelPath": "3.7.4.1",
-      "levelTitle": "🌿 Branch 7.3 — Platform & Economics (Days 157–160)",
+      "levelTitle": "Branch 7.3 — Platform & Economics (Days 157–160)",
       "title": "Day 158 · Service mesh, sidecars, mTLS — and when it's overkill",
-      "description": "Day 158 · Service mesh, sidecars, mTLS — and when it's overkill",
+      "description": "**What:** Offloading cross-cutting concerns (mTLS, retries, observability) into a sidecar proxy next to each service, and the real operational cost that makes it overkill for smaller systems.\n\n**How to complete:** Name 2 concerns a service mesh moves out of application code, and state a team size/system scale below which you'd skip it entirely.",
       "markers": []
     },
     {
       "levelPath": "3.7.4.2",
-      "levelTitle": "🌿 Branch 7.3 — Platform & Economics (Days 157–160)",
+      "levelTitle": "Branch 7.3 — Platform & Economics (Days 157–160)",
       "title": "Day 159 · Serverless, cold starts, edge compute — fit and misfit",
-      "description": "Day 159 · Serverless, cold starts, edge compute — fit and misfit",
+      "description": "**What:** Running code without managing servers — great for spiky, short-lived workloads, badly suited to workloads sensitive to cold-start latency or long-running state.\n\n**How to complete:** Give one workload that fits serverless well and one that doesn't, explaining the cold-start or statefulness reason in each case.",
       "markers": []
     },
     {
       "levelPath": "3.7.4.3",
-      "levelTitle": "🌿 Branch 7.3 — Platform & Economics (Days 157–160)",
+      "levelTitle": "Branch 7.3 — Platform & Economics (Days 157–160)",
       "title": "Day 160 · Cost engineering: unit economics, egress, tiering, spot",
-      "description": "Day 160 · Cost engineering: unit economics, egress, tiering, spot",
+      "description": "**What:** Treating cost as a first-class design constraint — computing unit economics per request, minimizing cross-AZ/cross-cloud egress, tiering storage, and using spot instances where safe.\n\n**How to complete:** Compute a rough unit economics figure (cost per 1000 requests) for a design you've already built, and name one concrete change that would cut it.",
       "markers": []
     },
     {
       "levelPath": "1.8",
       "levelTitle": "180-Day Roadmap",
       "title": "🌳 PHASE 8 — RELIABILITY & OPERATIONS (Days 161–175)",
-      "description": "Goal: Operational maturity — the senior-level differentiator. Strength area — make it dominant.",
+      "description": "**What:** Operational maturity — the senior-level differentiator, and (like Phase 4) a genuine existing strength worth making dominant rather than re-learning.\n\n**How to complete:** Work the 4 branches in order, then sit Gate 8. Focus reps on making unprompted failure-handling reflexive in every design, not just this phase's.",
       "markers": []
     },
     {
       "levelPath": "2.8.0",
       "levelTitle": "🌳 PHASE 8 — RELIABILITY & OPERATIONS (Days 161–175)",
       "title": "Branch 8.1 — Measuring Reliability (Days 161–164)",
-      "description": "Branch 8.1 — Measuring Reliability (Days 161–164)",
+      "description": "**What:** The vocabulary and instrumentation for talking about reliability precisely — SLIs/SLOs/error budgets, and the three observability signal types.\n\n**How to complete:** Work Days 161–164; you're done when you can define an SLO with an error budget for a real service and pick the right telemetry signal to debug an incident.",
       "markers": []
     },
     {
       "levelPath": "3.8.0.0",
       "levelTitle": "Branch 8.1 — Measuring Reliability (Days 161–164)",
       "title": "Day 161 · SLI/SLO/SLA, error budgets, nines arithmetic",
-      "description": "Day 161 · SLI/SLO/SLA, error budgets, nines arithmetic",
+      "description": "**What:** The precise vocabulary of reliability targets — an SLI measures, an SLO targets, an SLA is contractual — and the error budget an SLO implies.\n\n**How to complete:** Define an SLI/SLO/error-budget triplet for a real API, and compute how many minutes of downtime a 99.9% monthly SLO actually allows.",
       "markers": []
     },
     {
       "levelPath": "3.8.0.1",
       "levelTitle": "Branch 8.1 — Measuring Reliability (Days 161–164)",
       "title": "Day 162 · Metrics vs logs vs traces; cardinality traps, telemetry cost",
-      "description": "Day 162 · Metrics vs logs vs traces; cardinality traps, telemetry cost",
+      "description": "**What:** The three observability signal types, each suited to a different question, and the cardinality explosion (e.g. per-user labels) that can silently blow up metrics storage cost.\n\n**How to complete:** State which signal (metric, log, trace) you'd reach for to answer 3 different debugging questions, and name one label choice that risks a cardinality explosion.",
       "markers": []
     },
     {
       "levelPath": "3.8.0.2",
       "levelTitle": "Branch 8.1 — Measuring Reliability (Days 161–164)",
       "title": "Day 163 · Distributed tracing, sampling, context propagation",
-      "description": "Day 163 · Distributed tracing, sampling, context propagation",
+      "description": "**What:** Following a single request across many services via a shared trace ID, sampled to control volume, propagated through every service boundary.\n\n**How to complete:** Explain how a trace ID propagates across an async queue boundary, and justify a sampling rate for a high-traffic endpoint.",
       "markers": []
     },
     {
       "levelPath": "3.8.0.3",
       "levelTitle": "Branch 8.1 — Measuring Reliability (Days 161–164)",
       "title": "Day 164 · Alerting: symptom vs cause, on-call, runbooks, incident command",
-      "description": "Day 164 · Alerting: symptom vs cause, on-call, runbooks, incident command",
+      "description": "**What:** Alerting on symptoms (user-facing pain) rather than causes (a specific metric threshold), backed by runbooks and a clear incident command structure.\n\n**How to complete:** Rewrite a cause-based alert (\"CPU > 80%\") as a symptom-based one, and outline the first 3 steps of a runbook for the incident it represents.",
       "markers": []
     },
     {
       "levelPath": "2.8.1",
       "levelTitle": "🌳 PHASE 8 — RELIABILITY & OPERATIONS (Days 161–175)",
       "title": "Branch 8.2 — Failure Engineering (Days 165–169)",
-      "description": "Branch 8.2 — Failure Engineering (Days 165–169)",
+      "description": "**What:** Designing systems that degrade gracefully instead of collapsing — the failure patterns that cascade, and the techniques that stop them.\n\n**How to complete:** Work Days 165–169; you're done when every design you produce handles overload and partial failure without being asked.",
       "markers": []
     },
     {
       "levelPath": "3.8.1.0",
       "levelTitle": "Branch 8.2 — Failure Engineering (Days 165–169)",
       "title": "Day 165 · Cascading failures, retry storms, thundering herd, jitter",
-      "description": "Day 165 · Cascading failures, retry storms, thundering herd, jitter",
+      "description": "**What:** How a small failure amplifies into a system-wide outage — synchronized retries (a retry storm) or synchronized cache expiry (thundering herd) overwhelming an already-struggling downstream.\n\n**How to complete:** Explain how adding jitter to retry backoff prevents a retry storm, with a concrete before/after timeline.",
       "markers": []
     },
     {
       "levelPath": "3.8.1.1",
       "levelTitle": "Branch 8.2 — Failure Engineering (Days 165–169)",
       "title": "Day 166 · Load shedding, admission control, priority queues, brownout",
-      "description": "Day 166 · Load shedding, admission control, priority queues, brownout",
+      "description": "**What:** Deliberately rejecting or degrading some requests under overload to protect the system as a whole, prioritizing the requests that matter most.\n\n**How to complete:** Design an admission-control policy that sheds low-priority requests first under overload, and define what a \"brownout\" response looks like for your service.",
       "markers": []
     },
     {
       "levelPath": "3.8.1.2",
       "levelTitle": "Branch 8.2 — Failure Engineering (Days 165–169)",
       "title": "Day 167 · Circuit breakers, bulkheads, timeout hierarchies",
-      "description": "Day 167 · Circuit breakers, bulkheads, timeout hierarchies",
+      "description": "**What:** Stopping calls to a failing dependency before they pile up (circuit breaker), isolating resource pools so one dependency's failure can't starve others (bulkhead), and setting nested timeouts consistently.\n\n**How to complete:** Design a timeout hierarchy across 3 nested service calls, and explain when a circuit breaker should trip versus just retrying.",
       "markers": []
     },
     {
       "levelPath": "3.8.1.3",
       "levelTitle": "Branch 8.2 — Failure Engineering (Days 165–169)",
       "title": "Day 168 · Chaos engineering, fault injection, game days",
-      "description": "Day 168 · Chaos engineering, fault injection, game days",
+      "description": "**What:** Deliberately injecting failures in production (or a close facsimile) to verify a system's resilience claims are actually true, run as scheduled \"game days\".\n\n**How to complete:** Design a chaos experiment (e.g. kill a random replica) for a service you've built, stating your hypothesis and how you'd measure success.",
       "markers": []
     },
     {
       "levelPath": "3.8.1.4",
       "levelTitle": "Branch 8.2 — Failure Engineering (Days 165–169)",
       "title": "Day 169 · Capacity planning, autoscaling, headroom, load testing",
-      "description": "Day 169 · Capacity planning, autoscaling, headroom, load testing",
+      "description": "**What:** Sizing infrastructure ahead of demand — autoscaling reactively, but only on top of a deliberate headroom buffer validated by load testing.\n\n**How to complete:** Compute a headroom buffer for a service given its peak load and autoscaling reaction time, and describe the load test that would validate it.",
       "markers": []
     },
     {
       "levelPath": "2.8.2",
       "levelTitle": "🌳 PHASE 8 — RELIABILITY & OPERATIONS (Days 161–175)",
       "title": "Branch 8.3 — Change & Recovery (Days 170–172)",
-      "description": "Branch 8.3 — Change & Recovery (Days 170–172)",
+      "description": "**What:** Shipping changes to a live system safely, and recovering when a change (or disaster) goes wrong anyway.\n\n**How to complete:** Work Days 170–172; you're done when you can design a zero-downtime schema migration and state your DR plan's RPO/RTO.",
       "markers": []
     },
     {
       "levelPath": "3.8.2.0",
       "levelTitle": "Branch 8.3 — Change & Recovery (Days 170–172)",
       "title": "Day 170 · Blue-green, canary, progressive rollout, auto-rollback",
-      "description": "Day 170 · Blue-green, canary, progressive rollout, auto-rollback",
+      "description": "**What:** Deployment strategies that limit blast radius — switching between two full environments (blue-green), rolling out to a small percentage first (canary), and rolling back automatically on regression signals.\n\n**How to complete:** Design a canary rollout with an automatic rollback trigger tied to a specific error-rate threshold, and explain blue-green's tradeoff versus it.",
       "markers": []
     },
     {
       "levelPath": "3.8.2.1",
       "levelTitle": "Branch 8.3 — Change & Recovery (Days 170–172)",
       "title": "Day 171 · Online schema migration, expand-contract, dual-write, backfill",
-      "description": "Day 171 · Online schema migration, expand-contract, dual-write, backfill",
-      "markers": [
-        "strength"
-      ]
+      "description": "**What:** Changing a database schema without downtime — adding the new shape first (expand), dual-writing both old and new, backfilling history, then removing the old shape (contract).\n\n**How to complete:** Rehearsed strength — walk through an expand-contract migration for renaming a column on a live table with zero downtime, step by step.",
+      "markers": []
     },
     {
       "levelPath": "3.8.2.2",
       "levelTitle": "Branch 8.3 — Change & Recovery (Days 170–172)",
       "title": "Day 172 · DR: RPO/RTO, backups, region evacuation, drills",
-      "description": "Day 172 · DR: RPO/RTO, backups, region evacuation, drills",
+      "description": "**What:** Disaster recovery planning quantified by two numbers — how much data you can afford to lose (RPO) and how fast you must be back up (RTO) — and the backup/evacuation plan that hits them.\n\n**How to complete:** Define an RPO/RTO pair for a real system and describe the backup + region failover plan that would actually meet those numbers, then explain how you'd drill it.",
       "markers": []
     },
     {
       "levelPath": "2.8.3",
       "levelTitle": "🌳 PHASE 8 — RELIABILITY & OPERATIONS (Days 161–175)",
       "title": "Branch 8.4 — Security (Days 173–174)",
-      "description": "Branch 8.4 — Security (Days 173–174)",
+      "description": "**What:** The baseline security architecture every production system needs — identity, authorization, and encryption of data at rest and in transit.\n\n**How to complete:** Work Days 173–174; you're done when you can explain a zero-trust auth flow and a key-rotation policy from memory.",
       "markers": []
     },
     {
       "levelPath": "3.8.3.0",
       "levelTitle": "Branch 8.4 — Security (Days 173–174)",
       "title": "Day 173 · OAuth2/OIDC, JWT pitfalls, session design, zero trust",
-      "description": "Day 173 · OAuth2/OIDC, JWT pitfalls, session design, zero trust",
+      "description": "**What:** The standard identity/authorization protocols, the common mistakes made with JWTs (no revocation, over-trusting claims), and zero-trust — verifying every request instead of trusting the network perimeter.\n\n**How to complete:** Explain one common JWT pitfall (e.g. no built-in revocation) and how you'd mitigate it, then describe what \"zero trust\" changes about internal service calls.",
       "markers": []
     },
     {
       "levelPath": "3.8.3.1",
       "levelTitle": "Branch 8.4 — Security (Days 173–174)",
       "title": "Day 174 · Encryption at rest/transit, KMS, key rotation, PII",
-      "description": "Day 174 · Encryption at rest/transit, KMS, key rotation, PII",
+      "description": "**What:** Encrypting stored and in-flight data using keys managed by a dedicated service (KMS), with a rotation policy, and extra handling for PII specifically.\n\n**How to complete:** Design a key-rotation policy using a KMS for encrypting PII at rest, and explain how existing encrypted data is handled when the key rotates.",
       "markers": []
     },
     {
       "levelPath": "2.8.4",
       "levelTitle": "🌳 PHASE 8 — RELIABILITY & OPERATIONS (Days 161–175)",
       "title": "🎯 GATE 8 — Day 175 · MOCK #14: Monitoring / Observability Platform",
-      "description": "**Tests:** write volume, cardinality, time-series storage, query\n\n**🔑 Exit criteria:**\n- Every design handles partial failure by default, unprompted",
+      "description": "**What:** The Phase 8 checkpoint — designing the very system that makes reliability measurable, testing whether that operational maturity is now reflexive.\n\n**How to complete:** Sit the mock cold, timed to 45 minutes, then score yourself against: write volume, cardinality, time-series storage, query. Don't move on until you can truthfully check off:\n- Every design handles partial failure by default, unprompted",
       "markers": [
         "mock",
         "gate"
@@ -1661,60 +1635,58 @@
       "levelPath": "1.9",
       "levelTitle": "180-Day Roadmap",
       "title": "🌳 PHASE 9 — INTERVIEW CRAFT & LOOP SIMULATION (Days 176–180)",
-      "description": "Goal: Convert knowledge into performance under time pressure.",
+      "description": "**What:** The final phase — converting 179 days of knowledge into performance under real time pressure, which is a distinct skill from knowing the material.\n\n**How to complete:** Work the 3 branches in order, then sit the Final Gate. You're ready for real loops once no rubric dimension scores below 4.",
       "markers": []
     },
     {
       "levelPath": "2.9.0",
       "levelTitle": "🌳 PHASE 9 — INTERVIEW CRAFT & LOOP SIMULATION (Days 176–180)",
-      "title": "🌿 Branch 9.1 — Performance Mechanics (Day 176)",
-      "description": "🌿 Branch 9.1 — Performance Mechanics (Day 176)",
+      "title": "Branch 9.1 — Performance Mechanics (Day 176)",
+      "description": "**What:** The meta-skill of the whole 180 days — running the 45-minute interview format itself flawlessly, independent of which system you're asked to design.\n\n**How to complete:** Complete Day 176; you're done when the 45-minute framework runs on reflex, not conscious effort.",
       "markers": []
     },
     {
       "levelPath": "3.9.0.0",
-      "levelTitle": "🌿 Branch 9.1 — Performance Mechanics (Day 176)",
+      "levelTitle": "Branch 9.1 — Performance Mechanics (Day 176)",
       "title": "Day 176 · 45-min framework, timeboxing, diagram discipline, handling pushback — drilled to reflex",
-      "description": "Day 176 · 45-min framework, timeboxing, diagram discipline, handling pushback — drilled to reflex",
+      "description": "**What:** The repeatable structure for any system design interview — requirements, estimation, high-level design, deep dive, wrap-up — timeboxed and diagrammed consistently.\n\n**How to complete:** Run 3 back-to-back mock designs using a strict internal timebox per phase, and drill your response to an interviewer pushing back on a design choice.",
       "markers": []
     },
     {
       "levelPath": "2.9.1",
       "levelTitle": "🌳 PHASE 9 — INTERVIEW CRAFT & LOOP SIMULATION (Days 176–180)",
-      "title": "🌿 Branch 9.2 — Your Story (Day 177)",
-      "description": "🌿 Branch 9.2 — Your Story (Day 177)",
+      "title": "Branch 9.2 — Your Story (Day 177)",
+      "description": "**What:** Turning real production experience (the notification platform, the CDC/ES pipeline) into tight, quantified narratives for the \"tell me about a system you built\" portion of interviews.\n\n**How to complete:** Complete Day 177; you're done when each story runs exactly 5 minutes with real numbers and a clear tradeoff, without notes.",
       "markers": []
     },
     {
       "levelPath": "3.9.1.0",
-      "levelTitle": "🌿 Branch 9.2 — Your Story (Day 177)",
+      "levelTitle": "Branch 9.2 — Your Story (Day 177)",
       "title": "Day 177 · Notification platform + CDC/ES pipeline as 5-minute narratives with real numbers and tradeoffs",
-      "description": "Day 177 · Notification platform + CDC/ES pipeline as 5-minute narratives with real numbers and tradeoffs",
-      "markers": [
-        "strength"
-      ]
+      "description": "**What:** Two real production systems, reshaped into interview-ready stories that lead with scale/impact numbers and one honest tradeoff you made.\n\n**How to complete:** Rehearsed strength — time yourself telling each story in exactly 5 minutes, including one specific number (e.g. \"100M+ notifications/day\") and one tradeoff.",
+      "markers": []
     },
     {
       "levelPath": "2.9.2",
       "levelTitle": "🌳 PHASE 9 — INTERVIEW CRAFT & LOOP SIMULATION (Days 176–180)",
-      "title": "🌿 Branch 9.3 — Company Calibration (Days 178–179)",
-      "description": "🌿 Branch 9.3 — Company Calibration (Days 178–179)",
+      "title": "Branch 9.3 — Company Calibration (Days 178–179)",
+      "description": "**What:** Adjusting your delivery for each company's actual interview style — Amazon's leadership-principle framing differs from Google's or Meta's more open-ended format.\n\n**How to complete:** Work Days 178–179; you're done when you've sat one mock in each company's style and adjusted for the differences you noticed.",
       "markers": []
     },
     {
       "levelPath": "3.9.2.0",
-      "levelTitle": "🌿 Branch 9.3 — Company Calibration (Days 178–179)",
+      "levelTitle": "Branch 9.3 — Company Calibration (Days 178–179)",
       "title": "Day 178 · MOCK #15 (Google-style) + MOCK #16 (Amazon-style, LPs)",
-      "description": "Day 178 · MOCK #15 (Google-style) + MOCK #16 (Amazon-style, LPs)",
+      "description": "**What:** Two back-to-back mocks in different company styles — Google's open-ended depth-first questioning versus Amazon's leadership-principle-anchored format.\n\n**How to complete:** Sit both mocks same-day, and after each, write down one concrete delivery adjustment the style demanded that the other didn't.",
       "markers": [
         "mock"
       ]
     },
     {
       "levelPath": "3.9.2.1",
-      "levelTitle": "🌿 Branch 9.3 — Company Calibration (Days 178–179)",
+      "levelTitle": "Branch 9.3 — Company Calibration (Days 178–179)",
       "title": "Day 179 · MOCK #17 (Meta-style) + MOCK #18 (Netflix-style)",
-      "description": "Day 179 · MOCK #17 (Meta-style) + MOCK #18 (Netflix-style)",
+      "description": "**What:** Two more calibration mocks — Meta's execution-speed-focused format and Netflix's high-autonomy, judgment-focused culture fit.\n\n**How to complete:** Sit both mocks same-day, and compare your notes against Day 178's two styles — you should now have a felt sense of what changes per company.",
       "markers": [
         "mock"
       ]
@@ -1723,7 +1695,7 @@
       "levelPath": "2.9.3",
       "levelTitle": "🌳 PHASE 9 — INTERVIEW CRAFT & LOOP SIMULATION (Days 176–180)",
       "title": "🏁 FINAL GATE — Day 180",
-      "description": "**Tests:** MOCK #19 — Full loop, design 1 (unseen); MOCK #20 — Full loop, design 2 (unseen, under fatigue)\n\n**🔑 Exit criteria:**\n- Ready criteria: no rubric dimension below 4",
+      "description": "**What:** The last checkpoint of the entire 180-day plan — two unseen, full-length mock loops back to back, the closest simulation of the real thing before you sit it for real.\n\n**How to complete:** Sit the mock cold, timed to 45 minutes, then score yourself against: MOCK #19 — Full loop, design 1 (unseen); MOCK #20 — Full loop, design 2 (unseen, under fatigue). Don't move on until you can truthfully check off:\n- Ready criteria: no rubric dimension below 4",
       "markers": [
         "mock",
         "gate"
@@ -1733,28 +1705,28 @@
       "levelPath": "1.10",
       "levelTitle": "180-Day Roadmap",
       "title": "🔁 PARALLEL TRACKS — run alongside all 180 days",
-      "description": "🔁 PARALLEL TRACKS — run alongside all 180 days",
+      "description": "**What:** Three ongoing commitments that run underneath the whole 180-day plan — coding practice, behavioral prep, and the job pipeline — none of which fit into a single day's slot.\n\n**How to complete:** Give each track its stated weekly time budget every week from Day 1, rather than deferring them until the system design phases are \"done\".",
       "markers": []
     },
     {
       "levelPath": "2.10.0",
       "levelTitle": "🔁 PARALLEL TRACKS — run alongside all 180 days",
       "title": "💻 DSA / Coding — ~5 hrs/week, every week",
-      "description": "- Vehicle: your Grand Algorithm project\n- Target: NeetCode 150 solved twice; second pass timed\n- ⚠️ Most common rejection reason — do NOT let this slip",
+      "description": "**What:** The coding-interview track running in parallel to system design — still the single most common reason candidates get rejected, regardless of how strong their system design is.\n\n**How to complete:** Spend ~5 hrs/week on your Grand Algorithm project, work through NeetCode 150 twice (second pass timed), and never let this slip — it's the most common rejection reason.",
       "markers": []
     },
     {
       "levelPath": "2.10.1",
       "levelTitle": "🔁 PARALLEL TRACKS — run alongside all 180 days",
       "title": "🗣️ Behavioral / Leadership Principles — ~30 hrs total",
-      "description": "- Amazon: 15–20 rehearsed STAR stories mapped to LPs\n- Google/Meta/Netflix: lighter, but real\n- Source from real work: notification platform, CDC pipeline, incidents",
+      "description": "**What:** Behavioral interview prep, weighted toward Amazon's leadership-principle format (heaviest requirement) with lighter but real prep for Google/Meta/Netflix's less structured behavioral rounds.\n\n**How to complete:** Draft 15–20 STAR stories mapped to Amazon's LPs sourced from real work (the notification platform, the CDC pipeline, real incidents), spending ~30 hours total across the 180 days.",
       "markers": []
     },
     {
       "levelPath": "2.10.2",
       "levelTitle": "🔁 PARALLEL TRACKS — run alongside all 180 days",
       "title": "📮 Pipeline — starts Day 120",
-      "description": "- Referrals convert far better than cold applications\n- Resume must quantify: \"100M+ notifications/day\", not \"worked on notifications\"\n- Keep Bangla technical writing + GitHub active — real differentiators",
+      "description": "**What:** The actual job-application pipeline — referrals, resume, and public technical presence — which needs a multi-week head start before Phase 5's gate, since loops are slow.\n\n**How to complete:** From Day 120, prioritize referrals over cold applications, quantify your resume (\"100M+ notifications/day\", not \"worked on notifications\"), and keep your Bangla technical writing + GitHub active as differentiators.",
       "markers": []
     }
   ]
