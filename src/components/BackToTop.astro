@@ -1,0 +1,48 @@
+---
+---
+
+<button
+  id="back-to-top"
+  aria-label="Back to top"
+  class="fixed bottom-6 right-6 z-50 p-3 rounded-full bg-indigo-600 text-white shadow-lg
+    opacity-0 translate-y-2 pointer-events-none
+    transition-all duration-300
+    hover:bg-indigo-500
+    dark:bg-indigo-500 dark:hover:bg-indigo-400
+    focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+>
+  <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 19V5" />
+    <path d="M5 12l7-7 7 7" />
+  </svg>
+</button>
+
+<script>
+  const button = document.getElementById('back-to-top');
+
+  if (button) {
+    const SHOW_AFTER_PX = 300;
+    let ticking = false;
+
+    const updateVisibility = () => {
+      const isVisible = window.scrollY > SHOW_AFTER_PX;
+      button.classList.toggle('opacity-0', !isVisible);
+      button.classList.toggle('translate-y-2', !isVisible);
+      button.classList.toggle('pointer-events-none', !isVisible);
+      ticking = false;
+    };
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(updateVisibility);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    updateVisibility();
+
+    button.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+</script>

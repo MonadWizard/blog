@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import BackToTop from '../components/BackToTop.astro';
 
 interface Props {
   title: string;
@@ -72,5 +73,6 @@ const ogImageURL = ogImage
   </head>
   <body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 antialiased">
     <slot />
+    <BackToTop />
   </body>
 </html>
