@@ -60,7 +60,7 @@
       "levelPath": "1.1",
       "levelTitle": "180-Day Roadmap",
       "title": "🌳 PHASE 1 — FOUNDATIONS (Days 1–25)",
-      "description": "**What:** The base layer every later phase assumes you already have: fluent estimation, a working mental model of the network stack, sound API contracts, effective caching, and relational database internals.\n\n**How to complete:** Work the 5 branches below in order (they build on each other), then sit Gate 1. Don't advance to Phase 2 until you pass it.",
+      "description": "Phase 1 হলো পুরো **System Design Mastery**\\-এর সবচেয়ে গুরুত্বপূর্ণ ভিত্তি। এটি তোমার পুরো ১৮০ দিনের যাত্রার নোঙ্গর (Anchor)।\n\nএকজন সাধারণ সফটওয়্যার ডেভেলপার এবং একজন সিস্টেম আর্কিটেক্টের মধ্যে প্রধান পার্থক্য তৈরি হয় এই ২৫ দিনে। কারণ এখানে আমরা সিস্টেম ডিজাইনের **Fundamental Building Blocks** বা মৌলিক উপাদানগুলো এমনভাবে আয়ত্ত করব যেন যেকোনো প্রশ্নের উত্তর দেওয়ার সময় তোমার যুক্তি গাণিতিকভাবে এবং টেকনিক্যালি নিখুঁত হয়।\n\n### 🎯 Phase 1-এর মূল লক্ষ্য (Primary Goal)\n\nএই ২৫ দিনের মূল লক্ষ্য হলো **Estimation, Networking, Caching, এবং Relational Database Internals**\\-এ এমন দক্ষতা তৈরি করা যাতে যেকোনো সিস্টেম হ্যান্ডেল করার ক্ষমতা তোমার নখদর্পণে থাকে।\n\n> **Phase 1 Exit Criteria (২৫ দিন পর তোমার যোগ্যতা যা হতে হবে):**১. যেকোনো সিস্টেমের স্কেল (QPS, Storage, Bandwidth) কোনো নোট ছাড়া খাতার পাতায় **৫ মিনিটের মধ্যে** নির্ভুলভাবে হিসাব (Size) করতে পারা।২. একটি HTTP Request ব্রাউজার থেকে শুরু করে লোড ব্যালেন্সার, এপিআই গেটওয়ে, ক্যাশ পার হয়ে ডেটাবেজ পর্যন্ত কীভাবে যায় এবং উত্তর কীভাবে ফিরে আসে—তার পুরো পথ নোটিশ ছাড়া নিখুঁতভাবে ব্যাখ্যা করতে পারা।",
       "markers": []
     },
     {
