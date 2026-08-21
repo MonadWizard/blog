@@ -1,0 +1,128 @@
+{
+  "title": "Apache Kafka — শূন্য থেকে এক্সপার্ট",
+  "description": "৭টা ফেজ আর ১৪টা মডিউলের একটা সম্পূর্ণ বাংলা রোডম্যাপ — Kafka-র বেসিক ভোকাবুলারি থেকে শুরু করে প্রোডিউসার/কনজিউমার ইন্টার্নালস, ডিস্ক লেআউট, রেপ্লিকেশন, KRaft, এক্সাক্টলি-ওয়ান্স সিমেন্টিকস, স্কিমা রেজিস্ট্রি, Kafka Connect/Streams হয়ে প্রোডাকশন অপারেশন আর একটা ক্যাপস্টোন সিস্টেম-ডিজাইন পর্যন্ত। প্রতিটা টপিকে What/How/Why/Do — থিওরি, ইন্টার্নালস, হ্যান্ডস-অন ল্যাব, ইন্টারভিউ প্রশ্ন আর প্রোডাকশন কর্নার কেস।",
+  "pubDate": "2026-08-22",
+  "tags": ["kafka"],
+  "draft": false,
+  "steps": [
+    {
+      "levelPath": "0",
+      "levelTitle": "Apache Kafka Journey",
+      "title": "APACHE KAFKA — শূন্য থেকে এক্সপার্ট",
+      "description": "## মেন্টর ও স্টুডেন্ট\n\nমেন্টর: Claude · স্টুডেন্ট: Rakib (Backend Software Developer & System Architect, ঢাকা)\n\nফরম্যাট: ৭টা Phase, ১৪টা Module। প্রতিটা মডিউলে চারটা লেয়ার:\n\n| লেয়ার | কী শিখবেন |\n|---|---|\n| **What** | কনসেপ্টটা কী, কোন সমস্যা সমাধান করে |\n| **How** | Kafka ভেতরে ঠিক কীভাবে করে (ডিস্ক লেআউট, প্রোটোকল, স্টেট মেশিন) |\n| **Why** | ডিজাইনাররা কেন এই ট্রেড-অফটা নিলো (অন্য অপশন কী ছিলো) |\n| **Do** | নিজের মেশিনে চালিয়ে দেখা, ভাঙা, ফিক্স করা |\n\n## কেন এই ম্যাপিং জরুরি\n\nRakib-এর আগে থেকেই PostgreSQL WAL, logical replication, Redis Streams consumer group, আর Debezium CDC নিয়ে কাজ করা আছে। Kafka-র অনেক কনসেপ্ট এগুলোরই বড় ভাই — তাই প্রতিটা মডিউলে যেখানেই সম্ভব সরাসরি তুলনা টানা হবে, নতুন করে শূন্য থেকে শেখার দরকার নেই, দরকার শুধু সঠিক ম্যাপিং।\n\n## যা লাগবে (prerequisite)\n\n- Linux, systemd, EC2 ops — আগে থেকেই আছে ✅\n- PostgreSQL WAL ও logical replication — আগে থেকেই আছে ✅\n- Debezium CDC, Redis Streams consumer group model — আগে থেকেই আছে ✅\n- Python (FastAPI/Django) — আগে থেকেই আছে ✅\n- JVM basics (শুধু tuning বোঝার জন্য, কোড লেখার জন্য না) — নতুন\n- Docker Compose (ল্যাবের জন্য) — নতুন\n\n## রেফারেন্স\n\n- *Kafka: The Definitive Guide* (2nd ed.) — Narkhede, Shapira, Palino\n- *Designing Data-Intensive Applications* — Chapter 11\n- Kafka official docs — configuration reference\n- KIP আর্কাইভ: KIP-98 (EOS), KIP-101 (Leader Epoch), KIP-405 (Tiered Storage), KIP-429 (Cooperative Rebalance), KIP-500/848 (KRaft ও নতুন rebalance protocol)\n- LinkedIn-এর মূল পেপার: *Kafka: a Distributed Messaging System for Log Processing*\n\nপরের ধাপ: Phase 0 → Module 1।",
+      "markers": []
+    },
+    {
+      "levelPath": "1.0",
+      "levelTitle": "Phase 0 — ভিত্তি",
+      "title": "PHASE 0: ভিত্তি",
+      "description": "Kafka শেখার আগে বোঝা দরকার Kafka আসলে **কী নয়** — এটা RabbitMQ-এর মতো একটা 'স্মার্ট' message broker না, এটা একটা distributed commit log। এই একটা মানসিক মডেল ঠিকমতো বসে গেলে বাকি ১৩টা মডিউলের প্রতিটা ডিজাইন-সিদ্ধান্ত স্বাভাবিক মনে হবে। Module 1-এ vocabulary, mental model, আর প্রথম hands-on ক্লাস্টার — এই তিনটাই কভার হবে।",
+      "markers": []
+    },
+    {
+      "levelPath": "1.1",
+      "levelTitle": "Phase 1 — কোর মেকানিক্স",
+      "title": "PHASE 1: কোর মেকানিক্স",
+      "description": "এখানে Kafka-র দৈনন্দিন ব্যবহারের তিনটা স্তম্ভ — Topic/Partition/Offset, Producer internals, আর Consumer group protocol। এই Phase শেষ করার পর প্রোডাকশনে একটা Kafka pipeline লেখা, ডিবাগ করা, আর টিউন করার মতো ব্যবহারিক দক্ষতা তৈরি হয়ে যাবে। Module 3-4-এ producer batching আর consumer rebalance-এর যে ডিটেইল আসবে, সেটাই প্রোডাকশনে সবচেয়ে বেশি ভুল হওয়া জায়গা।",
+      "markers": []
+    },
+    {
+      "levelPath": "1.2",
+      "levelTitle": "Phase 2 — স্টোরেজ ইন্টার্নালস",
+      "title": "PHASE 2: স্টোরেজ ইন্টার্নালস",
+      "description": "Kafka ডিস্কে ঠিক কী ফরম্যাটে লেখে, কেন এত দ্রুত, আর পুরনো ডেটা কীভাবে সরানো/কমপ্যাক্ট করা হয় — এই Phase-এ সেই লেয়ারে নামা হবে। এখানেই বোঝা যাবে কেন Kafka-র throughput কোনো traditional message broker-এর ধারেকাছেও যেতে পারে না: sequential I/O, page cache, আর zero-copy — এই তিনটা কৌশলের সমষ্টি।",
+      "markers": []
+    },
+    {
+      "levelPath": "1.3",
+      "levelTitle": "Phase 3 — ক্লাস্টার ও ডিস্ট্রিবিউটেড ইন্টার্নালস",
+      "title": "PHASE 3: ক্লাস্টার ইন্টার্নালস",
+      "description": "একটা single broker আর একটা production cluster-এর মধ্যে আসল পার্থক্য তৈরি হয় replication আর metadata consensus-এ। এই Phase-এ ISR, High Watermark, Leader Epoch, আর KRaft (Kafka-র নিজস্ব Raft-ভিত্তিক controller) নিয়ে গভীরে যাওয়া হবে — এগুলো না বুঝলে production incident-এ (broker crash, split-brain, data loss) কী হচ্ছে বোঝা অসম্ভব।",
+      "markers": []
+    },
+    {
+      "levelPath": "1.4",
+      "levelTitle": "Phase 4 — ডেলিভারি সিমেন্টিকস",
+      "title": "PHASE 4: ডেলিভারি সিমেন্টিকস",
+      "description": "At-most-once, at-least-once, exactly-once — এই তিনটা শব্দ ইন্টারভিউতে সবচেয়ে বেশি জিজ্ঞেস করা হয়, আর প্রোডাকশনে সবচেয়ে বেশি ভুল বোঝা হয়। এই Phase-এ Kafka Transactions-এর পুরো মেকানিজম (Transaction Coordinator, markers, isolation level) খুঁটিয়ে দেখা হবে।",
+      "markers": []
+    },
+    {
+      "levelPath": "1.5",
+      "levelTitle": "Phase 5 — ইকোসিস্টেম",
+      "title": "PHASE 5: ইকোসিস্টেম",
+      "description": "Kafka একা কিছু করে না — Schema Registry ডেটা কন্ট্র্যাক্ট ধরে রাখে, Kafka Connect (আর তার ভেতরের Debezium) সিস্টেমের মধ্যে ডেটা সরায়, আর Kafka Streams রিয়েল-টাইম প্রসেসিং করে। এই Phase আপনার (Rakib) বর্তমান CDC/notification pipeline-এর সাথে সবচেয়ে বেশি ওভারল্যাপ করে।",
+      "markers": []
+    },
+    {
+      "levelPath": "1.6",
+      "levelTitle": "Phase 6 — প্রোডাকশন ও অ্যাডভান্সড",
+      "title": "PHASE 6: প্রোডাকশন ও ক্যাপস্টোন",
+      "description": "শেষ Phase — capacity planning, security, monitoring, multi-DC replication, আর একটা failure playbook। শেষ হবে একটা capstone দিয়ে: আপনার 100M+/day notification system-এর Kafka লেয়ারটা সম্পূর্ণ ডিজাইন করা, FAANG-স্টাইল mock ইন্টারভিউ ফরম্যাটে।",
+      "markers": []
+    },
+    {
+      "levelPath": "2.0.0",
+      "levelTitle": "Phase 0 · Module 1",
+      "title": "MODULE 1: Kafka আসলে কী, এবং কেন",
+      "description": "এই মডিউলের লক্ষ্য একটাই বাক্য ভেতরে বসিয়ে দেওয়া: **Kafka একটা distributed commit log, message queue না।** এখান থেকেই বাকি সব কনসেপ্ট (ordering, replay, consumer group, retention) যুক্তিসঙ্গত হয়ে ওঠে। কভার হবে: message queue vs log, core vocabulary, পরিচিত সিস্টেমের সাথে ম্যাপিং, anti-pattern, আর প্রথম hands-on KRaft cluster।",
+      "markers": []
+    },
+    {
+      "levelPath": "3.0.0.0",
+      "levelTitle": "Module 1 · What",
+      "title": "Message Queue vs Log — মৌলিক পার্থক্য",
+      "description": "## সমস্যাটা কী\n\nRabbitMQ/ActiveMQ-এর মতো traditional message broker একটা **queue** মডেল অনুসরণ করে: মেসেজ আসে, একজন কনজিউমার সেটা প্রসেস করে ACK পাঠায়, broker মেসেজটা মুছে ফেলে। মেসেজ একবার কনজিউম হয়ে গেলে সেটা আর নেই — replay করার উপায় নেই।\n\nKafka সম্পূর্ণ ভিন্ন মডেল অনুসরণ করে: একটা **append-only log**। মেসেজ পড়া মানে ডিলিট হওয়া না — শুধু একটা offset পয়েন্টার এগিয়ে যায়। মেসেজ ডিস্কে থেকেই যায়, retention policy (সময় বা সাইজ ভিত্তিক) অনুযায়ী মেয়াদ শেষ না হওয়া পর্যন্ত।\n\n## কেন RabbitMQ কে Kafka দিয়ে রিপ্লেস করা ভুল হতে পারে\n\n- **RabbitMQ-এর শক্তি:** জটিল routing (topic exchange, fanout, priority queue, per-message TTL, delayed delivery)। কম latency, কম throughput ওয়ার্কলোডে এটা চমৎকার।\n- **Kafka-র শক্তি:** বিশাল throughput, একাধিক কনজিউমার group independently পুরো history replay করতে পারে, আর ডেটা দীর্ঘদিন ধরে রাখা যায় একটা \"source of truth\" হিসেবে।\n\n## রিয়েল-লাইফ উদাহরণ\n\nধরুন আপনার (Rakib) notification pipeline-এ একটা `order.placed` ইভেন্ট আসে। RabbitMQ মডেলে সেই ইভেন্ট একবার notification-service কনজিউম করলে শেষ — যদি পরে analytics-service-ও এটা দরকার হয়, নতুন করে পাবে না। Kafka মডেলে notification-service আর analytics-service — দুটোই আলাদা consumer group হিসেবে **একই টপিক থেকে independently** পুরো স্ট্রিম পড়তে পারে, একজন আরেকজনের read-position-কে প্রভাবিত না করে।\n\n## মনে রাখার শর্টকাট\n\n> Queue = ডেটা পড়া হলে সরিয়ে ফেলা (pull-and-remove)।\n> Log = ডেটা পড়া মানে শুধু pointer এগোনো, ডেটা থেকেই যায় (pull-and-preserve)।",
+      "markers": []
+    },
+    {
+      "levelPath": "3.0.0.1",
+      "levelTitle": "Module 1 · What",
+      "title": "Distributed Commit Log — এক কথায় Kafka",
+      "description": "## সংজ্ঞা\n\n**Commit log** ডেটাবেজ ইন্টার্নালসের একটা পুরনো ধারণা: একটা append-only, ordered, immutable রেকর্ডের সিকোয়েন্স, যেখানে প্রতিটা এন্ট্রির একটা ধারাবাহিক সিকোয়েন্স নম্বর (offset) থাকে। Kafka মূলত এই ধারণাটাকেই নেটওয়ার্কে distributed আর horizontally scalable করে তুলেছে।\n\n**Distributed** অংশটা আসে partitioning আর replication থেকে — একটা topic একাধিক partition-এ ভাগ হয়, প্রতিটা partition একাধিক broker-এ কপি থাকে।\n\n## আপনার পরিচিত জিনিসের সাথে সরাসরি মিল\n\nPostgreSQL-এর **WAL (Write-Ahead Log)** ঠিক এই ধারণারই একটা single-node সংস্করণ: প্রতিটা write আগে WAL-এ append হয়, তারপর actual data page-এ। WAL entry-রও একটা monotonic LSN (Log Sequence Number) থাকে — Kafka-র offset-এর সমতুল্য। logical replication যখন WAL থেকে read করে subscriber-কে পাঠায়, সেটা অনেকটা Kafka consumer-এর মতোই একটা \"cursor\" (replication slot-এর confirmed_flush_lsn) রেখে এগোয়।\n\nফারাক এখানে: PostgreSQL WAL একটা single-node, internal mechanism — এটা বাইরের কনজিউমারদের জন্য ডিজাইন করা না (logical replication ছাড়া)। Kafka-র commit log-টাই তার **পাবলিক API** — এটাই প্রোডাক্ট।\n\n## কেন এই মডেল এত শক্তিশালী\n\n- **Replayability:** offset রিসেট করে পুরনো ডেটা আবার প্রসেস করা যায় (বাগ ফিক্সের পর reprocessing, নতুন consumer-এর backfill)।\n- **Decoupling:** producer জানে না কে বা কয়জন consume করছে।\n- **Ordering guarantee (per-partition):** log-এর ভেতরে ক্রম কখনো বদলায় না — এটাই পরের মডিউলে ordering guarantee-র ভিত্তি।\n\n## এক লাইনে\n\n> Kafka = অনেকগুলো ordered, append-only log (partition), distributed across broker, যার প্রতিটা log স্বাধীনভাবে replicate আর consume হয়।",
+      "markers": []
+    },
+    {
+      "levelPath": "3.0.0.2",
+      "levelTitle": "Module 1 · How",
+      "title": "পরিচিত জিনিসের সাথে ম্যাপিং (WAL, Redis Streams, Debezium)",
+      "description": "## PostgreSQL WAL ≈ Kafka Partition Log\n\n| PostgreSQL | Kafka | পার্থক্য |\n|---|---|---|\n| WAL segment file | Log segment file | WAL single-writer, single-node; Kafka partition distributed ও replicated |\n| LSN | Offset | দুটোই monotonically increasing, ordering-এর ভিত্তি |\n| Replication slot | Consumer group offset | slot না সরালে WAL জমে ডিস্ক ভরে যায় — ঠিক যেমন consumer lag বাড়লে Kafka retention-এর সাথে race শুরু হয় |\n| `pg_wal` ডিরেক্টরির ফাইল রোটেশন | Segment rotation (`segment.bytes`/`segment.ms`) | দুটোই বড় লগকে ছোট ফাইলে ভাগ করে পুরনোটা মুছে ফেলার সুবিধার জন্য |\n\n## Redis Streams Consumer Group ≈ Kafka Consumer Group — কিন্তু গুরুত্বপূর্ণ পার্থক্য\n\nRedis Streams-এর `XREADGROUP` অনেকটা Kafka consumer group-এর মতো দেখতে — একাধিক consumer, একটা group, লোড ভাগ হয়। কিন্তু মৌলিক পার্থক্য:\n\n- Redis Streams-এ **partitioning নেই** — পুরো stream-টাই একটা একক কাঠামো, ordering এবং scaling দুটোই stream-level, Kafka-র মতো partition-level parallelism নেই।\n- Redis Streams-এ per-message ACK/PEL (Pending Entries List) মডেল আছে — একটা নির্দিষ্ট মেসেজ retry করা যায় স্বাধীনভাবে। Kafka-তে ACK হয় **offset পর্যন্ত commit** — নির্দিষ্ট একটা মেসেজ আলাদা করে retry করা যায় না, পুরো offset থেকে re-consume করতে হয়।\n- Redis সাধারণত in-memory (persistence optional) — retention সীমিত। Kafka ডিজাইন করা হয়েছে দিনের পর দিন/সপ্তাহ ডেটা ধরে রাখার জন্য, ডিস্ক-ভিত্তিক।\n\n## Debezium যা Kafka-তে ঢালে, তার আসল রূপ\n\nDebezium PostgreSQL-এর logical decoding (`pgoutput` প্লাগইন) ব্যবহার করে WAL থেকে row-level change event তৈরি করে, আর সেগুলো একটা Kafka topic-এ produce করে — সাধারণত প্রতি টেবিলের জন্য একটা টপিক, primary key কে message key হিসেবে ব্যবহার করে। অর্থাৎ Debezium আসলে **WAL log-কে Kafka log-এ translate করে** — একটা log থেকে আরেকটা log-এ ব্রিজ। এটা Module 11-এ আরও গভীরে যাবে।\n\n## সারমর্ম টেবিল\n\n| আপনার আগের অভিজ্ঞতা | Kafka-র সমতুল্য |\n|---|---|\n| WAL + LSN | Partition log + Offset |\n| Replication slot lag | Consumer lag |\n| Redis Streams consumer group | Kafka consumer group (partition-parallel, offset-based) |\n| Debezium output topic | CDC-translated commit log |",
+      "markers": []
+    },
+    {
+      "levelPath": "3.0.0.3",
+      "levelTitle": "Module 1 · What",
+      "title": "Core Vocabulary: Topic, Partition, Offset, Producer, Consumer, Broker, Cluster",
+      "description": "## সাতটা শব্দ যা সব জায়গায় ফিরে আসবে\n\n- **Topic** — একটা logical নাম, যেমন `order.placed` বা `payment.failed`। এটা একটা category/feed — RDBMS-এর টেবিলের সাথে তুলনীয় (schema সবসময় strict না)।\n- **Partition** — একটা topic ভাঙা হয় একাধিক partition-এ। প্রতিটা partition একটা স্বাধীন, ordered, append-only log। Parallelism-এর একক (পরের মডিউলে বিস্তারিত)।\n- **Offset** — একটা partition-এর ভেতরে প্রতিটা মেসেজের ধারাবাহিক পজিশন নম্বর (0, 1, 2, …)। শুধু partition-এর ভেতরে অর্থবহ — দুইটা ভিন্ন partition-এর offset তুলনীয় না।\n- **Producer** — যে ক্লায়েন্ট মেসেজ পাঠায় (write করে)।\n- **Consumer** — যে ক্লায়েন্ট মেসেজ পড়ে। consumer-রা **consumer group**-এ সংগঠিত হয়ে লোড ভাগ করে নেয়।\n- **Broker** — একটা একক Kafka সার্ভার প্রসেস, যেটা কিছু partition-এর ডেটা রাখে ও সার্ভ করে।\n- **Cluster** — একাধিক broker মিলে একটা cluster গঠন করে; একজন broker হয় **controller** হিসেবে metadata পরিচালনা করে (Module 8)।\n\n## একটা ছবি হিসেবে ভাবুন\n\n```\nTopic: order.placed (3 partitions, replication-factor=2)\n\nBroker-1                Broker-2                Broker-3\n┌────────────┐          ┌────────────┐          ┌────────────┐\n│ P0 (leader)│◄───────► │ P0 (replica)│         │ P1 (leader)│\n│ P2 (replica)│         │ P1 (replica)│◄───────►│ P2 (leader)│\n└────────────┘          └────────────┘          └────────────┘\n```\n\nপ্রতিটা partition-এর একজন **leader** থাকে (সব read/write ওখানে যায়) আর বাকি broker-এ **replica** (Module 7-এ বিস্তারিত)।\n\n## রিয়েল-লাইফ ম্যাপিং\n\nআপনার notification system-এ: `notification.email` একটা topic, ৬টা partition, একটা `NotificationSenderService` তিনটা instance চালালে সেগুলো একটা consumer group গঠন করে, প্রতিটা instance গড়ে ২টা partition handle করে — এটাই horizontal scaling-এর মূল প্যাটার্ন।",
+      "markers": []
+    },
+    {
+      "levelPath": "3.0.0.4",
+      "levelTitle": "Module 1 · Why",
+      "title": "Kafka কোথায় ব্যবহার করবেন না (Anti-patterns)",
+      "description": "## Kafka যা না\n\n- **RPC replacement না।** সিনক্রোনাস request-response দরকার হলে (যেমন \"এই ইউজারের ব্যালেন্স এখনই দাও\") gRPC/REST ব্যবহার করুন। Kafka-তে request-reply করা যায় (reply topic দিয়ে), কিন্তু এটা জটিল আর latency বাড়ায় — এই জন্য ডিজাইন করা হয়নি।\n- **ছোট, low-latency task queue না।** Celery/RabbitMQ-এর মতো per-task priority, delayed execution, বা fine-grained retry দরকার হলে Kafka এখানে দুর্বল — এতে per-message priority queue নেই, delayed delivery নেই (workaround আছে কিন্তু native না)।\n- **প্রাইমারি ডেটাবেজ না।** যদিও Kafka log টেকসই এবং কমপ্যাক্টেড টপিক key-value store-এর মতো আচরণ করতে পারে, এটা random-access query, secondary index, বা transaction-heavy OLTP workload-এর জন্য ডিজাইন করা না।\n- **ছোট স্কেলে ওভার-ইঞ্জিনিয়ারিং।** দিনে কয়েক হাজার মেসেজ হলে, একটা single Postgres টেবিল + polling বা Redis Streams-ই যথেষ্ট। Kafka অপারেশনাল খরচ (ZooKeeper/KRaft, monitoring, disk planning) আনার আগে scale/throughput justification থাকা উচিত।\n- **স্ট্রং consistency lock-step transaction-এর বিকল্প না।** একাধিক সার্ভিস জুড়ে distributed transaction দরকার হলে Kafka দিয়ে সরাসরি ACID পাবেন না — Saga/Outbox প্যাটার্ন লাগবে (Module 11)।\n\n## সিদ্ধান্ত নেওয়ার প্রশ্ন\n\nKafka ব্যবহার করার আগে নিজেকে জিজ্ঞেস করুন:\n\n1. একাধিক independent consumer কি একই ডেটা স্ট্রিম আলাদাভাবে পড়বে?\n2. Replay/reprocessing দরকার হবে কি?\n3. Throughput কি সত্যিই high (per second-এ হাজার+ মেসেজ) নাকি এটা আসলে low-volume RPC-এর ছদ্মবেশ?\n\nতিনটার উত্তর \"হ্যাঁ, হ্যাঁ, হ্যাঁ\" না হলে, আরেকবার ভাবুন — হয়তো RabbitMQ, Redis Streams, বা এমনকি একটা সাধারণ Postgres outbox টেবিলই যথেষ্ট।",
+      "markers": []
+    },
+    {
+      "levelPath": "3.0.0.5",
+      "levelTitle": "Module 1 · Do (ল্যাব)",
+      "title": "ল্যাব: Docker Compose দিয়ে Single-Broker KRaft Cluster",
+      "description": "## লক্ষ্য\n\nZooKeeper ছাড়াই (KRaft mode) একটা single-broker Kafka cluster চালানো, একটা topic তৈরি করা, console producer/consumer দিয়ে মেসেজ পাঠানো-পড়া।\n\n## `docker-compose.yml`\n\n```yaml\nservices:\n  kafka:\n    image: apache/kafka:3.8.0\n    container_name: kafka\n    ports:\n      - \"9092:9092\"\n    environment:\n      KAFKA_NODE_ID: 1\n      KAFKA_PROCESS_ROLES: broker,controller\n      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093\n      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092\n      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER\n      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093\n      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT\n      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1\n```\n\n## চালানো\n\n```bash\ndocker compose up -d\n\n# Topic তৈরি (৩ partition)\ndocker exec -it kafka /opt/kafka/bin/kafka-topics.sh \\\n  --create --topic order.placed --partitions 3 --replication-factor 1 \\\n  --bootstrap-server localhost:9092\n\n# Console producer\ndocker exec -it kafka /opt/kafka/bin/kafka-console-producer.sh \\\n  --topic order.placed --bootstrap-server localhost:9092\n\n# আরেকটা টার্মিনালে — console consumer (শুরু থেকে সব পড়বে)\ndocker exec -it kafka /opt/kafka/bin/kafka-console-consumer.sh \\\n  --topic order.placed --from-beginning --bootstrap-server localhost:9092\n```\n\n## যা লক্ষ্য করবেন\n\n- Producer টার্মিনালে টাইপ করা প্রতিটা লাইন consumer টার্মিনালে সাথে সাথে দেখা যাবে।\n- Consumer বন্ধ করে আবার `--from-beginning` দিয়ে চালালে **আগের সব মেসেজ আবার দেখাবে** — এটাই log model-এর replay ক্ষমতা, এটাই RabbitMQ থেকে সবচেয়ে বড় পার্থক্য।\n- `kafka-topics.sh --describe --topic order.placed --bootstrap-server localhost:9092` চালিয়ে দেখুন partition, leader, replica তথ্য।\n\n## চ্যালেঞ্জ (নিজে করুন)\n\nএকটা key দিয়ে producer থেকে মেসেজ পাঠান (`kafka-console-producer.sh --property \"parse.key=true\" --property \"key.separator=:\"`), তারপর `--partition` ফ্ল্যাগ দিয়ে consumer শুধু একটা নির্দিষ্ট partition থেকে পড়ান — দেখুন একই key সবসময় একই partition-এ যাচ্ছে কিনা।",
+      "markers": ["strength"]
+    },
+    {
+      "levelPath": "3.0.0.6",
+      "levelTitle": "Module 1 · পরীক্ষা",
+      "title": "ইন্টারভিউ প্রশ্ন — Module 1",
+      "description": "**প্র.১ — Kafka-কে \"distributed commit log\" বলা হয় কেন, \"distributed queue\" না কেন?**\nউত্তর: কারণ মেসেজ কনজিউম হওয়ার পরও ডিলিট হয় না — এটা শুধু একটা append-only, ordered log যেখানে consumer একটা offset পয়েন্টার এগিয়ে নেয়। একাধিক consumer group স্বাধীনভাবে পুরো history replay করতে পারে, যেটা traditional queue মডেলে সম্ভব না।\n\n**প্র.২ — RabbitMQ-এর বদলে আপনি কখন Kafka বেছে নেবেন?**\nউত্তর: যখন high throughput দরকার (প্রতি সেকেন্ডে হাজার-লাখ মেসেজ), একাধিক independent consumer একই ডেটা আলাদাভাবে পড়বে, replay/reprocessing দরকার হবে, বা দীর্ঘমেয়াদী retention চাই (audit log, event sourcing)। ছোট স্কেলে জটিল routing/priority queue দরকার হলে RabbitMQ ভালো ফিট।\n\n**প্র.৩ — PostgreSQL WAL-এর সাথে Kafka partition-এর মিল ও অমিল কী?**\nউত্তর: মিল — দুটোই append-only, monotonically increasing sequence number (LSN vs offset), sequential write। অমিল — WAL single-node internal mechanism, বাইরের কনজিউমারের জন্য না (logical replication ছাড়া); Kafka partition distributed, replicated, আর এটাই এর পাবলিক API।\n\n**প্র.৪ — Redis Streams consumer group আর Kafka consumer group-এর মূল পার্থক্য কী?**\nউত্তর: Redis Streams-এ partitioning নেই (পুরো stream একক), per-message ACK/PEL আছে (নির্দিষ্ট মেসেজ আলাদা retry করা যায়), সাধারণত in-memory-ভিত্তিক সীমিত retention। Kafka-তে partition-level parallelism, offset-ভিত্তিক bulk commit (নির্দিষ্ট মেসেজ আলাদা retry করা যায় না), আর ডিস্ক-ভিত্তিক দীর্ঘমেয়াদী retention।\n\n**প্র.৫ — একটা টিম বলছে \"আমরা সব inter-service communication Kafka দিয়ে করব, এমনকি synchronous user-facing API-ও\" — আপনার প্রতিক্রিয়া কী হবে?**\nউত্তর: এটা একটা anti-pattern red flag। Synchronous, low-latency request-response-এর জন্য Kafka ডিজাইন করা হয়নি — request-reply pattern সম্ভব কিন্তু জটিলতা ও latency বাড়ায়। User-facing সিনক্রোনাস কলের জন্য REST/gRPC রাখা উচিত, Kafka রাখা উচিত asynchronous, event-driven, বা fan-out ওয়ার্কলোডের জন্য।\n\n**প্র.৬ — Topic, Partition, আর Offset-এর সম্পর্ক এক লাইনে ব্যাখ্যা করুন।**\nউত্তর: একটা Topic একাধিক Partition-এ ভাগ হয়; প্রতিটা Partition একটা স্বাধীন ordered log; সেই log-এর প্রতিটা মেসেজের একটা ধারাবাহিক Offset থাকে যেটা শুধু ওই partition-এর ভেতরেই অর্থবহ।",
+      "markers": []
+    },
+    {
+      "levelPath": "3.0.0.7",
+      "levelTitle": "Module 1 · কর্নার কেস",
+      "title": "কর্নার কেস — Module 1",
+      "description": "- **একটা topic-এ ০ partition তৈরি করা যায় না।** কমপক্ষে ১টা partition লাগবেই — অনেকে ভুলে ভাবেন partition অপশনাল।\n- **`--from-beginning` মানে \"সব সময় শুরু থেকে\" না।** এটা শুধু তখনই কাজ করে যখন consumer group-এর জন্য কোনো committed offset আগে থেকে সংরক্ষিত নেই। একবার offset commit হয়ে গেলে, একই group-id দিয়ে আবার চালালে `--from-beginning` ইগনোর হয়ে যাবে — committed offset থেকেই শুরু হবে।\n- **Replication factor cluster-এর broker সংখ্যার চেয়ে বেশি সেট করলে টপিক তৈরি ব্যর্থ হবে।** single-broker ল্যাবে `replication-factor=2` দিলে error — এটা প্রায়ই নতুনদের প্রথম কনফিউশন।\n- **Console producer default-এ key ছাড়া মেসেজ পাঠায় — round-robin/sticky partitioning হয়, key-based না।** যদি ordering guarantee টেস্ট করতে চান, key ছাড়া পাঠালে ভুল উপসংহারে পৌঁছাবেন (\"Kafka ordering guarantee দেয় না\" — ভুল, key ছাড়া partition assignment predictable না শুধু তার জন্য)।\n- **Docker container রিস্টার্ট করলে ডেটা হারাতে পারে যদি volume mount না থাকে** — লোকাল ল্যাবে এটা প্রায়ই ভুলে যাওয়া হয়, প্রোডাকশনে persistent volume/EBS ছাড়া broker restart মানেই ডেটা লস।\n- **Topic নাম-এ `.` আর `_` একসাথে ব্যবহার করলে সতর্কবার্তা আসে (কিন্তু এরর না)** — কারণ Kafka ইন্টারনালি মেট্রিক নামে `.` কে `_`-এ রূপান্তর করে, ফলে `order.placed` আর `order_placed` — দুটো টপিক একসাথে থাকলে মেট্রিক নাম কলিশন করবে।",
+      "markers": []
+    }
+  ]
+}
