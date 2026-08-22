@@ -5,24 +5,9 @@
 // and connector length grow or shrink with content, so boxes rearrange
 // instead of scaling down and text never overlaps.
 import JourneyTreeNode from './JourneyTreeNode.astro';
-
-type Marker = 'strength' | 'mock' | 'gate';
-
-interface Step {
-  levelPath: string;
-  levelTitle: string;
-  title: string;
-  description: string;
-  markers?: Marker[];
-}
+import type { Marker, TreeNode } from '../utils/journeyTree';
 
 const MARKER_EMOJI: Record<Marker, string> = { strength: '⭐', mock: '🎯', gate: '🔑' };
-
-interface TreeNode {
-  step: Step;
-  children: TreeNode[];
-  levelPath: string;
-}
 
 interface Props {
   node: TreeNode;

@@ -1,0 +1,56 @@
+---
+import Self from './JourneySidebarNode.astro';
+import { depthColor, stepDepth, type TreeNode } from '../utils/journeyTree';
+
+interface Props {
+  node: TreeNode;
+  defaultOpen?: boolean;
+}
+
+const { node, defaultOpen = false } = Astro.props;
+const depth = stepDepth(node.levelPath);
+const hasChildren = node.children.length > 0;
+const color = depthColor(depth);
+---
+
+<li>
+  {hasChildren ? (
+    <details open={defaultOpen} class="journey-toc-group" data-levelpath={node.levelPath}>
+      <summary class="toc-summary flex items-start gap-1.5 py-1 cursor-pointer select-none list-none marker:hidden [&::-webkit-details-marker]:hidden">
+        <svg class="toc-caret w-3 h-3 mt-1 shrink-0 text-gray-400 transition-transform" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path d="M6 6l8 4-8 4V6z" />
+        </svg>
+        <a
+          href={`#step-${node.levelPath}`}
+          data-toc-link
+          data-levelpath={node.levelPath}
+          class="toc-link flex-1 min-w-0 flex items-baseline gap-1.5 text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors leading-snug"
+        >
+          <span class="font-mono text-[10px] shrink-0 opacity-70" style={`color: ${color}`}>{node.levelPath}</span>
+          <span class="truncate">{node.step.title}</span>
+        </a>
+      </summary>
+      <ul class="ml-4 pl-2 border-l border-gray-200 dark:border-gray-800 space-y-0.5">
+        {node.children.map((child, i) => (
+          <Self node={child} defaultOpen={defaultOpen && i === 0} />
+        ))}
+      </ul>
+    </details>
+  ) : (
+    <a
+      href={`#step-${node.levelPath}`}
+      data-toc-link
+      data-levelpath={node.levelPath}
+      class="toc-link flex items-baseline gap-1.5 py-1 pl-[18px] text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors leading-snug"
+    >
+      <span class="font-mono text-[10px] shrink-0 opacity-70" style={`color: ${color}`}>{node.levelPath}</span>
+      <span class="truncate">{node.step.title}</span>
+    </a>
+  )}
+</li>
+
+<style>
+  details[open] > summary .toc-caret {
+    transform: rotate(90deg);
+  }
+</style>

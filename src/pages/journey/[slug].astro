@@ -4,8 +4,8 @@ import { marked } from 'marked';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
-import JourneyTree from '../../components/JourneyTree.astro';
 import JourneyStep from '../../components/JourneyStep.astro';
+import JourneyFloatingNav from '../../components/JourneyFloatingNav.astro';
 
 export async function getStaticPaths() {
   const journeys = await getCollection('journey', ({ data }) => !data.draft);
@@ -43,6 +43,7 @@ const updatedFormatted = updatedDate?.toLocaleDateString('en-US', {
 
 <BaseLayout title={`${title} — With Journey`} description={description} ogImage={heroImage}>
   <Navbar />
+  <JourneyFloatingNav steps={steps} slug={journey.id} />
 
   <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
 
@@ -88,18 +89,15 @@ const updatedFormatted = updatedDate?.toLocaleDateString('en-US', {
       </div>
     </header>
 
-    <!-- Tree visualization hero -->
-    {steps.length > 0 && (
-      <section class="mb-14 p-6 rounded-2xl border-2 border-indigo-200 dark:border-indigo-800">
-        <h2 class="inline-block text-sm font-semibold uppercase tracking-widest text-indigo-700 dark:text-indigo-300 mb-4 px-2 py-0.5 -mx-2 rounded bg-indigo-100/70 dark:bg-indigo-500/10">
-          Roadmap Overview
-        </h2>
-        <JourneyTree steps={steps} />
-        <p class="text-xs text-gray-400 dark:text-gray-600 mt-3 text-center">
-          Click any node to jump to that step ↓
-        </p>
-      </section>
-    )}
+    <!-- Resume last position -->
+    <div class="journey-resume-banner hidden mb-8 flex flex-wrap items-center justify-between gap-3 p-4 rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50 dark:bg-indigo-950/40">
+      <p class="text-sm text-gray-600 dark:text-gray-300">
+        Continue where you left off: <span class="journey-resume-title font-medium text-gray-900 dark:text-white"></span>
+      </p>
+      <a href="#" class="journey-resume-link shrink-0 inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">
+        Resume <span aria-hidden="true">→</span>
+      </a>
+    </div>
 
     <!-- Step cards -->
     {steps.length > 0 && (

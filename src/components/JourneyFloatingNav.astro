@@ -1,0 +1,221 @@
+---
+import JourneySidebarNode from './JourneySidebarNode.astro';
+import JourneyTreeNode from './JourneyTreeNode.astro';
+import { buildTree, type Step } from '../utils/journeyTree';
+
+interface Props {
+  steps: Step[];
+  slug: string;
+}
+
+const { steps, slug } = Astro.props;
+const root = buildTree(steps);
+---
+
+{root && (
+  <div class="journey-floating-nav" data-journey-slug={slug}>
+    <button
+      id="journey-fab"
+      type="button"
+      class="journey-fab fixed bottom-24 right-4 sm:right-6 z-50 flex items-center gap-2 rounded-full bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg pl-3 pr-4 py-3 transition-colors"
+      aria-expanded="false"
+      aria-controls="journey-panel"
+      aria-label="Open journey navigation"
+    >
+      <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+      </svg>
+      <span class="journey-fab-label text-xs font-mono font-semibold whitespace-nowrap">Overview</span>
+    </button>
+
+    <div
+      id="journey-panel"
+      class="journey-panel hidden fixed bottom-40 right-4 sm:right-6 z-50 w-[90vw] max-w-sm rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-2xl flex flex-col overflow-hidden"
+    >
+      <div class="flex items-center justify-between px-3 pt-3 pb-2 border-b border-gray-100 dark:border-gray-800 shrink-0">
+        <div class="flex gap-1">
+          <button
+            type="button"
+            data-tab="outline"
+            class="journey-tab-btn is-active text-xs font-semibold px-2.5 py-1 rounded-full transition-colors"
+          >
+            Outline
+          </button>
+          <button
+            type="button"
+            data-tab="tree"
+            class="journey-tab-btn text-xs font-semibold px-2.5 py-1 rounded-full transition-colors"
+          >
+            Tree
+          </button>
+        </div>
+        <button
+          id="journey-panel-close"
+          type="button"
+          aria-label="Close journey navigation"
+          class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors px-1"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div data-tab-panel="outline" class="journey-toc-scroll overflow-y-auto max-h-[60vh] p-3 text-sm">
+        <a
+          href={`#step-${root.levelPath}`}
+          data-toc-link
+          data-levelpath={root.levelPath}
+          class="toc-link block py-1 mb-2 text-[13px] font-semibold text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+        >
+          Overview
+        </a>
+        <ul class="space-y-0.5">
+          {root.children.map((phase, i) => (
+            <JourneySidebarNode node={phase} defaultOpen={i === 0} />
+          ))}
+        </ul>
+      </div>
+
+      <div data-tab-panel="tree" class="hidden overflow-y-auto max-h-[60vh] p-3">
+        <ul>
+          <JourneyTreeNode node={root} depth={0} />
+        </ul>
+      </div>
+    </div>
+  </div>
+)}
+
+<style>
+  .journey-tab-btn {
+    color: #6b7280;
+  }
+  .journey-tab-btn.is-active {
+    background: #eef2ff;
+    color: #4338ca;
+  }
+  html.dark .journey-tab-btn {
+    color: #9ca3af;
+  }
+  html.dark .journey-tab-btn.is-active {
+    background: rgba(99, 102, 241, 0.15);
+    color: #a5b4fc;
+  }
+</style>
+
+<script>
+  const navRoot = document.querySelector<HTMLElement>('.journey-floating-nav');
+  if (navRoot) {
+    const slug = navRoot.dataset.journeySlug ?? null;
+    const fab = navRoot.querySelector<HTMLButtonElement>('#journey-fab');
+    const panel = navRoot.querySelector<HTMLElement>('#journey-panel');
+    const closeBtn = navRoot.querySelector<HTMLButtonElement>('#journey-panel-close');
+    const fabLabel = navRoot.querySelector<HTMLElement>('.journey-fab-label');
+    const tabBtns = Array.from(navRoot.querySelectorAll<HTMLButtonElement>('.journey-tab-btn'));
+    const tabPanels = Array.from(navRoot.querySelectorAll<HTMLElement>('[data-tab-panel]'));
+
+    // ── Open / close ──────────────────────────────────────────────
+    function setOpen(open: boolean) {
+      panel?.classList.toggle('hidden', !open);
+      fab?.setAttribute('aria-expanded', String(open));
+    }
+    fab?.addEventListener('click', () => setOpen(panel?.classList.contains('hidden') ?? true));
+    closeBtn?.addEventListener('click', () => setOpen(false));
+
+    // ── Tabs ──────────────────────────────────────────────────────
+    function setTab(tab: string) {
+      tabBtns.forEach((btn) => btn.classList.toggle('is-active', btn.dataset.tab === tab));
+      tabPanels.forEach((p) => p.classList.toggle('hidden', p.dataset.tabPanel !== tab));
+    }
+    tabBtns.forEach((btn) => btn.addEventListener('click', () => setTab(btn.dataset.tab!)));
+
+    // A link nested inside a <summary> must navigate, not also toggle the <details>.
+    navRoot.querySelectorAll('.toc-summary .toc-link').forEach((link) => {
+      link.addEventListener('click', (e) => e.stopPropagation());
+    });
+
+    // ── Active-step tracking ─────────────────────────────────────
+    const STORAGE_PREFIX = 'journey:lastStep:';
+    const stepEls = Array.from(document.querySelectorAll<HTMLElement>('[id^="step-"]'));
+    const tocLinks = Array.from(navRoot.querySelectorAll<HTMLAnchorElement>('.toc-link'));
+
+    const titleByPath = new Map<string, string>();
+    stepEls.forEach((el) => {
+      const path = el.id.replace(/^step-/, '');
+      const heading = el.querySelector('h3');
+      titleByPath.set(path, heading?.textContent?.trim() ?? path);
+    });
+
+    let lastActive: string | null = null;
+    let saveTimer: ReturnType<typeof setTimeout> | undefined;
+
+    function saveProgress(levelPath: string) {
+      if (!slug) return;
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(() => {
+        localStorage.setItem(
+          `${STORAGE_PREFIX}${slug}`,
+          JSON.stringify({ levelPath, title: titleByPath.get(levelPath) ?? '', updatedAt: Date.now() }),
+        );
+      }, 800);
+    }
+
+    function setActive(levelPath: string) {
+      if (levelPath === lastActive) return;
+      lastActive = levelPath;
+
+      if (fabLabel) fabLabel.textContent = levelPath;
+
+      tocLinks.forEach((link) => {
+        const active = link.dataset.levelpath === levelPath;
+        link.classList.toggle('text-indigo-600', active);
+        link.classList.toggle('dark:text-indigo-400', active);
+        link.classList.toggle('font-medium', active);
+      });
+
+      navRoot.querySelectorAll<HTMLAnchorElement>(`.toc-link[data-levelpath="${CSS.escape(levelPath)}"]`).forEach((link) => {
+        let details = link.closest('details');
+        while (details) {
+          details.open = true;
+          details = details.parentElement?.closest('details') ?? null;
+        }
+        link.scrollIntoView({ block: 'nearest' });
+      });
+
+      saveProgress(levelPath);
+    }
+
+    if (stepEls.length && tocLinks.length) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const visible = entries.filter((e) => e.isIntersecting);
+          if (!visible.length) return;
+          visible.sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+          const levelPath = visible[0].target.id.replace(/^step-/, '');
+          setActive(levelPath);
+        },
+        { rootMargin: '-80px 0% -70% 0%', threshold: 0 },
+      );
+      stepEls.forEach((el) => observer.observe(el));
+    }
+
+    // ── Resume banner ─────────────────────────────────────────────
+    if (slug) {
+      const raw = localStorage.getItem(`${STORAGE_PREFIX}${slug}`);
+      if (raw) {
+        try {
+          const { levelPath, title } = JSON.parse(raw);
+          if (levelPath && levelPath !== '0') {
+            document.querySelectorAll<HTMLElement>('.journey-resume-banner').forEach((banner) => {
+              banner.classList.remove('hidden');
+              const link = banner.querySelector<HTMLAnchorElement>('.journey-resume-link');
+              const titleEl = banner.querySelector<HTMLElement>('.journey-resume-title');
+              if (link) link.href = `#step-${levelPath}`;
+              if (titleEl) titleEl.textContent = title || levelPath;
+            });
+          }
+        } catch {
+          // ignore malformed saved state
+        }
+      }
+    }
+  }
+</script>
