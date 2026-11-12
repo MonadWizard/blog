@@ -24,11 +24,55 @@ const skills = [
 
 const experience = [
   {
-    role: 'Backend Software Developer & System Architect',
-    company: 'Freelance / Open Source',
-    period: '2022 — Present',
-    description: 'Designing and building highly scalable RESTful services and robust backend infrastructure. Core stack: Django, FastAPI, Python. Architecting complex data pipelines connecting PostgreSQL, Redis, and Elasticsearch.',
+    company: 'Algorithm Generation',
+    meta: 'Full-time',
+    roles: [
+      {
+        title: 'Product Developer',
+        period: 'Feb 2026 — Present',
+        location: 'Spordium, Banani, Dhaka, Bangladesh · On-site',
+        description: 'Python Backend, PostgreSQL, PL/pgSQL, DevOps, System Design',
+        skills: ['DevOps', 'PostgreSQL'],
+      },
+      {
+        title: 'Senior Software Developer',
+        period: 'Mar 2024 — Mar 2025 · 1 yr 1 mo',
+        location: 'Gulshan, Dhaka, Bangladesh · On-site',
+        skills: ['Software Systems Engineering', 'Django REST Framework'],
+      },
+      {
+        title: 'Software Developer',
+        period: 'Aug 2023 — Mar 2024 · 8 mos',
+        location: 'Gulshan, Dhaka, Bangladesh · On-site',
+        skills: ['Nginx', 'Amazon Web Services (AWS)'],
+      },
+      {
+        title: 'Junior Developer',
+        period: 'Aug 2022 — Sep 2023 · 1 yr 2 mos',
+        location: 'Gulshan, Dhaka, Bangladesh',
+        skills: ['Nginx', 'PostgreSQL'],
+      },
+      {
+        title: 'Apprenticeship',
+        period: 'Dec 2021 — Aug 2022 · 9 mos',
+        skills: ['Analytical Skills'],
+      },
+    ],
   },
+];
+
+const education = [
+  {
+    school: 'Daffodil International University (DIU)',
+    degree: 'Bachelor of Science (BS), Computer Science',
+    period: '2015 — 2020',
+  },
+];
+
+const certifications = [
+  { name: 'Problem Solving (Basic)', issuer: 'HackerRank', issued: 'Sep 2020', id: '7A27AEDDD38F' },
+  { name: 'Python (Advanced)', issuer: 'HackerRank', issued: 'Sep 2020', id: 'C4DF624AD9F0' },
+  { name: 'Python (Intermediate)', issuer: 'HackerRank', issued: 'Sep 2020', id: 'A75E66C5049F' },
 ];
 ---
 
@@ -125,17 +169,71 @@ const experience = [
     <!-- Experience -->
     <section class="mb-16">
       <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-8">Experience</h2>
-      <div class="space-y-8">
-        {experience.map((job) => (
-          <div class="flex gap-4">
-            <div class="flex-shrink-0 mt-1 w-2 h-2 rounded-full bg-indigo-500 ring-4 ring-indigo-100 dark:ring-indigo-900/40"></div>
-            <div>
-              <h3 class="font-semibold text-gray-900 dark:text-white">{job.role}</h3>
-              <p class="text-sm text-indigo-600 dark:text-indigo-400 font-medium">{job.company}</p>
-              <p class="text-xs text-gray-400 dark:text-gray-500 mb-2">{job.period}</p>
-              <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">{job.description}</p>
+      <div class="space-y-10">
+        {experience.map((org) => (
+          <div>
+            <div class="mb-4">
+              <h3 class="font-semibold text-gray-900 dark:text-white">{org.company}</h3>
+              <p class="text-xs text-gray-400 dark:text-gray-500">{org.meta}</p>
             </div>
+            <ol class="relative border-l border-gray-200 dark:border-gray-700 ml-1 space-y-6">
+              {org.roles.map((role) => (
+                <li class="pl-6 relative">
+                  <span class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-indigo-500 ring-4 ring-indigo-100 dark:ring-indigo-900/40"></span>
+                  <h4 class="font-medium text-indigo-600 dark:text-indigo-400">{role.title}</h4>
+                  <p class="text-xs text-gray-400 dark:text-gray-500">{role.period}</p>
+                  {role.location && (
+                    <p class="text-xs text-gray-400 dark:text-gray-500">{role.location}</p>
+                  )}
+                  <div class="mb-2"></div>
+                  {role.description && (
+                    <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-2">{role.description}</p>
+                  )}
+                  <div class="flex flex-wrap gap-1.5">
+                    {role.skills.map((skill) => (
+                      <span class="px-2 py-0.5 text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full border border-gray-200 dark:border-gray-700">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </li>
+              ))}
+            </ol>
           </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Education -->
+    <section class="mb-16">
+      <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-8">Education</h2>
+      <div class="space-y-6">
+        {education.map((edu) => (
+          <div>
+            <h3 class="font-semibold text-gray-900 dark:text-white">{edu.school}</h3>
+            <p class="text-sm text-indigo-600 dark:text-indigo-400 font-medium">{edu.degree}</p>
+            <p class="text-xs text-gray-400 dark:text-gray-500">{edu.period}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Certifications -->
+    <section class="mb-16">
+      <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-8">Licenses &amp; Certifications</h2>
+      <div class="grid sm:grid-cols-3 gap-4">
+        {certifications.map((cert) => (
+          <a
+            href={`https://www.hackerrank.com/certificates/${cert.id.toLowerCase()}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="block p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-indigo-400 dark:hover:border-indigo-500 transition-colors"
+          >
+            <h3 class="font-semibold text-gray-900 dark:text-white text-sm">{cert.name}</h3>
+            <p class="text-sm text-indigo-600 dark:text-indigo-400">{cert.issuer}</p>
+            <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">Issued {cert.issued}</p>
+            <p class="text-xs text-gray-400 dark:text-gray-500 font-mono">ID {cert.id}</p>
+          </a>
         ))}
       </div>
     </section>
