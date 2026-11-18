@@ -12,6 +12,7 @@ const blog = defineCollection({
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
     heroImage: z.string().optional(),
+    audio: z.boolean().optional(), // force-enable/disable TTS audio generation
   }),
 });
 
@@ -40,6 +41,7 @@ const journey = defineCollection({
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
     heroImage: z.string().optional(),
+    audio: z.boolean().optional(), // force-enable/disable TTS audio generation
     steps: z.array(stepSchema).default([]),
   }),
 });

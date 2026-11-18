@@ -1,11 +1,14 @@
 ---
 import { getCollection } from 'astro:content';
 import { marked } from 'marked';
+import fs from 'node:fs';
+import path from 'node:path';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
 import JourneyStep from '../../components/JourneyStep.astro';
 import JourneyFloatingNav from '../../components/JourneyFloatingNav.astro';
+import AudioPlayer from '../../components/AudioPlayer.astro';
 
 export async function getStaticPaths() {
   const journeys = await getCollection('journey', ({ data }) => !data.draft);
@@ -29,6 +32,21 @@ const stepsWithHtml = steps.map((step) => {
   };
 });
 
+// Pre-generated TTS audio (if any) for this journey — see scripts/generate-audio.mjs.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+let audioSrc: string | undefined;
+let audioData: string | undefined;
+try {
+  const manifest = JSON.parse(fs.readFileSync(path.resolve('public/audio/manifest.json'), 'utf8'));
+  const entry = manifest[`journey:${journey.id}`];
+  if (entry?.file) {
+    audioSrc = base + '/' + entry.file;
+    if (entry.segmentsFile) audioData = base + '/' + entry.segmentsFile;
+  }
+} catch {
+  // no manifest yet — player simply won't render
+}
+
 const formattedDate = pubDate.toLocaleDateString('en-US', {
   month: 'long',
   day: 'numeric',
@@ -45,7 +63,7 @@ const updatedFormatted = updatedDate?.toLocaleDateString('en-US', {
   <Navbar />
   <JourneyFloatingNav steps={steps} slug={journey.id} />
 
-  <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+  <main id="journey-content" class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
 
     <!-- Hero header -->
     <header class="mb-10">
@@ -88,6 +106,9 @@ const updatedFormatted = updatedDate?.toLocaleDateString('en-US', {
         <span>{steps.length} {steps.length === 1 ? 'step' : 'steps'}</span>
       </div>
     </header>
+
+    <!-- Listen to this journey -->
+    {audioSrc && <AudioPlayer src={audioSrc} data={audioData} highlight="#journey-content" />}
 
     <!-- Resume last position -->
     <div class="journey-resume-banner hidden mb-8 flex flex-wrap items-center justify-between gap-3 p-4 rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50 dark:bg-indigo-950/40">
