@@ -9,7 +9,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "audio": "node scripts/generate-audio.mjs",
+    "audio": "bash scripts/audio.sh",
+    "audio:google": "node scripts/generate-audio.mjs",
     "astro": "astro"
   },
   "dependencies": {

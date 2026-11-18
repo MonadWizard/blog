@@ -1,98 +1,100 @@
-# Post & Journey audio — Bangla TTS with sentence highlighting
+# Post & Journey audio — FREE Bangla TTS with sentence highlighting
 
 Every published **blog post** (and, opt-in, every **journey**) can be played as
 audio in a natural Bangla voice, like an audiobook — with the **currently-spoken
-sentence highlighted** in the article as it plays (karaoke-style), and auto-scroll.
+sentence highlighted** in the article as it plays (karaoke-style) and auto-scroll.
 
-Audio is **pre-generated at build time** (not synthesized live in the browser), so
-there is no API key in the frontend and playback is instant on every device.
+Audio is **pre-generated** and committed, so there is no API in the frontend and
+playback is instant on every device.
+
+## The free engine: Microsoft Edge voices (edge-tts)
+
+Default generation uses **[edge-tts](https://github.com/rany2/edge-tts)** — the
+same free neural voices as Edge's "Read aloud". **No account, no credit card, no
+API key.** Default voice `bn-BD-NabanitaNeural` is **Bangladeshi (Dhaka) accent**.
+
+Available Bangla voices:
+
+| Voice | Accent | Gender |
+|---|---|---|
+| `bn-BD-NabanitaNeural` (default) | Bangladesh 🇧🇩 | Female |
+| `bn-BD-PradeepNeural` | Bangladesh 🇧🇩 | Male |
+| `bn-IN-TanishaaNeural` | India | Female |
+| `bn-IN-BashkarNeural` | India | Male |
+
+> edge-tts uses an unofficial Microsoft endpoint. It's free and widely used, but
+> Microsoft could change it. If it ever stops working, switch to the Google
+> engine (`npm run audio:google`, needs a billing-enabled key) — same output.
+
+## Setup (one time, free)
+
+```bash
+python3 -m venv .venv
+.venv/bin/pip install edge-tts
+```
+
+`npm run audio` auto-detects `.venv`. (You're on Python — if you prefer, a global
+`pip install --user edge-tts` or `pipx install edge-tts` works too.)
+
+## Generate & publish
+
+```bash
+npm run audio            # generate MP3s + timings into public/audio (FREE)
+git add public/audio
+git commit -m "Add post audio"
+git push                 # deploy serves the committed audio
+```
+
+Audio is committed to the repo (no secret, no CI cost). Re-running only
+regenerates posts whose text changed — nothing is redone needlessly.
+
+### Preview without generating (no network, no edge-tts needed)
+
+```bash
+npm run audio -- --dry          # per-item segment counts
+npm run audio -- --dry --show   # also show a text preview
+```
+
+## ⚠️ Journeys are opt-in (size cap)
+
+Journeys are **huge** (200K–600K chars = hours of audio). Items over
+`TTS_MAX_CHARS` (default 100,000) are **skipped** unless opted in:
+
+- All **blog posts** are under the cap → generated automatically.
+- To enable a **journey**, add `"audio": true` to its JSON, or run
+  `TTS_MAX_CHARS=700000 npm run audio`.
+- To disable any item: `audio: false`.
 
 ## How it works
 
-1. `scripts/generate-audio.mjs` reads each post/journey, strips markdown & code,
-   and splits the text into **sentence-level segments**.
-2. Each segment is synthesized separately with **Google Cloud TTS**
-   (`bn-IN-Chirp3-HD-Aoede`), its real duration is measured, and the segments are
-   concatenated into one `public/audio/<hash>.mp3`.
-3. A timing sidecar `public/audio/<hash>.json` records each sentence's start time
-   so the player can highlight it in sync. (Chirp3-HD has no SSML timepoints, so
-   timing is derived from per-segment durations — that's why we synthesize per
-   sentence.)
-4. At build time the page looks the item up in `public/audio/manifest.json` and,
-   if audio exists, renders `src/components/AudioPlayer.astro`.
-5. The player highlights the active sentence using the **CSS Custom Highlight
-   API** (graceful no-op on older browsers; audio always plays regardless).
-6. Re-running only regenerates items whose text changed — you are never charged
-   twice for the same content.
+1. `scripts/generate_audio.py` strips markdown/code, splits text into
+   **sentence-level segments**, synthesizes each with edge-tts, and concatenates
+   them into `public/audio/<hash>.mp3`.
+2. A sidecar `public/audio/<hash>.json` stores each sentence's start time.
+3. Pages look items up in `public/audio/manifest.json` and render
+   `src/components/AudioPlayer.astro` when audio exists.
+4. The player highlights the active sentence (CSS Custom Highlight API; graceful
+   no-op on old browsers — audio always plays).
 
-## ⚠️ Size cap & journeys (read this)
+## Config (env vars)
 
-Journeys are **huge** (200K–600K characters = multi-hour audio, real cost). To
-prevent accidental spend, items over **`TTS_MAX_CHARS` (default 100,000 chars)**
-are **skipped** unless explicitly opted in.
+| Variable          | Default               | Notes |
+|-------------------|-----------------------|-------|
+| `TTS_VOICE`       | `bn-BD-NabanitaNeural`| Any voice from the table above. |
+| `TTS_RATE`        | `+0%`                 | e.g. `-10%`, `+15%`. |
+| `TTS_SEGMENT`     | `sentence`            | `sentence` = fine highlighting; `paragraph` = fewer requests. |
+| `TTS_MAX_CHARS`   | `100000`              | Skip bigger items unless `audio: true`. |
+| `TTS_CONCURRENCY` | `4`                   | Parallel requests. |
 
-- **All blog posts** are under the cap → audio is generated automatically.
-- **Journeys** are skipped by default. To enable one, add `"audio": true` to its
-  JSON frontmatter, or raise the cap: `TTS_MAX_CHARS=700000 npm run audio`.
-- To **disable** audio for a specific item, set `audio: false`.
+## Alternative: Google Cloud (paid, needs a card)
 
-> A 600K-char journey is ~10 hours of audio and exceeds the 1M/month free tier on
-> its own. Enable journey audio deliberately.
-
-## One-time setup
-
-### 1. Create a Google Cloud API key
-
-1. <https://console.cloud.google.com/> → create/select a project.
-2. Enable the **Cloud Text-to-Speech API**.
-3. Enable **billing** (required even for the free tier; a blog stays within the
-   free monthly characters, so it is typically $0). Set a $1 budget alert for
-   peace of mind.
-4. APIs & Services → Credentials → **Create credentials → API key**.
-5. (Recommended) Restrict the key to the "Cloud Text-to-Speech API".
-
-### 2. Add it to GitHub
-
-Repo → Settings → Secrets and variables → Actions → **New repository secret**:
-`GOOGLE_TTS_API_KEY` = your key.
-
-The deploy workflow (`.github/workflows/deploy.yml`) already restores the audio
-cache, runs `npm run audio`, then builds — so audio regenerates for new/changed
-posts on every deploy.
-
-## Local usage
-
-```bash
-# Preview text + cost WITHOUT a key or any charge:
-npm run audio -- --dry          # per-item segment counts + estimated cost
-npm run audio -- --dry --show   # also show a text preview
-
-# Generate for real (needs the key):
-export GOOGLE_TTS_API_KEY=your_key_here
-npm run audio
-npm run dev                     # player + highlighting appear on each post
-```
-
-Without the key, `npm run audio` and `npm run build` still succeed — generation
-is skipped and the player simply doesn't render.
-
-## Configuration (env vars)
-
-| Variable          | Default                 | Notes |
-|-------------------|-------------------------|-------|
-| `TTS_VOICE`       | `bn-IN-Chirp3-HD-Aoede` | Any `bn-IN` voice. HD options: Kore, Charon, Puck, Leda, Orus, … Fallback that always works with API keys: `bn-IN-Wavenet-A`. |
-| `TTS_RATE`        | `1.0`                   | Speaking rate 0.25–4.0. |
-| `TTS_SEGMENT`     | `sentence`              | `sentence` = fine highlighting (more requests). `paragraph` = fewer requests, coarser highlighting. |
-| `TTS_MAX_CHARS`   | `100000`                | Skip items larger than this unless `audio: true`. |
-| `TTS_CONCURRENCY` | `6`                     | Parallel TTS requests. |
+`npm run audio:google` uses Google Chirp3-HD (`scripts/generate-audio.mjs`) and
+needs `GOOGLE_TTS_API_KEY` (billing-enabled account). Produces the same files.
+Only worth it if you specifically want Google's voices.
 
 ## Notes
 
-- **Accent**: top-quality neural Bangla is Indian Bengali (`bn-IN`) — clear, but
-  slightly Kolkata-style, not Dhaka.
-- **Highlighting coverage**: ~95%+ of sentences in prose-heavy posts; lower in
-  table/diagram-heavy posts (table rows don't map to spoken sentences). Any
-  unmatched sentence simply isn't highlighted — audio plays through normally.
-- **Audio files are gitignored** (`public/audio/`). They're built in CI and
-  persisted via the Actions cache. If you'd rather commit them (bulletproof, zero
-  regeneration), remove that line from `.gitignore` and `git add -f public/audio`.
+- **Highlighting coverage**: ~95%+ on prose-heavy posts; lower on
+  table/diagram-heavy ones. Unmatched sentences simply aren't highlighted —
+  audio always plays through.
+- Audio lives in `public/audio/` and **is committed** to the repo.
