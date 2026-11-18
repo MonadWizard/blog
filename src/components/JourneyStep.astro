@@ -1,4 +1,6 @@
 ---
+import AudioPlayer from './AudioPlayer.astro';
+
 type Marker = 'strength' | 'mock' | 'gate';
 
 interface Props {
@@ -8,9 +10,12 @@ interface Props {
   descriptionHtml: string;
   depth: number;
   markers?: Marker[];
+  stepIndex: number;
+  audioSrc?: string;
+  audioData?: string;
 }
 
-const { levelPath, levelTitle, title, descriptionHtml, depth, markers = [] } = Astro.props;
+const { levelPath, levelTitle, title, descriptionHtml, depth, markers = [], stepIndex, audioSrc, audioData } = Astro.props;
 
 const depthColors = ['#6366f1', '#8b5cf6', '#06b6d4', '#9ca3af'];
 const borderColor = depthColors[Math.min(depth, depthColors.length - 1)];
@@ -30,6 +35,7 @@ const MARKER_CLASS: Record<Marker, string> = {
 
 <div
   id={`step-${levelPath}`}
+  data-astep={stepIndex}
   class="scroll-mt-20 border-l-4 pl-5 mb-10"
   style={`border-color: ${borderColor}`}
 >
@@ -37,11 +43,12 @@ const MARKER_CLASS: Record<Marker, string> = {
     {levelTitle}
   </div>
 
-  <div class="flex items-center gap-3 mb-3">
+  <div class="flex flex-wrap items-center gap-3 mb-3">
     <span class="font-mono text-xs bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 px-2 py-0.5 rounded border border-indigo-200 dark:border-indigo-800">
       {levelPath}
     </span>
     <h3 class="text-xl font-semibold text-gray-900 dark:text-white">{title}</h3>
+    {audioSrc && <AudioPlayer src={audioSrc} data={audioData} highlight={`[data-astep="${stepIndex}"]`} compact />}
   </div>
 
   {markers.length > 0 && (

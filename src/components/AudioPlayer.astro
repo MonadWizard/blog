@@ -8,80 +8,82 @@ interface Props {
   src: string;
   data?: string;
   highlight?: string;
+  compact?: boolean; // small pill for journey step cards
 }
-const { src, data, highlight = '.prose' } = Astro.props;
+const { src, data, highlight = '.prose', compact = false } = Astro.props;
 ---
 
 <div
-  class="audio-player mb-10 flex items-center gap-4 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 dark:border-gray-700 dark:bg-gray-900"
+  class:list={[
+    'audio-player',
+    compact
+      ? 'inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-2 py-1 dark:border-gray-700 dark:bg-gray-900/70'
+      : 'mb-10 flex items-center gap-4 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 dark:border-gray-700 dark:bg-gray-900',
+  ]}
   data-audio-player
   data-highlight={highlight}
   data-segments={data}
 >
-  <audio preload="metadata" src={src}></audio>
+  <audio preload={compact ? 'none' : 'metadata'} src={src}></audio>
 
   <button
     type="button"
     data-play
-    aria-label="পোস্টটি শুনুন / Play"
-    class="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-indigo-600 text-white transition hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400"
+    aria-label="শুনুন / Play"
+    class:list={[
+      'flex flex-shrink-0 items-center justify-center rounded-full bg-indigo-600 text-white transition hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400',
+      compact ? 'h-7 w-7' : 'h-11 w-11',
+    ]}
   >
-    <svg data-icon-play viewBox="0 0 24 24" class="h-5 w-5 translate-x-0.5" fill="currentColor" aria-hidden="true">
+    <svg data-icon-play viewBox="0 0 24 24" class:list={['translate-x-0.5', compact ? 'h-3.5 w-3.5' : 'h-5 w-5']} fill="currentColor" aria-hidden="true">
       <path d="M8 5v14l11-7z" />
     </svg>
-    <svg data-icon-pause viewBox="0 0 24 24" class="hidden h-5 w-5" fill="currentColor" aria-hidden="true">
+    <svg data-icon-pause viewBox="0 0 24 24" class:list={['hidden', compact ? 'h-3.5 w-3.5' : 'h-5 w-5']} fill="currentColor" aria-hidden="true">
       <path d="M6 5h4v14H6zM14 5h4v14h-4z" />
     </svg>
   </button>
 
-  <div class="min-w-0 flex-1">
-    <div class="mb-1 flex items-center justify-between gap-2">
-      <span class="truncate text-sm font-medium text-gray-700 dark:text-gray-300">
-        🎧 শুনুন <span data-hl-note class="hidden text-xs font-normal text-gray-400 dark:text-gray-500">· বাক্য হাইলাইট হবে</span>
-      </span>
-      <span class="flex items-center gap-2 text-xs tabular-nums text-gray-500 dark:text-gray-400">
-        <span data-current>0:00</span>
-        <span aria-hidden="true">/</span>
-        <span data-duration>0:00</span>
-      </span>
-    </div>
+  {compact ? (
+    <span class="pr-1 text-xs font-medium text-gray-600 dark:text-gray-300" data-label>🎧 শুনুন</span>
+  ) : (
+    <>
+      <div class="min-w-0 flex-1">
+        <div class="mb-1 flex items-center justify-between gap-2">
+          <span class="truncate text-sm font-medium text-gray-700 dark:text-gray-300">
+            🎧 শুনুন <span data-hl-note class="hidden text-xs font-normal text-gray-400 dark:text-gray-500">· বাক্য হাইলাইট হবে</span>
+          </span>
+          <span class="flex items-center gap-2 text-xs tabular-nums text-gray-500 dark:text-gray-400">
+            <span data-current>0:00</span>
+            <span aria-hidden="true">/</span>
+            <span data-duration>0:00</span>
+          </span>
+        </div>
 
-    <div
-      data-track
-      class="group relative h-1.5 w-full cursor-pointer rounded-full bg-gray-200 dark:bg-gray-700"
-      role="slider"
-      tabindex="0"
-      aria-label="Seek"
-      aria-valuemin="0"
-      aria-valuemax="100"
-      aria-valuenow="0"
-    >
-      <div data-progress class="absolute inset-y-0 left-0 w-0 rounded-full bg-indigo-600"></div>
-    </div>
-  </div>
+        <div
+          data-track
+          class="group relative h-1.5 w-full cursor-pointer rounded-full bg-gray-200 dark:bg-gray-700"
+          role="slider"
+          tabindex="0"
+          aria-label="Seek"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="0"
+        >
+          <div data-progress class="absolute inset-y-0 left-0 w-0 rounded-full bg-indigo-600"></div>
+        </div>
+      </div>
 
-  <button
-    type="button"
-    data-speed
-    aria-label="গতি / Playback speed"
-    class="flex-shrink-0 rounded-md border border-gray-300 px-2 py-1 text-xs font-semibold text-gray-600 transition hover:border-indigo-400 hover:text-indigo-600 dark:border-gray-600 dark:text-gray-300 dark:hover:text-indigo-400"
-  >
-    1×
-  </button>
+      <button
+        type="button"
+        data-speed
+        aria-label="গতি / Playback speed"
+        class="flex-shrink-0 rounded-md border border-gray-300 px-2 py-1 text-xs font-semibold text-gray-600 transition hover:border-indigo-400 hover:text-indigo-600 dark:border-gray-600 dark:text-gray-300 dark:hover:text-indigo-400"
+      >
+        1×
+      </button>
+    </>
+  )}
 </div>
-
-<style is:global>
-  /* The currently-spoken sentence (CSS Custom Highlight API). */
-  ::highlight(tts-active) {
-    background-color: rgba(99, 102, 241, 0.22);
-    color: inherit;
-    border-radius: 0.2em;
-  }
-  :root[data-theme='dark'] ::highlight(tts-active),
-  .dark ::highlight(tts-active) {
-    background-color: rgba(129, 140, 248, 0.3);
-  }
-</style>
 
 <script>
   function fmt(sec: number): string {
@@ -182,12 +184,14 @@ const { src, data, highlight = '.prose' } = Astro.props;
     const durEl = root.querySelector('[data-duration]') as HTMLElement | null;
     const speedBtn = root.querySelector('[data-speed]') as HTMLButtonElement | null;
     const hlNote = root.querySelector('[data-hl-note]') as HTMLElement | null;
-    if (!audio || !playBtn || !track || !progress) return;
+    const label = root.querySelector('[data-label]') as HTMLElement | null;
+    if (!audio || !playBtn) return;
 
     const showPlaying = (p: boolean) => {
       iconPlay?.classList.toggle('hidden', p);
       iconPause?.classList.toggle('hidden', !p);
-      playBtn.setAttribute('aria-label', p ? 'থামান / Pause' : 'পোস্টটি শুনুন / Play');
+      playBtn.setAttribute('aria-label', p ? 'থামান / Pause' : 'শুনুন / Play');
+      if (label) label.textContent = p ? '🎧 থামান' : '🎧 শুনুন';
     };
 
     // --- highlighting state (lazy-loaded on first interaction) ---
@@ -253,14 +257,20 @@ const { src, data, highlight = '.prose' } = Astro.props;
       if (audio.paused) audio.play();
       else audio.pause();
     });
-    audio.addEventListener('play', () => {
+    audio.addEventListener('play', async () => {
+      // Only one player at a time: pause every other audio on the page.
+      document.querySelectorAll('audio').forEach((a) => {
+        if (a !== audio) a.pause();
+      });
       showPlaying(true);
-      ensureHighlighting();
+      await ensureHighlighting();
+      // Re-claim the shared highlight registration (pages can have many players).
+      if (hl) (CSS as any).highlights?.set('tts-active', hl);
     });
     audio.addEventListener('pause', () => showPlaying(false));
     audio.addEventListener('ended', () => {
       showPlaying(false);
-      progress.style.width = '0%';
+      if (progress) progress.style.width = '0%';
       if (curEl) curEl.textContent = '0:00';
       hl?.clear();
       active = -1;
@@ -271,23 +281,25 @@ const { src, data, highlight = '.prose' } = Astro.props;
     });
     audio.addEventListener('timeupdate', () => {
       const pct = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
-      progress.style.width = pct + '%';
-      track.setAttribute('aria-valuenow', String(Math.round(pct)));
+      if (progress) progress.style.width = pct + '%';
+      track?.setAttribute('aria-valuenow', String(Math.round(pct)));
       if (curEl) curEl.textContent = fmt(audio.currentTime);
       syncHighlight();
     });
 
-    const seek = (clientX: number) => {
-      const rect = track.getBoundingClientRect();
-      const ratio = Math.min(1, Math.max(0, (clientX - rect.left) / rect.width));
-      if (audio.duration) audio.currentTime = ratio * audio.duration;
-    };
-    track.addEventListener('click', (e) => seek((e as MouseEvent).clientX));
-    track.addEventListener('keydown', (e) => {
-      const ev = e as KeyboardEvent;
-      if (ev.key === 'ArrowRight') audio.currentTime = Math.min(audio.duration, audio.currentTime + 5);
-      else if (ev.key === 'ArrowLeft') audio.currentTime = Math.max(0, audio.currentTime - 5);
-    });
+    if (track) {
+      const seek = (clientX: number) => {
+        const rect = track.getBoundingClientRect();
+        const ratio = Math.min(1, Math.max(0, (clientX - rect.left) / rect.width));
+        if (audio.duration) audio.currentTime = ratio * audio.duration;
+      };
+      track.addEventListener('click', (e) => seek((e as MouseEvent).clientX));
+      track.addEventListener('keydown', (e) => {
+        const ev = e as KeyboardEvent;
+        if (ev.key === 'ArrowRight') audio.currentTime = Math.min(audio.duration, audio.currentTime + 5);
+        else if (ev.key === 'ArrowLeft') audio.currentTime = Math.max(0, audio.currentTime - 5);
+      });
+    }
 
     const speeds = [1, 1.25, 1.5, 0.75];
     let si = 0;

@@ -60,6 +60,18 @@ const ogImageURL = ogImage
 
     <slot name="head" />
 
+    <!-- TTS karaoke highlight (inline so the CSS minifier doesn't strip ::highlight) -->
+    <style is:inline>
+      ::highlight(tts-active) {
+        background-color: rgba(99, 102, 241, 0.22);
+        color: inherit;
+        border-radius: 0.2em;
+      }
+      .dark ::highlight(tts-active) {
+        background-color: rgba(129, 140, 248, 0.3);
+      }
+    </style>
+
     <!-- Dark mode init: runs before first paint to prevent flash -->
     <script is:inline>
       (function () {

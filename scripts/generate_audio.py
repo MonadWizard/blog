@@ -40,7 +40,7 @@ JOURNEY_DIR = ROOT / "src/content/journey"
 OUT_DIR = ROOT / "public/audio"
 MANIFEST_PATH = OUT_DIR / "manifest.json"
 
-VOICE = os.environ.get("TTS_VOICE", "bn-BD-NabanitaNeural")
+VOICE = os.environ.get("TTS_VOICE", "bn-BD-PradeepNeural")
 RATE = os.environ.get("TTS_RATE", "+0%")
 SEGMENT_MODE = os.environ.get("TTS_SEGMENT", "sentence").lower()
 MAX_BYTES = 4500
@@ -54,6 +54,19 @@ BYTES_PER_SEC = 48000 / 8  # 6000
 
 DRY = "--dry" in sys.argv
 SHOW = "--show" in sys.argv
+
+
+def _arg(name, default=None):
+    if name in sys.argv:
+        i = sys.argv.index(name)
+        if i + 1 < len(sys.argv):
+            return sys.argv[i + 1]
+    return default
+
+
+ONLY = _arg("--only")                # only process keys containing this substring
+NO_PRUNE = "--no-prune" in sys.argv   # don't delete stale files (for parallel workers)
+MANIFEST_OUT = _arg("--manifest-out")  # write manifest to this file instead of the main one
 
 
 def log(*a):
@@ -187,23 +200,27 @@ def collect_blog():
 
 
 def collect_journey():
+    # Journeys are enormous, so each STEP becomes its own small audio clip
+    # (key jstep:<slug>:<index>) — keeps files tiny and under GitHub's 100MB
+    # limit, and lets a listener play just the step they're reading.
     items = []
     for f in list_files(JOURNEY_DIR, {".json"}):
         data = json.loads(f.read_text(encoding="utf-8"))
         slug = str(f.relative_to(JOURNEY_DIR)).rsplit(".", 1)[0]
-        parts = [data.get("title", ""), data.get("description", "")]
-        for step in data.get("steps", []):
-            if step.get("levelTitle"):
-                parts.append(step["levelTitle"])
-            if step.get("title"):
-                parts.append(step["title"])
+        draft = data.get("draft") is True
+        jaudio = _audio_flag(data.get("audio"))
+        for i, step in enumerate(data.get("steps", [])):
+            parts = [step.get("levelTitle", ""), step.get("title", "")]
             if step.get("description"):
                 parts.append(md_to_speech(step["description"]))
-        text = "।\n\n".join(x for x in parts if x)
-        items.append({
-            "key": f"journey:{slug}", "draft": data.get("draft") is True,
-            "text": text, "audio": _audio_flag(data.get("audio")),
-        })
+            text = "।\n\n".join(x for x in parts if x)
+            items.append({
+                "key": f"jstep:{slug}:{i}", "draft": draft,
+                "text": text,
+                # Per-step clips are small, so they are never over the size cap;
+                # force them on unless the journey explicitly sets audio:false.
+                "audio": True if jaudio is not False else False,
+            })
     return items
 
 
@@ -218,6 +235,9 @@ def content_hash(text: str) -> str:
 # ---- synthesis (edge-tts) --------------------------------------------------
 
 async def synth_segment(edge_tts, sem, text, tries=4) -> bytes:
+    # Nothing speakable (punctuation/symbols/commas only) -> no audio needed.
+    if not re.search(r"\w", text, re.UNICODE):
+        return b""
     async with sem:
         last_err = None
         for attempt in range(tries):
@@ -227,10 +247,11 @@ async def synth_segment(edge_tts, sem, text, tries=4) -> bytes:
                 async for chunk in comm.stream():
                     if chunk["type"] == "audio":
                         audio.extend(chunk["data"])
-                if not audio:
-                    raise RuntimeError("empty audio")
+                # edge-tts can return no audio for odd fragments; treat as silence.
                 return bytes(audio)
             except Exception as err:  # noqa
+                if "No audio" in str(err) or "NoAudioReceived" in type(err).__name__:
+                    return b""  # unspeakable fragment — skip, don't fail the post
                 last_err = err
                 if attempt == tries - 1:
                     break
@@ -259,10 +280,11 @@ async def synth_item(edge_tts, segments):
 
 def main():
     OUT_DIR.mkdir(parents=True, exist_ok=True)
+    manifest_path = Path(MANIFEST_OUT) if MANIFEST_OUT else MANIFEST_PATH
     manifest = {}
-    if MANIFEST_PATH.exists():
+    if manifest_path.exists():
         try:
-            manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         except Exception:
             manifest = {}
 
@@ -278,7 +300,9 @@ def main():
             sys.exit(1)
 
     items = [it for it in (collect_blog() + collect_journey()) if not it["draft"] and it["text"]]
-    seen, generated, skipped, too_large, total_chars = set(), 0, 0, 0, 0
+    if ONLY:
+        items = [it for it in items if ONLY in it["key"]]
+    seen, generated, skipped, too_large, total_chars, failed = set(), 0, 0, 0, 0, 0
 
     for item in items:
         chars = len(item["text"])
@@ -335,21 +359,26 @@ def main():
             generated += 1
         except Exception as e:  # noqa
             print(f"[tts] FAILED for {item['key']}: {e}", file=sys.stderr)
-            sys.exit(1)
+            failed += 1
+            continue
 
     if not DRY:
-        for key in list(manifest.keys()):
-            if key not in seen:
-                for fn in (manifest[key].get("file"), manifest[key].get("segmentsFile")):
-                    if fn and (ROOT / "public" / fn).exists():
-                        (ROOT / "public" / fn).unlink()
-                del manifest[key]
-        MANIFEST_PATH.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
+        if not NO_PRUNE and not ONLY:
+            for key in list(manifest.keys()):
+                if key not in seen:
+                    for fn in (manifest[key].get("file"), manifest[key].get("segmentsFile")):
+                        if fn and (ROOT / "public" / fn).exists():
+                            (ROOT / "public" / fn).unlink()
+                    del manifest[key]
+        manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
                                  encoding="utf-8")
 
     log(f"{'[dry-run] ' if DRY else ''}Done. generated={generated}, unchanged={skipped}, "
-        f"over-cap={too_large}, audio-items={len(seen)}, chars this run={total_chars:,} "
-        f"(FREE via edge-tts)")
+        f"over-cap={too_large}, failed={failed}, audio-items={len(seen)}, "
+        f"chars this run={total_chars:,} (FREE via edge-tts)")
+    if failed:
+        log(f"{failed} item(s) failed — re-run `npm run audio` to retry just those.")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
