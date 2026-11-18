@@ -1,0 +1,302 @@
+---
+// "Listen to this post/journey" player with karaoke-style sentence highlighting.
+// Rendered only when a pre-generated MP3 exists (see scripts/generate-audio.mjs).
+//   src       – MP3 url
+//   data      – timing sidecar JSON url ({ computedDuration, segments:[{t,d,text}] })
+//   highlight – CSS selector of the container whose sentences get highlighted
+interface Props {
+  src: string;
+  data?: string;
+  highlight?: string;
+}
+const { src, data, highlight = '.prose' } = Astro.props;
+---
+
+<div
+  class="audio-player mb-10 flex items-center gap-4 rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 dark:border-gray-700 dark:bg-gray-900"
+  data-audio-player
+  data-highlight={highlight}
+  data-segments={data}
+>
+  <audio preload="metadata" src={src}></audio>
+
+  <button
+    type="button"
+    data-play
+    aria-label="পোস্টটি শুনুন / Play"
+    class="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-indigo-600 text-white transition hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400"
+  >
+    <svg data-icon-play viewBox="0 0 24 24" class="h-5 w-5 translate-x-0.5" fill="currentColor" aria-hidden="true">
+      <path d="M8 5v14l11-7z" />
+    </svg>
+    <svg data-icon-pause viewBox="0 0 24 24" class="hidden h-5 w-5" fill="currentColor" aria-hidden="true">
+      <path d="M6 5h4v14H6zM14 5h4v14h-4z" />
+    </svg>
+  </button>
+
+  <div class="min-w-0 flex-1">
+    <div class="mb-1 flex items-center justify-between gap-2">
+      <span class="truncate text-sm font-medium text-gray-700 dark:text-gray-300">
+        🎧 শুনুন <span data-hl-note class="hidden text-xs font-normal text-gray-400 dark:text-gray-500">· বাক্য হাইলাইট হবে</span>
+      </span>
+      <span class="flex items-center gap-2 text-xs tabular-nums text-gray-500 dark:text-gray-400">
+        <span data-current>0:00</span>
+        <span aria-hidden="true">/</span>
+        <span data-duration>0:00</span>
+      </span>
+    </div>
+
+    <div
+      data-track
+      class="group relative h-1.5 w-full cursor-pointer rounded-full bg-gray-200 dark:bg-gray-700"
+      role="slider"
+      tabindex="0"
+      aria-label="Seek"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-valuenow="0"
+    >
+      <div data-progress class="absolute inset-y-0 left-0 w-0 rounded-full bg-indigo-600"></div>
+    </div>
+  </div>
+
+  <button
+    type="button"
+    data-speed
+    aria-label="গতি / Playback speed"
+    class="flex-shrink-0 rounded-md border border-gray-300 px-2 py-1 text-xs font-semibold text-gray-600 transition hover:border-indigo-400 hover:text-indigo-600 dark:border-gray-600 dark:text-gray-300 dark:hover:text-indigo-400"
+  >
+    1×
+  </button>
+</div>
+
+<style is:global>
+  /* The currently-spoken sentence (CSS Custom Highlight API). */
+  ::highlight(tts-active) {
+    background-color: rgba(99, 102, 241, 0.22);
+    color: inherit;
+    border-radius: 0.2em;
+  }
+  :root[data-theme='dark'] ::highlight(tts-active),
+  .dark ::highlight(tts-active) {
+    background-color: rgba(129, 140, 248, 0.3);
+  }
+</style>
+
+<script>
+  function fmt(sec: number): string {
+    if (!isFinite(sec) || sec < 0) sec = 0;
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return `${m}:${s.toString().padStart(2, '0')}`;
+  }
+
+  interface Seg {
+    t: number;
+    d: number;
+    text: string;
+  }
+
+  // Build a whitespace-normalized string of a container's text plus a map from
+  // each normalized-char index back to its DOM text node + offset.
+  function buildIndex(root: Element) {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+        const el = node.parentElement;
+        if (!el) return NodeFilter.FILTER_REJECT;
+        if (el.closest('[data-audio-player]')) return NodeFilter.FILTER_REJECT;
+        const tag = el.tagName;
+        if (tag === 'SCRIPT' || tag === 'STYLE') return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      },
+    });
+    let norm = '';
+    const nodes: Text[] = [];
+    const offs: number[] = [];
+    let prevSpace = true;
+    let node: Node | null;
+    while ((node = walker.nextNode())) {
+      const v = (node as Text).nodeValue as string;
+      for (let k = 0; k < v.length; k++) {
+        const ch = v[k];
+        if (/\s/.test(ch)) {
+          if (prevSpace) continue;
+          norm += ' ';
+          nodes.push(node as Text);
+          offs.push(k);
+          prevSpace = true;
+        } else {
+          norm += ch;
+          nodes.push(node as Text);
+          offs.push(k);
+          prevSpace = false;
+        }
+      }
+      // No artificial boundary space: real whitespace already lives in the text
+      // nodes, and adding one here would break matches like `code`-এর.
+    }
+    return { norm, nodes, offs };
+  }
+
+  const normalizeQuery = (s: string) => s.replace(/\s+/g, ' ').trim();
+
+  // Map each segment to a DOM Range by finding its text in order (a moving
+  // cursor handles repeated phrases and keeps highlights monotonic).
+  function buildRanges(root: Element, segments: Seg[]): (Range | null)[] {
+    const { norm, nodes, offs } = buildIndex(root);
+    const ranges: (Range | null)[] = [];
+    let cursor = 0;
+    for (const seg of segments) {
+      const q = normalizeQuery(seg.text);
+      let range: Range | null = null;
+      if (q.length >= 2) {
+        let p = norm.indexOf(q, cursor);
+        if (p === -1) p = norm.indexOf(q); // fall back to a global search
+        if (p !== -1) {
+          const end = p + q.length - 1;
+          try {
+            const r = document.createRange();
+            r.setStart(nodes[p], offs[p]);
+            r.setEnd(nodes[end], offs[end] + 1);
+            range = r;
+            cursor = p + q.length;
+          } catch {
+            range = null;
+          }
+        }
+      }
+      ranges.push(range);
+    }
+    return ranges;
+  }
+
+  function initPlayer(root: HTMLElement) {
+    const audio = root.querySelector('audio') as HTMLAudioElement | null;
+    const playBtn = root.querySelector('[data-play]') as HTMLButtonElement | null;
+    const iconPlay = root.querySelector('[data-icon-play]') as SVGElement | null;
+    const iconPause = root.querySelector('[data-icon-pause]') as SVGElement | null;
+    const track = root.querySelector('[data-track]') as HTMLElement | null;
+    const progress = root.querySelector('[data-progress]') as HTMLElement | null;
+    const curEl = root.querySelector('[data-current]') as HTMLElement | null;
+    const durEl = root.querySelector('[data-duration]') as HTMLElement | null;
+    const speedBtn = root.querySelector('[data-speed]') as HTMLButtonElement | null;
+    const hlNote = root.querySelector('[data-hl-note]') as HTMLElement | null;
+    if (!audio || !playBtn || !track || !progress) return;
+
+    const showPlaying = (p: boolean) => {
+      iconPlay?.classList.toggle('hidden', p);
+      iconPause?.classList.toggle('hidden', !p);
+      playBtn.setAttribute('aria-label', p ? 'থামান / Pause' : 'পোস্টটি শুনুন / Play');
+    };
+
+    // --- highlighting state (lazy-loaded on first interaction) ---
+    const highlightSel = root.getAttribute('data-highlight') || '.prose';
+    const segmentsUrl = root.getAttribute('data-segments') || '';
+    const supportsHL = typeof (window as any).CSS !== 'undefined' && (CSS as any).highlights;
+    let segments: Seg[] = [];
+    let ranges: (Range | null)[] = [];
+    let scale = 1;
+    let active = -1;
+    let hl: any = null;
+
+    async function ensureHighlighting() {
+      if (!supportsHL || !segmentsUrl || segments.length) return;
+      try {
+        const res = await fetch(segmentsUrl);
+        if (!res.ok) return;
+        const data = await res.json();
+        segments = data.segments || [];
+        if (data.computedDuration && isFinite(audio.duration) && audio.duration > 0) {
+          scale = audio.duration / data.computedDuration;
+        }
+        const container = document.querySelector(highlightSel);
+        if (!container) return;
+        ranges = buildRanges(container, segments);
+        hl = new (window as any).Highlight();
+        (CSS as any).highlights.set('tts-active', hl);
+        if (ranges.some(Boolean)) hlNote?.classList.remove('hidden');
+      } catch {
+        /* highlighting is best-effort */
+      }
+    }
+
+    function setActive(i: number) {
+      if (i === active || !hl) return;
+      active = i;
+      hl.clear();
+      const r = ranges[i];
+      if (r) {
+        hl.add(r);
+        const el = (r.startContainer.parentElement || null) as HTMLElement | null;
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top < 80 || rect.bottom > window.innerHeight - 40) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }
+      }
+    }
+
+    function syncHighlight() {
+      if (!segments.length) return;
+      const t = audio.currentTime / (scale || 1);
+      // find current segment (linear from `active` is fine; lists are small-ish)
+      let i = active >= 0 && segments[active] && segments[active].t <= t ? active : 0;
+      while (i + 1 < segments.length && segments[i + 1].t <= t) i++;
+      while (i > 0 && segments[i].t > t) i--;
+      setActive(i);
+    }
+
+    playBtn.addEventListener('click', async () => {
+      await ensureHighlighting();
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+    audio.addEventListener('play', () => {
+      showPlaying(true);
+      ensureHighlighting();
+    });
+    audio.addEventListener('pause', () => showPlaying(false));
+    audio.addEventListener('ended', () => {
+      showPlaying(false);
+      progress.style.width = '0%';
+      if (curEl) curEl.textContent = '0:00';
+      hl?.clear();
+      active = -1;
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      if (durEl) durEl.textContent = fmt(audio.duration);
+    });
+    audio.addEventListener('timeupdate', () => {
+      const pct = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
+      progress.style.width = pct + '%';
+      track.setAttribute('aria-valuenow', String(Math.round(pct)));
+      if (curEl) curEl.textContent = fmt(audio.currentTime);
+      syncHighlight();
+    });
+
+    const seek = (clientX: number) => {
+      const rect = track.getBoundingClientRect();
+      const ratio = Math.min(1, Math.max(0, (clientX - rect.left) / rect.width));
+      if (audio.duration) audio.currentTime = ratio * audio.duration;
+    };
+    track.addEventListener('click', (e) => seek((e as MouseEvent).clientX));
+    track.addEventListener('keydown', (e) => {
+      const ev = e as KeyboardEvent;
+      if (ev.key === 'ArrowRight') audio.currentTime = Math.min(audio.duration, audio.currentTime + 5);
+      else if (ev.key === 'ArrowLeft') audio.currentTime = Math.max(0, audio.currentTime - 5);
+    });
+
+    const speeds = [1, 1.25, 1.5, 0.75];
+    let si = 0;
+    speedBtn?.addEventListener('click', () => {
+      si = (si + 1) % speeds.length;
+      audio.playbackRate = speeds[si];
+      speedBtn.textContent = speeds[si] + '×';
+    });
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-audio-player]').forEach(initPlayer);
+</script>

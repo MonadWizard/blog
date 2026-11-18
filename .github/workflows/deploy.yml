@@ -31,6 +31,22 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Restore previously generated audio so only new/changed posts are
+      # re-synthesized. restore-keys gives us the latest prior audio folder
+      # even when posts changed, enabling true per-post incremental generation.
+      - name: Restore generated audio cache
+        uses: actions/cache@v4
+        with:
+          path: public/audio
+          key: tts-audio-${{ hashFiles('src/content/blog/**') }}
+          restore-keys: |
+            tts-audio-
+
+      - name: Generate post audio (Bangla TTS)
+        env:
+          GOOGLE_TTS_API_KEY: ${{ secrets.GOOGLE_TTS_API_KEY }}
+        run: npm run audio
+
       - name: Build Astro site
         run: npm run build
 

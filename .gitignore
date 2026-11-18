@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# generated TTS audio (built in CI, persisted via Actions cache)
+public/audio/

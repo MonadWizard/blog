@@ -2,6 +2,8 @@
 import { getCollection, render } from 'astro:content';
 import BlogPostLayout from '../../layouts/BlogPostLayout.astro';
 import readingTime from 'reading-time';
+import fs from 'node:fs';
+import path from 'node:path';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -14,6 +16,23 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content, headings } = await render(post);
 const rt = readingTime(post.body ?? '');
+
+// Pre-generated TTS audio (if any) for this post — see scripts/generate-audio.mjs.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+let audioSrc: string | undefined;
+let audioData: string | undefined;
+try {
+  const manifest = JSON.parse(
+    fs.readFileSync(path.resolve('public/audio/manifest.json'), 'utf8')
+  );
+  const entry = manifest[`blog:${post.id}`];
+  if (entry?.file) {
+    audioSrc = base + '/' + entry.file;
+    if (entry.segmentsFile) audioData = base + '/' + entry.segmentsFile;
+  }
+} catch {
+  // no manifest yet — player simply won't render
+}
 ---
 
 <BlogPostLayout
@@ -25,6 +44,8 @@ const rt = readingTime(post.body ?? '');
   tags={post.data.tags}
   readingTime={rt.text}
   headings={headings}
+  audioSrc={audioSrc}
+  audioData={audioData}
 >
   <Content />
 </BlogPostLayout>
